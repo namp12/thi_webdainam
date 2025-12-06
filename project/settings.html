@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cài đặt</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h4 class="mb-3">Cài đặt</h4>
+            <div class="mb-3 form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="toggle-dark">
+              <label class="form-check-label" for="toggle-dark">Chế độ tối</label>
+            </div>
+            <div class="mb-3">
+              <label class="form-label" for="lang-select">Ngôn ngữ</label>
+              <select id="lang-select" class="form-select">
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+              </select>
+            </div>
+            <div class="mb-3" id="bg-theme-section" style="display: none;">
+              <label class="form-label" for="bg-theme-select">Kiểu Background (Dark Mode)</label>
+              <select id="bg-theme-select" class="form-select">
+                <option value="default">Mặc định</option>
+                <option value="gradient">Gradient</option>
+                <option value="pattern">Pattern Dots</option>
+                <option value="grid">Grid</option>
+                <option value="mesh">Mesh</option>
+                <option value="stars">Stars</option>
+              </select>
+              <small class="text-muted">Chỉ áp dụng khi Dark Mode được bật</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/background-theme.js"></script>
+  <script src="assets/js/settings-page.js"></script>
+  <script>
+    // Show/hide bg theme selector based on dark mode
+    $(function() {
+      function updateBgThemeVisibility() {
+        const isDark = document.documentElement.getAttribute("data-bs-theme") === "dark";
+        $("#bg-theme-section").toggle(isDark);
+        
+        if (isDark && window.BG_THEME) {
+          const currentTheme = window.BG_THEME.getCurrentTheme();
+          $("#bg-theme-select").val(currentTheme);
+        }
+      }
+      
+      // Check on load
+      updateBgThemeVisibility();
+      
+      // Watch for theme changes
+      $("#toggle-dark").on("change", function() {
+        setTimeout(updateBgThemeVisibility, 100);
+      });
+      
+      // Handle bg theme change
+      $("#bg-theme-select").on("change", function() {
+        if (window.BG_THEME) {
+          window.BG_THEME.setTheme(this.value);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

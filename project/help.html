@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hỗ trợ - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <h1 class="display-5 fw-bold mb-4 text-center">Trung Tâm Hỗ Trợ</h1>
+        <p class="lead text-center text-muted mb-5">Chúng tôi luôn sẵn sàng giúp đỡ bạn</p>
+
+        <div class="row g-4 mb-5">
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm text-center">
+              <div class="card-body">
+                <div class="display-4 mb-3">❓</div>
+                <h5 class="fw-bold">Câu hỏi thường gặp</h5>
+                <p class="text-muted small">Tìm câu trả lời cho các câu hỏi phổ biến</p>
+                <a href="faq.html" class="btn btn-outline-primary btn-sm mt-2">Xem FAQ</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm text-center">
+              <div class="card-body">
+                <div class="display-4 mb-3">📞</div>
+                <h5 class="fw-bold">Liên hệ trực tiếp</h5>
+                <p class="text-muted small">Nói chuyện với đội ngũ hỗ trợ của chúng tôi</p>
+                <a href="contact.html" class="btn btn-outline-primary btn-sm mt-2">Liên hệ</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm text-center">
+              <div class="card-body">
+                <div class="display-4 mb-3">📚</div>
+                <h5 class="fw-bold">Hướng dẫn sử dụng</h5>
+                <p class="text-muted small">Tìm hiểu cách sử dụng các tính năng</p>
+                <a href="#guides" class="btn btn-outline-primary btn-sm mt-2">Xem hướng dẫn</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section id="guides" class="mb-5">
+          <h2 class="h3 mb-4">Hướng Dẫn Sử Dụng</h2>
+          <div class="accordion" id="helpAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#guide1">
+                  Cách đặt tour
+                </button>
+              </h2>
+              <div id="guide1" class="accordion-collapse collapse show" data-bs-parent="#helpAccordion">
+                <div class="accordion-body">
+                  <ol>
+                    <li>Tìm kiếm tour bạn muốn đặt trên trang chủ hoặc trang Tours</li>
+                    <li>Click vào tour để xem chi tiết</li>
+                    <li>Nhấn nút "Đặt tour"</li>
+                    <li>Điền đầy đủ thông tin khách hàng</li>
+                    <li>Chọn phương thức thanh toán và xác nhận</li>
+                    <li>Bạn sẽ nhận được mã đặt chỗ sau khi thanh toán thành công</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#guide2">
+                  Cách hủy tour
+                </button>
+              </h2>
+              <div id="guide2" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                <div class="accordion-body">
+                  <p>Để hủy tour, bạn có thể:</p>
+                  <ul>
+                    <li>Truy cập trang "Lịch sử đặt tour"</li>
+                    <li>Tìm tour bạn muốn hủy</li>
+                    <li>Nhấn nút "Hủy tour" (nếu còn trong thời hạn hủy)</li>
+                    <li>Hoặc liên hệ trực tiếp với chúng tôi qua hotline hoặc email</li>
+                  </ul>
+                  <p class="text-muted small mt-2">Lưu ý: Phí hủy tour sẽ được tính theo chính sách của từng tour cụ thể.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#guide3">
+                  Cách thêm tour vào yêu thích
+                </button>
+              </h2>
+              <div id="guide3" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                <div class="accordion-body">
+                  <ol>
+                    <li>Tìm tour bạn muốn lưu</li>
+                    <li>Nhấn nút "Yêu thích" trên card tour hoặc trang chi tiết</li>
+                    <li>Tour sẽ được lưu vào danh sách yêu thích của bạn</li>
+                    <li>Xem danh sách yêu thích tại trang "Yêu thích" trong menu</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#guide4">
+                  Cách đánh giá tour
+                </button>
+              </h2>
+              <div id="guide4" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                <div class="accordion-body">
+                  <ol>
+                    <li>Truy cập trang "Thêm đánh giá"</li>
+                    <li>Chọn tour bạn muốn đánh giá</li>
+                    <li>Chọn điểm số (1-5 sao)</li>
+                    <li>Viết nội dung đánh giá</li>
+                    <li>Nhấn "Gửi đánh giá"</li>
+                  </ol>
+                  <p class="text-muted small mt-2">Đánh giá của bạn sẽ được hiển thị sau khi được phê duyệt.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#guide5">
+                  Cách thay đổi thông tin tài khoản
+                </button>
+              </h2>
+              <div id="guide5" class="accordion-collapse collapse" data-bs-parent="#helpAccordion">
+                <div class="accordion-body">
+                  <ol>
+                    <li>Đăng nhập vào tài khoản của bạn</li>
+                    <li>Truy cập trang "Trang cá nhân"</li>
+                    <li>Chỉnh sửa thông tin bạn muốn thay đổi</li>
+                    <li>Nhấn "Lưu thay đổi"</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="h3 mb-4">Liên Kết Nhanh</h2>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="list-group">
+                <a href="faq.html" class="list-group-item list-group-item-action">
+                  <i class="bi bi-question-circle me-2"></i> Câu hỏi thường gặp (FAQ)
+                </a>
+                <a href="contact.html" class="list-group-item list-group-item-action">
+                  <i class="bi bi-envelope me-2"></i> Liên hệ với chúng tôi
+                </a>
+                <a href="terms.html" class="list-group-item list-group-item-action">
+                  <i class="bi bi-file-text me-2"></i> Điều khoản dịch vụ
+                </a>
+                <a href="privacy.html" class="list-group-item list-group-item-action">
+                  <i class="bi bi-shield-lock me-2"></i> Chính sách bảo mật
+                </a>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="fw-bold mb-3">Thông Tin Liên Hệ</h5>
+                  <p class="mb-2">
+                    <strong>Hotline:</strong><br>
+                    <a href="tel:1900123456" class="text-decoration-none">1900 123 456</a>
+                  </p>
+                  <p class="mb-2">
+                    <strong>Email:</strong><br>
+                    <a href="mailto:support@travelbooking.com" class="text-decoration-none">support@travelbooking.com</a>
+                  </p>
+                  <p class="mb-0">
+                    <strong>Giờ làm việc:</strong><br>
+                    Thứ 2 - Thứ 6: 8:00 - 18:00<br>
+                    Thứ 7: 8:00 - 12:00
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

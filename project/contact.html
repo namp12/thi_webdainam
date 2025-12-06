@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Liên hệ</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <h1 class="display-5 fw-bold mb-4 text-center" data-i18n="contact_title">Liên Hệ Với Chúng Tôi</h1>
+        <p class="lead text-center text-muted mb-5" data-i18n="contact_subtitle">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+        
+        <div class="row g-4">
+          <div class="col-md-7">
+            <div class="card shadow-sm border-0">
+              <div class="card-body p-4">
+                <h4 class="mb-4" data-i18n="contact_send_message">Gửi tin nhắn</h4>
+                <form id="contact-form">
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold"><span data-i18n="contact_name">Họ và tên</span> <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="contact-name" required data-i18n-placeholder="contact_name_placeholder">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold"><span data-i18n="contact_email">Email</span> <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="contact-email" required placeholder="your.email@example.com">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold" data-i18n="contact_phone">Số điện thoại</label>
+                    <input type="tel" class="form-control" id="contact-phone" placeholder="0123456789">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label fw-semibold"><span data-i18n="contact_message">Nội dung tin nhắn</span> <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="contact-message" rows="5" required data-i18n-placeholder="contact_message_placeholder"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-lg w-100">
+                    <i class="bi bi-send"></i> <span data-i18n="contact_send">Gửi tin nhắn</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-5">
+            <div class="card shadow-sm border-0 h-100">
+              <div class="card-body p-4">
+                <h4 class="mb-4" data-i18n="contact_info">Thông tin liên hệ</h4>
+                
+                <div class="mb-4">
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-geo-alt-fill text-primary"></i> <span data-i18n="contact_address">Địa chỉ</span>
+                  </h6>
+                  <p class="text-muted mb-0">
+                    123 Đường ABC, Phường XYZ<br>
+                    Quận 1, TP. Hồ Chí Minh<br>
+                    Việt Nam
+                  </p>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-telephone-fill text-primary"></i> <span data-i18n="contact_phone_label">Điện thoại</span>
+                  </h6>
+                  <p class="text-muted mb-0">
+                    Hotline: <a href="tel:1900123456" class="text-decoration-none">1900 123 456</a><br>
+                    Di động: <a href="tel:0912345678" class="text-decoration-none">0912 345 678</a>
+                  </p>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-envelope-fill text-primary"></i> Email
+                  </h6>
+                  <p class="text-muted mb-0">
+                    <a href="mailto:info@travelbooking.com" class="text-decoration-none">info@travelbooking.com</a><br>
+                    <a href="mailto:support@travelbooking.com" class="text-decoration-none">support@travelbooking.com</a>
+                  </p>
+                </div>
+
+                <div class="mb-4">
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-clock-fill text-primary"></i> <span data-i18n="contact_working_hours">Giờ làm việc</span>
+                  </h6>
+                  <p class="text-muted mb-0">
+                    Thứ 2 - Thứ 6: 8:00 - 18:00<br>
+                    Thứ 7: 8:00 - 12:00<br>
+                    Chủ nhật: Nghỉ
+                  </p>
+                </div>
+
+                <div>
+                  <h6 class="fw-bold mb-2">
+                    <i class="bi bi-share-fill text-primary"></i> <span data-i18n="contact_social">Mạng xã hội</span>
+                  </h6>
+                  <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-primary btn-sm">
+                      <i class="bi bi-facebook"></i> Facebook
+                    </a>
+                    <a href="#" class="btn btn-outline-info btn-sm">
+                      <i class="bi bi-twitter"></i> Twitter
+                    </a>
+                    <a href="#" class="btn btn-outline-danger btn-sm">
+                      <i class="bi bi-instagram"></i> Instagram
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/contact.js"></script>
+</body>
+</html>
+

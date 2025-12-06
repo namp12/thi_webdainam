@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Quản lý Bookings - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="admin-layout bg-light d-flex">
+  <div id="header-admin-placeholder"></div>
+  <div class="d-flex flex-grow-1">
+    <div id="sidebar-placeholder"></div>
+    <main class="flex-grow-1 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Quản lý Bookings</h3>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-middle" id="booking-table">
+        <thead>
+          <tr>
+            <th>Mã</th><th>Khách</th><th>Tour</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="bookings-tbody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/admin-guard.js"></script>
+  <script>
+    $(function() {
+      $("#header-admin-placeholder").load("components/header-admin.html", function() {
+        if (window.APP_SETTINGS) window.APP_SETTINGS.init();
+      });
+      $("#sidebar-placeholder").load("components/sidebar-admin.html");
+    });
+  </script>
+  <script src="assets/js/admin-booking.js"></script>
+</body>
+</html>
+

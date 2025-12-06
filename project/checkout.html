@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thanh toán - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="mb-1">
+          <i class="bi bi-credit-card text-success me-2"></i><span data-i18n="checkout_title">Thanh toán</span>
+        </h2>
+        <p class="text-muted small mb-0" data-i18n="checkout_subtitle">Hoàn tất thông tin để đặt tour</p>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="cart.html" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left me-1"></i><span data-i18n="checkout_back">Quay lại giỏ hàng</span>
+        </a>
+        <a href="admin-dashboard.html" class="btn btn-outline-primary admin-link d-none" id="admin-dashboard-link">
+          <i class="bi bi-speedometer2 me-1"></i>Dashboard
+        </a>
+      </div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-person-circle"></i> <span data-i18n="checkout_customer_info">Thông tin khách hàng</span></h5>
+          </div>
+          <div class="card-body">
+            <form id="checkout-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label"><span data-i18n="checkout_name">Họ và tên</span> <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="checkout-name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span data-i18n="checkout_email">Email</span> <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="checkout-email" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span data-i18n="checkout_phone">Số điện thoại</span> <span class="text-danger">*</span></label>
+                  <input type="tel" class="form-control" id="checkout-phone" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><span data-i18n="checkout_date">Ngày khởi hành</span></label>
+                  <input type="date" class="form-control" id="checkout-date">
+                </div>
+                <div class="col-12">
+                  <label class="form-label"><span data-i18n="checkout_note">Ghi chú</span></label>
+                  <textarea class="form-control" id="checkout-note" rows="3" data-i18n-placeholder="checkout_note_placeholder"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card shadow-sm">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0"><i class="bi bi-credit-card"></i> <span data-i18n="checkout_payment_method">Phương thức thanh toán</span></h5>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-check payment-method">
+                  <input class="form-check-input" type="radio" name="payment" id="payment-card" value="card" checked>
+                  <label class="form-check-label w-100 p-3 border rounded" for="payment-card">
+                    <i class="bi bi-credit-card fs-4 d-block mb-2"></i>
+                    <strong data-i18n="checkout_payment_card">Thẻ tín dụng/Ghi nợ</strong>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check payment-method">
+                  <input class="form-check-input" type="radio" name="payment" id="payment-momo" value="momo">
+                  <label class="form-check-label w-100 p-3 border rounded" for="payment-momo">
+                    <i class="bi bi-wallet2 fs-4 d-block mb-2"></i>
+                    <strong data-i18n="checkout_payment_momo">MoMo</strong>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check payment-method">
+                  <input class="form-check-input" type="radio" name="payment" id="payment-zalopay" value="zalopay">
+                  <label class="form-check-label w-100 p-3 border rounded" for="payment-zalopay">
+                    <i class="bi bi-phone fs-4 d-block mb-2"></i>
+                    <strong data-i18n="checkout_payment_zalopay">ZaloPay</strong>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check payment-method">
+                  <input class="form-check-input" type="radio" name="payment" id="payment-bank" value="bank">
+                  <label class="form-check-label w-100 p-3 border rounded" for="payment-bank">
+                    <i class="bi bi-bank fs-4 d-block mb-2"></i>
+                    <strong data-i18n="checkout_payment_bank">Chuyển khoản</strong>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card shadow-sm sticky-top" style="top: 100px;">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="bi bi-cart-check"></i> <span data-i18n="checkout_order">Đơn hàng của bạn</span></h5>
+          </div>
+          <div class="card-body">
+            <div id="checkout-items"></div>
+            <hr>
+            <div class="d-flex justify-content-between mb-2">
+              <span data-i18n="checkout_subtotal_label">Tạm tính:</span>
+              <span id="checkout-subtotal">0 đ</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span data-i18n="checkout_service_fee">Phí dịch vụ:</span>
+              <span>0 đ</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span data-i18n="checkout_discount">Giảm giá:</span>
+              <span class="text-success" id="checkout-discount">0 đ</span>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between mb-4">
+              <strong data-i18n="checkout_total">Tổng thanh toán:</strong>
+              <strong class="text-primary fs-5" id="checkout-total">0 đ</strong>
+            </div>
+            <button class="btn btn-primary w-100 btn-lg" id="btn-process-payment">
+              <i class="bi bi-lock"></i> <span data-i18n="checkout_process">Thanh toán ngay</span>
+            </button>
+            <div class="mt-3 text-center">
+              <small class="text-muted">
+                <i class="bi bi-shield-check"></i> <span data-i18n="checkout_secure">Thanh toán được bảo mật SSL</span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/checkout.js"></script>
+  <script src="assets/js/dashboard-links.js"></script>
+</body>
+</html>
+
+

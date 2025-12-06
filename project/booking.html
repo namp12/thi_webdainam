@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đặt tour</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <h4 class="mb-3">Thông tin khách hàng</h4>
+        <form id="booking-form" class="card p-3 shadow-sm">
+          <div class="mb-3">
+            <label class="form-label">Họ tên</label>
+            <input class="form-control" id="bk-name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" id="bk-email" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Số điện thoại</label>
+            <input class="form-control" id="bk-phone" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phương thức thanh toán</label>
+            <select class="form-select" id="bk-payment">
+              <option>Thẻ</option>
+              <option>Momo</option>
+              <option>ZaloPay</option>
+            </select>
+          </div>
+          <button class="btn btn-primary" type="submit">Xác nhận</button>
+        </form>
+      </div>
+      <div class="col-lg-5">
+        <div class="card shadow-sm">
+          <div class="card-body" id="bk-summary">
+            <h5 class="mb-3">Tóm tắt tour</h5>
+            <div id="bk-tour-title" class="fw-bold"></div>
+            <div id="bk-tour-price" class="text-primary fw-semibold"></div>
+            <div id="bk-tour-duration" class="text-muted"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/booking.js"></script>
+</body>
+</html>
+
+
+

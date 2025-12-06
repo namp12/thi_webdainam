@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đối tác đồng hành - Travel Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/partners.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <!-- Hero Section - Enhanced -->
+  <section class="partners-hero">
+    <div class="hero-overlay"></div>
+    <div class="container position-relative">
+      <div class="row justify-content-center text-center">
+        <div class="col-lg-10">
+          <div class="hero-content reveal">
+            <h1 class="display-5 fw-bold mb-3 text-white" data-i18n="partners_title">Đối tác đồng hành</h1>
+            <p class="lead text-white mb-4" data-i18n="partners_subtitle">
+              Hợp tác với các thương hiệu uy tín hàng đầu, mang đến trải nghiệm chất lượng cao cho khách hàng
+            </p>
+            <div class="hero-stats reveal animate-delay-1">
+              <div class="stat-item">
+                <div class="stat-number" id="partner-count">10+</div>
+                <div class="stat-label" data-i18n="partners_count">Đối tác</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">4</div>
+                <div class="stat-label" data-i18n="partners_categories">Lĩnh vực</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label" data-i18n="partners_trust">Uy tín</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container py-5">
+    <!-- Search and Filter Section -->
+    <div class="partners-controls mb-5 reveal">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-8">
+          <div class="search-box">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" class="form-control search-input" id="partner-search" data-i18n-placeholder="partners_search_placeholder">
+            <button class="btn btn-link search-clear d-none" id="search-clear" type="button" aria-label="Clear search" title="Clear search">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="filter-tabs-wrapper">
+            <div class="d-flex flex-wrap gap-2 partners-filter">
+              <button class="btn btn-outline-primary active" data-category="all" type="button">
+                <i class="bi bi-grid"></i> <span data-i18n="partners_filter_all">Tất cả</span>
+              </button>
+              <button class="btn btn-outline-primary" data-category="airline" type="button">
+                <i class="bi bi-airplane"></i> <span data-i18n="partners_filter_airline">Hãng bay</span>
+              </button>
+              <button class="btn btn-outline-primary" data-category="hotel" type="button">
+                <i class="bi bi-building"></i> <span data-i18n="partners_filter_hotel">Khách sạn</span>
+              </button>
+              <button class="btn btn-outline-primary" data-category="travel" type="button">
+                <i class="bi bi-map"></i> <span data-i18n="partners_filter_travel">Lữ hành</span>
+              </button>
+              <button class="btn btn-outline-primary" data-category="service" type="button">
+                <i class="bi bi-star"></i> Dịch vụ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div id="partners-loading" class="text-center py-5">
+      <div class="spinner-border text-primary mb-3" role="status"></div>
+      <p class="text-muted">Đang tải đối tác...</p>
+    </div>
+
+    <!-- Partners Grid -->
+    <div class="row g-3" id="partners-grid">
+      <!-- Partners will be loaded here -->
+    </div>
+
+    <!-- Trust Section -->
+    <section class="trust-section mt-5 pt-5 border-top">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <h3 class="text-center fw-bold mb-4" data-i18n="partners_why">Vì sao chọn đối tác của chúng tôi?</h3>
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="trust-card text-center reveal">
+                <div class="trust-icon">
+                  <i class="bi bi-shield-check"></i>
+                </div>
+                <h5 class="fw-bold mb-2" data-i18n="partners_trust1">Uy tín đã được chứng nhận</h5>
+                <p class="text-muted small" data-i18n="partners_trust1_desc">
+                  Tất cả đối tác đều được kiểm duyệt kỹ lưỡng về chất lượng dịch vụ và độ tin cậy.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="trust-card text-center reveal animate-delay-1">
+                <div class="trust-icon">
+                  <i class="bi bi-award"></i>
+                </div>
+                <h5 class="fw-bold mb-2" data-i18n="partners_trust2">Thương hiệu hàng đầu</h5>
+                <p class="text-muted small" data-i18n="partners_trust2_desc">
+                  Hợp tác với các thương hiệu nổi tiếng trong và ngoài nước, đảm bảo chất lượng.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="trust-card text-center reveal animate-delay-2">
+                <div class="trust-icon">
+                  <i class="bi bi-handshake"></i>
+                </div>
+                <h5 class="fw-bold mb-2" data-i18n="partners_trust3">Hợp tác lâu dài</h5>
+                <p class="text-muted small" data-i18n="partners_trust3_desc">
+                  Mối quan hệ đối tác bền vững, mang lại giá trị tốt nhất cho khách hàng.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Partner Detail Modal -->
+  <div class="modal fade" id="partnerModal" tabindex="-1" aria-labelledby="partnerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="partner-modal-header text-center mb-4">
+            <div class="partner-logo-large mb-3" id="modal-logo"></div>
+            <h3 class="modal-title fw-bold mb-2" id="modal-name"></h3>
+            <div class="partner-badges mb-3" id="modal-badges"></div>
+          </div>
+          <div class="partner-modal-content">
+            <div class="mb-4">
+              <h5 class="fw-bold mb-3">
+                <i class="bi bi-info-circle text-primary"></i> Giới thiệu
+              </h5>
+              <p id="modal-description" class="text-muted"></p>
+            </div>
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="info-item">
+                  <i class="bi bi-tag text-primary"></i>
+                  <div>
+                    <strong>Lĩnh vực:</strong>
+                    <div id="modal-category"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-item">
+                  <i class="bi bi-calendar text-primary"></i>
+                  <div>
+                    <strong>Hợp tác từ:</strong>
+                    <div id="modal-since"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <h5 class="fw-bold mb-3">
+                <i class="bi bi-star text-warning"></i> Điểm nổi bật
+              </h5>
+              <ul class="list-unstyled" id="modal-features"></ul>
+            </div>
+            <div class="text-center">
+              <a href="#" class="btn btn-primary" id="modal-website" target="_blank">
+                <i class="bi bi-box-arrow-up-right"></i> Truy cập website
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/partners.js"></script>
+</body>
+</html>
+

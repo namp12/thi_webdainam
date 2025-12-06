@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin Dashboard - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="admin-layout bg-light d-flex">
+  <div id="header-admin-placeholder"></div>
+  <div class="d-flex flex-grow-1 admin-dashboard">
+    <div id="sidebar-placeholder"></div>
+    <main class="flex-grow-1 p-4">
+      <div class="card bg-gradient-primary text-white border-0 mb-4 hero-card shadow-lg reveal-scale">
+        <div class="hero-card-bg"></div>
+        <div class="card-body position-relative d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 p-4">
+          <div class="hero-content">
+            <div class="badge bg-white bg-opacity-20 text-white text-uppercase fw-semibold mb-3 px-3 py-2 border border-white border-opacity-30 animate-fade-in-down">
+              <i class="bi bi-speedometer2 me-2"></i>Admin Panel
+            </div>
+            <h2 class="fw-bold mb-2 display-6 animate-fade-in-up animate-delay-1">
+              <i class="bi bi-graph-up-arrow me-2"></i><span data-i18n="admin_dashboard_title">Dashboard tổng quan</span>
+            </h2>
+            <p class="mb-0 text-white-75 fs-5 animate-fade-in-up animate-delay-2" data-i18n="admin_dashboard_subtitle">
+              Theo dõi người dùng, tour, booking và đánh giá trong một nơi.
+            </p>
+          </div>
+          <div class="text-md-end hero-date animate-fade-in-left">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <i class="bi bi-calendar3"></i>
+              <span class="small text-white-75" data-i18n="admin_today">Hôm nay</span>
+            </div>
+            <div class="fs-4 fw-bold" id="current-date"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-4">
+        <div class="col-md-3">
+          <div class="stat-card gradient-blue hover-lift reveal animate-delay-1">
+            <div class="stat-card-pattern"></div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="stat-label text-white-75 fw-semibold">
+                <i class="bi bi-people-fill me-1"></i><span data-i18n="admin_users">Users</span>
+              </div>
+              <span class="stat-icon bg-white bg-opacity-20 text-white border border-white border-opacity-30">
+                <i class="bi bi-people"></i>
+              </span>
+            </div>
+            <div class="stat-value text-white mb-2" id="stat-users">--</div>
+            <div class="text-white-75 small d-flex align-items-center">
+              <i class="bi bi-arrow-up-circle me-1"></i>Tăng trưởng ổn định
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card gradient-green hover-lift reveal animate-delay-2">
+            <div class="stat-card-pattern"></div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="stat-label text-white-75 fw-semibold">
+                <i class="bi bi-map-fill me-1"></i><span data-i18n="admin_tours">Tours</span>
+              </div>
+              <span class="stat-icon bg-white bg-opacity-20 text-white border border-white border-opacity-30">
+                <i class="bi bi-map"></i>
+              </span>
+            </div>
+            <div class="stat-value text-white mb-2" id="stat-tours">--</div>
+            <div class="text-white-75 small d-flex align-items-center">
+              <i class="bi bi-geo-alt me-1"></i>Điểm đến mới mỗi tuần
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card gradient-orange hover-lift reveal animate-delay-3">
+            <div class="stat-card-pattern"></div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="stat-label text-white-75 fw-semibold">
+                <i class="bi bi-calendar-check-fill me-1"></i><span data-i18n="admin_bookings">Bookings</span>
+              </div>
+              <span class="stat-icon bg-white bg-opacity-20 text-white border border-white border-opacity-30">
+                <i class="bi bi-calendar-check"></i>
+              </span>
+            </div>
+            <div class="stat-value text-white mb-2" id="stat-bookings">--</div>
+            <div class="text-white-75 small" id="stat-bookings-desc">
+              <i class="bi bi-check-circle me-1"></i>Tỷ lệ xác nhận cao
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card gradient-purple hover-lift reveal animate-delay-4">
+            <div class="stat-card-pattern"></div>
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="stat-label text-white-75 fw-semibold">
+                <i class="bi bi-cash-stack me-1"></i><span data-i18n="admin_revenue">Doanh số</span>
+              </div>
+              <span class="stat-icon bg-white bg-opacity-20 text-white border border-white border-opacity-30">
+                <i class="bi bi-cash-coin"></i>
+              </span>
+            </div>
+            <div class="stat-value text-white mb-2" id="stat-revenue">--</div>
+            <div class="text-white-75 small" id="stat-revenue-desc">
+              <i class="bi bi-graph-up me-1"></i>Tổng doanh thu
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-xl-8">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-gradient-primary text-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-receipt-cutoff me-2"></i><span data-i18n="admin_recent_orders">Đơn hàng mới nhất</span>
+                </h5>
+                <div class="d-flex gap-2">
+                  <a href="admin-booking.html" class="badge bg-white bg-opacity-20 text-white text-decoration-none border border-white border-opacity-30 hover-scale">
+                    <i class="bi bi-cart-check me-1"></i>Quản lý
+                  </a>
+                  <a href="cart.html" class="badge bg-white bg-opacity-20 text-white text-decoration-none border border-white border-opacity-30 hover-scale">
+                    <i class="bi bi-bag me-1"></i><span data-i18n="admin_cart">Giỏ hàng</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="activity-list" id="recent-activities">
+                <div class="text-center text-muted py-3">
+                  <div class="spinner-border spinner-border-sm" role="status"></div>
+                  <div class="mt-2">Đang tải...</div>
+                </div>
+              </div>
+              <div class="mt-3 d-flex gap-2">
+                <a href="admin-booking.html" class="btn btn-primary btn-sm flex-fill hover-scale">
+                  <i class="bi bi-list-check me-1"></i>Xem tất cả bookings
+                </a>
+                <a href="checkout.html" class="btn btn-outline-success btn-sm hover-scale">
+                  <i class="bi bi-cart-plus me-1"></i>Thanh toán
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-4">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-gradient-success text-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-pie-chart me-2"></i><span data-i18n="admin_payment_stats">Thống kê thanh toán</span>
+                </h5>
+                <a href="payment.html" class="badge bg-white bg-opacity-20 text-white text-decoration-none border border-white border-opacity-30 hover-scale">
+                  <i class="bi bi-credit-card me-1"></i>Thanh toán
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="mb-4">
+                <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-success border-opacity-25">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-cash-stack text-success fs-5"></i>
+                      <span class="text-muted small" data-i18n="admin_total_revenue">Tổng doanh thu</span>
+                    </div>
+                    <span class="fw-bold text-success fs-6" id="total-revenue">0đ</span>
+                  </div>
+                </div>
+                <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-primary border-opacity-25">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-check-circle-fill text-primary fs-5"></i>
+                      <span class="text-muted small" data-i18n="admin_paid_revenue">Đã thanh toán</span>
+                    </div>
+                    <span class="fw-semibold text-primary fs-6" id="paid-revenue">0đ</span>
+                  </div>
+                </div>
+                <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-warning border-opacity-25">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-clock-history text-warning fs-5"></i>
+                      <span class="text-muted small" data-i18n="admin_pending_revenue">Chờ thanh toán</span>
+                    </div>
+                    <span class="fw-semibold text-warning fs-6" id="pending-revenue">0đ</span>
+                  </div>
+                </div>
+                <div class="stat-item-card p-3 bg-gradient-info text-white rounded-3">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                      <i class="bi bi-graph-up-arrow fs-5"></i>
+                      <span class="small" data-i18n="admin_conversion_rate">Tỷ lệ chuyển đổi</span>
+                    </div>
+                    <span class="badge bg-white text-info fs-6 px-3 py-2" id="conversion-rate">0%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="border-top pt-3">
+                <h6 class="small text-muted mb-2" data-i18n="admin_tour_performance">Hiệu suất tour</h6>
+                <div id="tour-performance">
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span class="fw-semibold small">Biển</span>
+                      <span class="text-muted small" id="perf-sea">0%</span>
+                    </div>
+                    <div class="progress progress-soft" style="height: 6px;">
+                      <div class="progress-bar bg-primary progress-bar-sea" id="bar-sea" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Hiệu suất tour Biển"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span class="fw-semibold small">Núi</span>
+                      <span class="text-muted small" id="perf-mountain">0%</span>
+                    </div>
+                    <div class="progress progress-soft" style="height: 6px;">
+                      <div class="progress-bar bg-success progress-bar-mountain" id="bar-mountain" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Hiệu suất tour Núi"></div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                      <span class="fw-semibold small">Văn hóa</span>
+                      <span class="text-muted small" id="perf-culture">0%</span>
+                    </div>
+                    <div class="progress progress-soft" style="height: 6px;">
+                      <div class="progress-bar bg-warning progress-bar-culture" id="bar-culture" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Hiệu suất tour Văn hóa"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="d-flex gap-2 mt-3 flex-wrap">
+                <a href="admin-booking.html" class="badge bg-primary text-white text-decoration-none">
+                  <i class="bi bi-cart-check"></i> Đơn hàng
+                </a>
+                <a href="checkout.html" class="badge bg-success text-white text-decoration-none">
+                  <i class="bi bi-cash-coin"></i> Thanh toán
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-1">
+        <div class="col-lg-4">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-gradient-warning text-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-bag-check me-2"></i><span data-i18n="admin_cart">Giỏ hàng</span>
+                </h5>
+                <a href="cart.html" class="badge bg-white bg-opacity-20 text-white text-decoration-none border border-white border-opacity-30 hover-scale">
+                  <i class="bi bi-arrow-right me-1"></i><span data-i18n="view_all">Xem</span>
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <div class="display-4 fw-bold text-warning mb-2" id="stat-cart-count">0</div>
+                <div class="text-muted small" data-i18n="admin_cart_items">Sản phẩm trong giỏ</div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="text-muted small" data-i18n="admin_cart_value">Tổng giá trị:</span>
+                  <span class="fw-bold text-success" id="stat-cart-total">0đ</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-muted small" data-i18n="admin_cart_avg">Trung bình/SP:</span>
+                  <span class="fw-semibold" id="stat-cart-avg">0đ</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <a href="cart.html" class="btn btn-warning btn-sm flex-fill hover-scale">
+                  <i class="bi bi-cart me-1"></i><span data-i18n="admin_view_cart">Xem giỏ hàng</span>
+                </a>
+                <a href="checkout.html" class="btn btn-outline-warning btn-sm hover-scale">
+                  <i class="bi bi-credit-card"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-gradient-danger text-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-heart-fill me-2"></i><span data-i18n="admin_favorites">Yêu thích</span>
+                </h5>
+                <a href="favorites.html" class="badge bg-white bg-opacity-20 text-white text-decoration-none border border-white border-opacity-30 hover-scale">
+                  <i class="bi bi-arrow-right me-1"></i><span data-i18n="view_all">Xem</span>
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="text-center mb-3">
+                <div class="display-4 fw-bold text-danger mb-2" id="stat-favorites-count">0</div>
+                <div class="text-muted small" data-i18n="admin_favorites_count">Tour yêu thích</div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <span class="text-muted small" data-i18n="admin_favorites_today">Đã thêm hôm nay:</span>
+                  <span class="fw-bold text-danger" id="stat-favorites-today">0</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-muted small" data-i18n="admin_fav_conversion">Tỷ lệ chuyển đổi:</span>
+                  <span class="badge bg-danger" id="stat-fav-conversion">0%</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <a href="favorites.html" class="btn btn-danger btn-sm flex-fill hover-scale">
+                  <i class="bi bi-heart me-1"></i><span data-i18n="admin_view_favorites">Xem yêu thích</span>
+                </a>
+                <a href="tours.html" class="btn btn-outline-danger btn-sm hover-scale">
+                  <i class="bi bi-plus-circle"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-white border-bottom">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-list-check text-warning me-2"></i><span data-i18n="admin_todo">Công việc cần làm</span>
+                </h5>
+                <span class="badge bg-warning text-dark">
+                  <i class="bi bi-exclamation-triangle me-1"></i>Ưu tiên
+                </span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="todo-list" id="todo-list">
+                <div class="todo-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="todo-1">
+                    <label class="form-check-label" for="todo-1">
+                      <a href="admin-booking.html" class="text-decoration-none">
+                        <i class="bi bi-calendar-check"></i> Duyệt booking đang chờ
+                      </a>
+                    </label>
+                  </div>
+                  <span class="badge bg-light text-secondary">Hôm nay</span>
+                </div>
+                <div class="todo-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="todo-2">
+                    <label class="form-check-label" for="todo-2">
+                      <a href="cart.html" class="text-decoration-none">
+                        <i class="bi bi-cart"></i> Kiểm tra giỏ hàng bỏ dở
+                      </a>
+                    </label>
+                  </div>
+                  <span class="badge bg-light text-secondary">Ưu tiên</span>
+                </div>
+                <div class="todo-item">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="todo-3">
+                    <label class="form-check-label" for="todo-3">
+                      <a href="admin-tours.html" class="text-decoration-none">
+                        <i class="bi bi-pencil"></i> Cập nhật giá tour
+                      </a>
+                    </label>
+                  </div>
+                  <span class="badge bg-light text-secondary">Tuần này</span>
+                </div>
+              </div>
+              <div class="mt-3">
+                <a href="admin-users.html" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="bi bi-people"></i> <span data-i18n="admin_manage_users">Quản lý users</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mt-1">
+        <div class="col-lg-6">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-white border-bottom">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-geo-alt-fill text-primary me-2"></i><span data-i18n="admin_top_destinations">Top điểm đến</span>
+                </h5>
+                <a href="admin-tours.html" class="btn btn-link btn-sm text-primary p-0 hover-scale">
+                  <i class="bi bi-arrow-right me-1"></i>Xem tours
+                </a>
+              </div>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush" id="top-destinations">
+                <li class="list-group-item text-center text-muted py-3">
+                  <div class="spinner-border spinner-border-sm" role="status"></div>
+                  <div class="mt-2">Đang tải...</div>
+                </li>
+              </ul>
+              <div class="mt-3">
+                <a href="admin-tours.html" class="btn btn-outline-primary btn-sm w-100" data-i18n="admin_manage_tours">Quản lý tours</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card shadow-lg border-0 h-100 hover-lift">
+            <div class="card-header bg-gradient-info text-white border-0">
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold">
+                  <i class="bi bi-link-45deg me-2"></i><span data-i18n="admin_quick_links">Liên kết nhanh</span>
+                </h5>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                <div class="col-6">
+                  <a href="cart.html" class="quick-link-card d-block p-3 bg-light rounded-3 text-center text-decoration-none hover-lift">
+                    <i class="bi bi-cart-check text-warning fs-3 d-block mb-2"></i>
+                    <div class="fw-semibold small" data-i18n="admin_cart">Giỏ hàng</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a href="favorites.html" class="quick-link-card d-block p-3 bg-light rounded-3 text-center text-decoration-none hover-lift">
+                    <i class="bi bi-heart-fill text-danger fs-3 d-block mb-2"></i>
+                    <div class="fw-semibold small" data-i18n="admin_favorites">Yêu thích</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a href="checkout.html" class="quick-link-card d-block p-3 bg-light rounded-3 text-center text-decoration-none hover-lift">
+                    <i class="bi bi-credit-card text-success fs-3 d-block mb-2"></i>
+                    <div class="fw-semibold small" data-i18n="checkout_title">Thanh toán</div>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <a href="payment.html" class="quick-link-card d-block p-3 bg-light rounded-3 text-center text-decoration-none hover-lift">
+                    <i class="bi bi-cash-coin text-primary fs-3 d-block mb-2"></i>
+                    <div class="fw-semibold small" data-i18n="admin_process_payment">Xử lý thanh toán</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/admin-guard.js"></script>
+  <script>
+    // Set current date
+    $(function() {
+      const now = new Date();
+      $("#current-date").text(now.toLocaleDateString('vi-VN', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      }));
+      
+      // Load components
+      $("#header-admin-placeholder").load("components/header-admin.html", function() {
+        if (window.APP_SETTINGS) window.APP_SETTINGS.init();
+      });
+      $("#sidebar-placeholder").load("components/sidebar-admin.html");
+    });
+  </script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/admin-dashboard.js"></script>
+  <script src="assets/js/dashboard-links.js"></script>
+  <script>
+    // Make loadStats available globally for refresh
+    window.loadStats = function() {
+      if (window.location.pathname.includes("admin-dashboard")) {
+        // Reload page stats
+        location.reload();
+      }
+    };
+
+    // Initialize scroll reveal animations
+    $(function() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.observe(el);
+      });
+    });
+  </script>
+</body>
+</html>
+
+

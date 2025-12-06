@@ -1,0 +1,665 @@
+/**
+ * Dark Mode Styles - Comprehensive Dark Theme
+ * Multiple background styles and beautiful dark mode design
+ */
+
+/* ============================================
+   CSS Variables for Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] {
+  /* Color Palette */
+  --dark-bg-primary: #0f1419;
+  --dark-bg-secondary: #1a1f2e;
+  --dark-bg-tertiary: #252b3b;
+  --dark-bg-card: #1e2330;
+  --dark-bg-hover: #2a3142;
+  
+  --dark-text-primary: #e4e6eb;
+  --dark-text-secondary: #b0b3b8;
+  --dark-text-muted: #8a8d93;
+  
+  --dark-accent: #34e0a1;
+  --dark-accent-hover: #2bc98a;
+  --dark-border: #2d3441;
+  --dark-shadow: rgba(0, 0, 0, 0.3);
+  
+  /* Background Patterns */
+  --dark-pattern-dots: radial-gradient(circle, rgba(52, 224, 161, 0.1) 1px, transparent 1px);
+  --dark-pattern-grid: linear-gradient(rgba(52, 224, 161, 0.05) 1px, transparent 1px),
+                       linear-gradient(90deg, rgba(52, 224, 161, 0.05) 1px, transparent 1px);
+}
+
+/* ============================================
+   Body & Base Styles
+   ============================================ */
+[data-bs-theme="dark"] body,
+[data-bs-theme="dark"] {
+  background: var(--dark-bg-primary);
+  color: var(--dark-text-primary);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Background Style Variants */
+[data-bs-theme="dark"] body.bg-style-gradient {
+  background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 50%, #0f1419 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 15s ease infinite;
+}
+
+[data-bs-theme="dark"] body.bg-style-pattern {
+  background: var(--dark-bg-primary);
+  background-image: var(--dark-pattern-dots);
+  background-size: 20px 20px;
+}
+
+[data-bs-theme="dark"] body.bg-style-grid {
+  background: var(--dark-bg-primary);
+  background-image: var(--dark-pattern-grid);
+  background-size: 30px 30px;
+}
+
+[data-bs-theme="dark"] body.bg-style-mesh {
+  background: 
+    radial-gradient(at 0% 0%, rgba(52, 224, 161, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 166, 128, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(52, 224, 161, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(0, 166, 128, 0.12) 0px, transparent 50%),
+    var(--dark-bg-primary);
+}
+
+[data-bs-theme="dark"] body.bg-style-stars {
+  background: var(--dark-bg-primary);
+  background-image: 
+    radial-gradient(2px 2px at 20% 30%, #34e0a1, transparent),
+    radial-gradient(2px 2px at 60% 70%, #00a680, transparent),
+    radial-gradient(1px 1px at 50% 50%, #34e0a1, transparent),
+    radial-gradient(1px 1px at 80% 10%, #00a680, transparent),
+    radial-gradient(2px 2px at 90% 40%, #34e0a1, transparent),
+    radial-gradient(1px 1px at 33% 60%, #00a680, transparent),
+    radial-gradient(1px 1px at 67% 20%, #34e0a1, transparent);
+  background-size: 200% 200%, 150% 150%, 100% 100%, 120% 120%, 180% 180%, 110% 110%, 130% 130%;
+  animation: starsMove 20s linear infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes starsMove {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+  100% { background-position: 100% 100%, 50% 50%, 25% 25%, 75% 75%, 30% 70%, 60% 40%, 80% 20%; }
+}
+
+/* ============================================
+   Navigation & Header
+   ============================================ */
+[data-bs-theme="dark"] .navbar,
+[data-bs-theme="dark"] .topbar {
+  background: var(--dark-bg-card) !important;
+  border-bottom: 1px solid var(--dark-border);
+  box-shadow: 0 2px 8px var(--dark-shadow);
+}
+
+[data-bs-theme="dark"] .navbar-brand {
+  color: var(--dark-text-primary) !important;
+}
+
+[data-bs-theme="dark"] .nav-link {
+  color: var(--dark-text-secondary) !important;
+  transition: color 0.2s ease;
+}
+
+[data-bs-theme="dark"] .nav-link:hover {
+  color: var(--dark-accent) !important;
+}
+
+[data-bs-theme="dark"] .nav-link.active {
+  color: var(--dark-accent) !important;
+  font-weight: 600;
+}
+
+[data-bs-theme="dark"] .topbar {
+  background: var(--dark-bg-secondary) !important;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+[data-bs-theme="dark"] .hero {
+  background: 
+    radial-gradient(circle at 15% 20%, rgba(52, 224, 161, 0.15), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(0, 166, 128, 0.12), transparent 28%),
+    linear-gradient(180deg, var(--dark-bg-secondary), var(--dark-bg-primary));
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .hero h1,
+[data-bs-theme="dark"] .hero h2,
+[data-bs-theme="dark"] .hero h3,
+[data-bs-theme="dark"] .hero p {
+  color: var(--dark-text-primary);
+}
+
+/* ============================================
+   Cards & Components
+   ============================================ */
+[data-bs-theme="dark"] .card,
+[data-bs-theme="dark"] .stat-card,
+[data-bs-theme="dark"] .feature-card {
+  background: var(--dark-bg-card);
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text-primary);
+  box-shadow: 0 4px 12px var(--dark-shadow);
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .card:hover,
+[data-bs-theme="dark"] .stat-card:hover,
+[data-bs-theme="dark"] .feature-card:hover {
+  background: var(--dark-bg-hover);
+  border-color: var(--dark-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(52, 224, 161, 0.2);
+}
+
+[data-bs-theme="dark"] .card-header {
+  background: var(--dark-bg-secondary);
+  border-bottom: 1px solid var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .card-body {
+  color: var(--dark-text-primary);
+}
+
+/* ============================================
+   Forms & Inputs
+   ============================================ */
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select,
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  background: var(--dark-bg-secondary);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+  background: var(--dark-bg-tertiary);
+  border-color: var(--dark-accent);
+  box-shadow: 0 0 0 0.2rem rgba(52, 224, 161, 0.25);
+}
+
+[data-bs-theme="dark"] .form-label {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .form-control::placeholder,
+[data-bs-theme="dark"] .form-select option {
+  color: var(--dark-text-muted);
+}
+
+[data-bs-theme="dark"] .search-dock {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+[data-bs-theme="dark"] .search-dock .divider {
+  background: var(--dark-border);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+[data-bs-theme="dark"] .btn-primary {
+  background: var(--dark-accent);
+  border-color: var(--dark-accent);
+  color: #0f1419;
+  font-weight: 600;
+}
+
+[data-bs-theme="dark"] .btn-primary:hover {
+  background: var(--dark-accent-hover);
+  border-color: var(--dark-accent-hover);
+  color: #0f1419;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(52, 224, 161, 0.3);
+}
+
+[data-bs-theme="dark"] .btn-outline-primary {
+  border-color: var(--dark-accent);
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .btn-outline-primary:hover {
+  background: var(--dark-accent);
+  border-color: var(--dark-accent);
+  color: #0f1419;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+  border-color: var(--dark-border);
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+  background: var(--dark-bg-hover);
+  border-color: var(--dark-accent);
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .btn-accent {
+  background: var(--dark-accent);
+  color: #0f1419;
+}
+
+[data-bs-theme="dark"] .btn-accent:hover {
+  background: var(--dark-accent-hover);
+  color: #0f1419;
+}
+
+/* ============================================
+   Badges & Labels
+   ============================================ */
+[data-bs-theme="dark"] .badge {
+  background: var(--dark-bg-tertiary);
+  color: var(--dark-text-primary);
+  border: 1px solid var(--dark-border);
+}
+
+[data-bs-theme="dark"] .badge.bg-primary,
+[data-bs-theme="dark"] .badge.bg-success,
+[data-bs-theme="dark"] .badge.bg-danger,
+[data-bs-theme="dark"] .badge.bg-warning {
+  opacity: 0.9;
+}
+
+[data-bs-theme="dark"] .badge.bg-light {
+  background: var(--dark-bg-secondary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+/* ============================================
+   Tables
+   ============================================ */
+[data-bs-theme="dark"] .table {
+  color: var(--dark-text-primary);
+  background: var(--dark-bg-card);
+}
+
+[data-bs-theme="dark"] .table thead {
+  background: var(--dark-bg-secondary);
+  border-bottom: 2px solid var(--dark-border);
+}
+
+[data-bs-theme="dark"] .table thead th {
+  color: var(--dark-text-primary);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .table tbody tr {
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .table tbody tr:hover {
+  background: var(--dark-bg-hover);
+}
+
+[data-bs-theme="dark"] .table td,
+[data-bs-theme="dark"] .table th {
+  border-color: var(--dark-border);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+[data-bs-theme="dark"] .footer {
+  background: var(--dark-bg-card);
+  border-top: 1px solid var(--dark-border);
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .footer a {
+  color: var(--dark-text-secondary);
+  transition: color 0.2s ease;
+}
+
+[data-bs-theme="dark"] .footer a:hover {
+  color: var(--dark-accent);
+}
+
+/* ============================================
+   Filter Bar & Sidebar
+   ============================================ */
+[data-bs-theme="dark"] .filter-bar {
+  background: transparent;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+[data-bs-theme="dark"] .sidebar {
+  background: var(--dark-bg-card);
+  border-right: 1px solid var(--dark-border);
+}
+
+/* ============================================
+   Blog Styles
+   ============================================ */
+[data-bs-theme="dark"] .blog-hero {
+  background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-bg-primary));
+}
+
+[data-bs-theme="dark"] .blog-card {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .blog-card:hover {
+  border-color: var(--dark-accent);
+  box-shadow: 0 8px 24px rgba(52, 224, 161, 0.15);
+}
+
+[data-bs-theme="dark"] .blog-card-category {
+  background: var(--dark-bg-secondary);
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .blog-article {
+  background: var(--dark-bg-card);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .blog-meta,
+[data-bs-theme="dark"] .blog-share {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .blog-content h3 {
+  color: var(--dark-text-primary);
+  border-left-color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .blog-sidebar .card {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .blog-sidebar .card-header {
+  background: var(--dark-bg-secondary);
+  border-bottom-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .blog-sidebar .list-unstyled a {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .blog-sidebar .list-unstyled a:hover {
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .blog-categories .btn.active {
+  background: var(--dark-accent);
+  color: #0f1419;
+}
+
+/* ============================================
+   Alerts & Notifications
+   ============================================ */
+[data-bs-theme="dark"] .alert {
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .alert-info {
+  background: rgba(52, 224, 161, 0.1);
+  border-color: var(--dark-accent);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .alert-success {
+  background: rgba(52, 224, 161, 0.15);
+  border-color: var(--dark-accent);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .alert-warning {
+  background: rgba(255, 193, 7, 0.1);
+  border-color: #ffc107;
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .alert-danger {
+  background: rgba(220, 53, 69, 0.1);
+  border-color: #dc3545;
+  color: var(--dark-text-primary);
+}
+
+/* ============================================
+   Modals
+   ============================================ */
+[data-bs-theme="dark"] .modal-content {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .modal-header {
+  background: var(--dark-bg-secondary);
+  border-bottom-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .modal-footer {
+  background: var(--dark-bg-secondary);
+  border-top-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .btn-close {
+  filter: invert(1);
+}
+
+/* ============================================
+   Dropdowns
+   ============================================ */
+[data-bs-theme="dark"] .dropdown-menu {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+  box-shadow: 0 8px 24px var(--dark-shadow);
+}
+
+[data-bs-theme="dark"] .dropdown-item {
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .dropdown-item:hover {
+  background: var(--dark-bg-hover);
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .dropdown-divider {
+  border-color: var(--dark-border);
+}
+
+/* ============================================
+   Pagination
+   ============================================ */
+[data-bs-theme="dark"] .pagination .page-link {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .pagination .page-link:hover {
+  background: var(--dark-bg-hover);
+  border-color: var(--dark-accent);
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .pagination .page-item.active .page-link {
+  background: var(--dark-accent);
+  border-color: var(--dark-accent);
+  color: #0f1419;
+}
+
+/* ============================================
+   Progress Bars
+   ============================================ */
+[data-bs-theme="dark"] .progress {
+  background: var(--dark-bg-secondary);
+}
+
+[data-bs-theme="dark"] .progress-bar {
+  background: var(--dark-accent);
+}
+
+/* ============================================
+   List Groups
+   ============================================ */
+[data-bs-theme="dark"] .list-group-item {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .list-group-item:hover {
+  background: var(--dark-bg-hover);
+}
+
+[data-bs-theme="dark"] .list-group-item.active {
+  background: var(--dark-accent);
+  border-color: var(--dark-accent);
+  color: #0f1419;
+}
+
+/* ============================================
+   Accordion
+   ============================================ */
+[data-bs-theme="dark"] .accordion-item {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .accordion-button {
+  background: var(--dark-bg-secondary);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .accordion-button:not(.collapsed) {
+  background: var(--dark-bg-hover);
+  color: var(--dark-accent);
+}
+
+[data-bs-theme="dark"] .accordion-button::after {
+  filter: invert(1);
+}
+
+[data-bs-theme="dark"] .accordion-body {
+  background: var(--dark-bg-card);
+  color: var(--dark-text-primary);
+}
+
+/* ============================================
+   Text Colors
+   ============================================ */
+[data-bs-theme="dark"] .text-muted {
+  color: var(--dark-text-muted) !important;
+}
+
+[data-bs-theme="dark"] .text-secondary {
+  color: var(--dark-text-secondary) !important;
+}
+
+[data-bs-theme="dark"] .text-primary {
+  color: var(--dark-accent) !important;
+}
+
+[data-bs-theme="dark"] .text-success {
+  color: var(--dark-accent) !important;
+}
+
+/* ============================================
+   Scrollbar (Webkit browsers)
+   ============================================ */
+[data-bs-theme="dark"] ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-track {
+  background: var(--dark-bg-secondary);
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--dark-bg-tertiary);
+  border-radius: 5px;
+}
+
+[data-bs-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-accent);
+}
+
+/* ============================================
+   Selection
+   ============================================ */
+[data-bs-theme="dark"] ::selection {
+  background: var(--dark-accent);
+  color: #0f1419;
+}
+
+[data-bs-theme="dark"] ::-moz-selection {
+  background: var(--dark-accent);
+  color: #0f1419;
+}
+
+/* ============================================
+   Links
+   ============================================ */
+[data-bs-theme="dark"] a {
+  color: var(--dark-accent);
+  transition: color 0.2s ease;
+}
+
+[data-bs-theme="dark"] a:hover {
+  color: var(--dark-accent-hover);
+}
+
+/* ============================================
+   Images & Media
+   ============================================ */
+[data-bs-theme="dark"] img {
+  opacity: 0.95;
+  transition: opacity 0.3s ease;
+}
+
+[data-bs-theme="dark"] img:hover {
+  opacity: 1;
+}
+
+/* ============================================
+   Utilities
+   ============================================ */
+[data-bs-theme="dark"] .bg-light {
+  background: var(--dark-bg-secondary) !important;
+}
+
+[data-bs-theme="dark"] .bg-white {
+  background: var(--dark-bg-card) !important;
+}
+
+[data-bs-theme="dark"] .border {
+  border-color: var(--dark-border) !important;
+}
+
+[data-bs-theme="dark"] .shadow {
+  box-shadow: 0 4px 12px var(--dark-shadow) !important;
+}
+
+[data-bs-theme="dark"] .shadow-sm {
+  box-shadow: 0 2px 8px var(--dark-shadow) !important;
+}
+
+[data-bs-theme="dark"] .shadow-lg {
+  box-shadow: 0 8px 24px var(--dark-shadow) !important;
+}
+

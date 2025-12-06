@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" href="admin-dashboard.html">
+      <i class="bi bi-shield-lock"></i> Admin Panel
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="admin-dashboard.html">
+            <i class="bi bi-speedometer2"></i> Dashboard
+          </a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center gap-3">
+        <div class="text-light small" id="admin-user-info">
+          <i class="bi bi-person-circle"></i> <span id="admin-user-name">Admin</span>
+        </div>
+        <a href="index.html" class="btn btn-outline-light btn-sm" target="_blank">
+          <i class="bi bi-box-arrow-up-right"></i> Xem Website
+        </a>
+        <button class="btn btn-outline-danger btn-sm" id="admin-logout-btn">
+          <i class="bi bi-box-arrow-right"></i> Đăng xuất
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Load user info và logout handler
+  $(function() {
+    if (window.ADMIN_GUARD) {
+      const user = window.ADMIN_GUARD.getCurrentUser();
+      if (user) {
+        $("#admin-user-name").text(user.name || user.email || "Admin");
+      }
+
+      $("#admin-logout-btn").on("click", function() {
+        if (confirm("Bạn có chắc muốn đăng xuất?")) {
+          window.ADMIN_GUARD.logout();
+        }
+      });
+    }
+  });
+</script>
+
+

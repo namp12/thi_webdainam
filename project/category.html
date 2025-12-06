@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Danh mục tour</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 id="category-title">Danh mục</h3>
+      <a href="index.html" class="btn btn-link">← Trang chủ</a>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <select id="tour-destination" class="form-select mb-2">
+          <option value="">Địa điểm</option>
+        </select>
+        <select id="tour-price" class="form-select mb-2">
+          <option value="">Giá</option>
+          <option value="0-3000000">&lt; 3 triệu</option>
+          <option value="3000000-7000000">3-7 triệu</option>
+          <option value="7000000-20000000">&gt; 7 triệu</option>
+        </select>
+      </div>
+      <div class="col-md-9">
+        <div class="row" id="tour-list"></div>
+        <div id="tour-empty" class="alert alert-info d-none mt-3">Không có tour phù hợp</div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/category.js"></script>
+</body>
+</html>
+
+
+

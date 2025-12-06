@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập - Travel Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body class="login-page">
+  <!-- Animated Background -->
+  <div class="login-background">
+    <div class="bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <div class="login-container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+      <div class="col-lg-5 col-md-7 col-11">
+        <!-- Login Card -->
+        <div class="login-card reveal-scale">
+          <!-- Decorative Header -->
+          <div class="login-header">
+            <div class="login-icon-wrapper">
+              <div class="login-icon animate-float">
+                <i class="bi bi-person-circle"></i>
+              </div>
+              <div class="icon-ring ring-1"></div>
+              <div class="icon-ring ring-2"></div>
+            </div>
+            <h2 class="login-title animate-fade-in-down" data-i18n="login_title">Chào mừng trở lại!</h2>
+            <p class="login-subtitle animate-fade-in-up" data-i18n="login_subtitle">Đăng nhập để tiếp tục khám phá</p>
+          </div>
+
+          <!-- Login Form -->
+          <div class="login-body">
+            <form id="login-form" class="login-form">
+              <!-- Email Input -->
+              <div class="form-group-wrapper animate-fade-in-up animate-delay-1">
+                <label class="form-label" for="login-email">
+                  <i class="bi bi-envelope"></i> <span data-i18n="login_email">Email</span>
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    id="login-email" 
+                    type="email" 
+                    class="form-control login-input" 
+                    data-i18n-placeholder="login_email_placeholder"
+                    placeholder="Nhập email của bạn"
+                    required
+                    autocomplete="email">
+                  <div class="input-icon">
+                    <i class="bi bi-envelope-fill"></i>
+                  </div>
+                  <div class="input-focus-line"></div>
+                </div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="form-group-wrapper animate-fade-in-up animate-delay-2">
+                <label class="form-label" for="login-password">
+                  <i class="bi bi-lock"></i> <span data-i18n="login_password">Mật khẩu</span>
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    id="login-password" 
+                    type="password" 
+                    class="form-control login-input" 
+                    data-i18n-placeholder="login_password_placeholder"
+                    placeholder="Nhập mật khẩu"
+                    required
+                    autocomplete="current-password">
+                  <div class="input-icon">
+                    <i class="bi bi-lock-fill"></i>
+                  </div>
+                  <button type="button" class="password-toggle" id="toggle-password" aria-label="Toggle password visibility">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <div class="input-focus-line"></div>
+                </div>
+              </div>
+
+              <!-- Remember & Forgot -->
+              <div class="form-options animate-fade-in-up animate-delay-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember-me">
+                  <label class="form-check-label" for="remember-me" data-i18n="login_remember">
+                    Ghi nhớ đăng nhập
+                  </label>
+                </div>
+                <a href="#" class="forgot-link" data-i18n="login_forgot">Quên mật khẩu?</a>
+              </div>
+
+              <!-- Submit Button -->
+              <button class="btn btn-login w-100 animate-fade-in-up animate-delay-4" type="submit">
+                <span class="btn-text">
+                  <i class="bi bi-box-arrow-in-right"></i>
+                  <span data-i18n="login_submit">Đăng nhập</span>
+                </span>
+                <span class="btn-loader d-none">
+                  <span class="spinner-border spinner-border-sm" role="status"></span>
+                  <span data-i18n="login_processing">Đang xử lý...</span>
+                </span>
+              </button>
+            </form>
+
+            <!-- Register Button - Prominent -->
+            <div class="register-section mt-4">
+              <div class="text-center mb-3">
+                <p class="text-muted small mb-2" data-i18n="login_no_account">Chưa có tài khoản?</p>
+                <a href="register.html" class="btn btn-register-cta w-100">
+                  <i class="bi bi-person-plus-fill me-2"></i>
+                  <span data-i18n="login_register_link">Đăng ký ngay</span>
+                  <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="login-divider animate-fade-in-up animate-delay-5">
+              <span data-i18n="login_or">hoặc</span>
+            </div>
+
+            <!-- Social Login -->
+            <div class="social-login animate-fade-in-up animate-delay-6">
+              <button type="button" class="btn btn-social btn-google">
+                <i class="bi bi-google"></i>
+                <span data-i18n="login_google">Google</span>
+              </button>
+              <button type="button" class="btn btn-social btn-facebook">
+                <i class="bi bi-facebook"></i>
+                <span data-i18n="login_facebook">Facebook</span>
+              </button>
+            </div>
+
+
+            <!-- Admin Info -->
+            <div class="admin-info alert alert-info mt-3 animate-fade-in-up animate-delay-8">
+              <div class="d-flex align-items-start gap-2">
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                  <strong>💡 Muốn vào Admin Panel?</strong>
+                  <p class="mb-0 small">
+                    Đăng nhập với email chứa "admin" hoặc tài khoản có role="admin".
+                    <a href="admin-setup.html" class="alert-link">Xem hướng dẫn</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/login-animations.js"></script>
+  <script>
+    // Auto-fill email from URL parameter
+    $(function() {
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get('email');
+      if (email) {
+        $("#login-email").val(email);
+        $("#login-password").focus();
+      }
+    });
+  </script>
+</body>
+</html>

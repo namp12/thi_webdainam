@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "title": "Tour Đà Nẵng - Hội An 3N2Đ",
+    "destination": "Đà Nẵng",
+    "price": 3500000,
+    "duration": 3,
+    "description": "Khám phá thành phố biển xinh đẹp và phố cổ Hội An cổ kính. Tour bao gồm tham quan Bà Nà Hills, Cầu Vàng, phố cổ Hội An về đêm.",
+    "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
+    "itinerary": [
+      {
+        "title": "Ngày 1: Đà Nẵng",
+        "description": "Đón khách tại sân bay, check-in khách sạn, tham quan Bà Nà Hills và Cầu Vàng."
+      },
+      {
+        "title": "Ngày 2: Hội An",
+        "description": "Tham quan phố cổ Hội An, làm gốm Thanh Hà, thưởng thức ẩm thực địa phương."
+      },
+      {
+        "title": "Ngày 3: Về lại",
+        "description": "Mua sắm tại chợ Hội An, check-out và đưa khách ra sân bay."
+      }
+    ],
+    "startDate": "2025-02-15",
+    "createdAt": "2025-01-01T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Tour Sapa - Fansipan 2N1Đ",
+    "destination": "Sapa",
+    "price": 2800000,
+    "duration": 2,
+    "description": "Chinh phục đỉnh Fansipan - nóc nhà Đông Dương, trải nghiệm văn hóa dân tộc thiểu số tại Sapa.",
+    "image": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
+    "itinerary": [
+      {
+        "title": "Ngày 1: Sapa",
+        "description": "Đón khách tại ga Lào Cai, di chuyển lên Sapa, tham quan bản Cát Cát."
+      },
+      {
+        "title": "Ngày 2: Fansipan",
+        "description": "Chinh phục Fansipan bằng cáp treo, ngắm toàn cảnh núi rừng Tây Bắc."
+      }
+    ],
+    "startDate": "2025-02-20",
+    "createdAt": "2025-01-02T00:00:00Z"
+  },
+  {
+    "id": 3,
+    "title": "Tour Phú Quốc 4N3Đ",
+    "destination": "Phú Quốc",
+    "price": 5500000,
+    "duration": 4,
+    "description": "Nghỉ dưỡng tại đảo ngọc Phú Quốc, tham quan Vinpearl Safari, làng chài Rạch Vẹm, tắm biển Bãi Sao.",
+    "image": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
+    "itinerary": [
+      {
+        "title": "Ngày 1: Đến Phú Quốc",
+        "description": "Đón khách tại sân bay, check-in resort, nghỉ ngơi và tắm biển."
+      },
+      {
+        "title": "Ngày 2: Vinpearl Safari",
+        "description": "Tham quan Vinpearl Safari, xem show động vật, vui chơi tại công viên nước."
+      },
+      {
+        "title": "Ngày 3: Làng chài",
+        "description": "Tham quan làng chài Rạch Vẹm, câu mực đêm, thưởng thức hải sản tươi sống."
+      },
+      {
+        "title": "Ngày 4: Về lại",
+        "description": "Tắm biển Bãi Sao, mua sắm tại chợ đêm Dinh Cậu, check-out và về."
+      }
+    ],
+    "startDate": "2025-03-01",
+    "createdAt": "2025-01-03T00:00:00Z"
+  }
+]
+
+
+

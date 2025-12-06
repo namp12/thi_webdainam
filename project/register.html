@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng ký - Travel Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body class="login-page">
+  <!-- Animated Background -->
+  <div class="login-background">
+    <div class="bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <div class="login-container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+      <div class="col-lg-5 col-md-7 col-11">
+        <!-- Register Card -->
+        <div class="login-card reveal-scale">
+          <!-- Decorative Header -->
+          <div class="login-header">
+            <div class="login-icon-wrapper">
+              <div class="login-icon animate-float">
+                <i class="bi bi-person-plus-fill"></i>
+              </div>
+              <div class="icon-ring ring-1"></div>
+              <div class="icon-ring ring-2"></div>
+            </div>
+            <h2 class="login-title animate-fade-in-down" data-i18n="register_title">Tạo tài khoản mới</h2>
+            <p class="login-subtitle animate-fade-in-up" data-i18n="register_subtitle">Tham gia cùng chúng tôi để khám phá thế giới</p>
+          </div>
+
+          <!-- Register Form -->
+          <div class="login-body">
+            <form id="register-form" class="login-form">
+              <!-- Name Input -->
+              <div class="form-group-wrapper animate-fade-in-up animate-delay-1">
+                <label class="form-label" for="register-name">
+                  <i class="bi bi-person"></i> <span data-i18n="register_name">Họ và tên</span>
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    id="register-name" 
+                    type="text" 
+                    class="form-control login-input" 
+                    data-i18n-placeholder="register_name_placeholder"
+                    placeholder="Nhập họ và tên của bạn"
+                    required
+                    autocomplete="name"
+                    minlength="2"
+                    maxlength="50">
+                  <div class="input-icon">
+                    <i class="bi bi-person-fill"></i>
+                  </div>
+                  <div class="input-focus-line"></div>
+                </div>
+                <div class="form-text small text-muted mt-1" data-i18n="register_name_hint">Tối thiểu 2 ký tự</div>
+              </div>
+
+              <!-- Email Input -->
+              <div class="form-group-wrapper animate-fade-in-up animate-delay-2">
+                <label class="form-label" for="register-email">
+                  <i class="bi bi-envelope"></i> <span data-i18n="register_email">Email</span>
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    id="register-email" 
+                    type="email" 
+                    class="form-control login-input" 
+                    data-i18n-placeholder="register_email_placeholder"
+                    placeholder="Nhập email của bạn"
+                    required
+                    autocomplete="email">
+                  <div class="input-icon">
+                    <i class="bi bi-envelope-fill"></i>
+                  </div>
+                  <div class="input-focus-line"></div>
+                </div>
+                <div class="form-text small text-muted mt-1" data-i18n="register_email_hint">Chúng tôi sẽ không chia sẻ email của bạn</div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="form-group-wrapper animate-fade-in-up animate-delay-3">
+                <label class="form-label" for="register-password">
+                  <i class="bi bi-lock"></i> <span data-i18n="register_password">Mật khẩu</span>
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    id="register-password" 
+                    type="password" 
+                    class="form-control login-input" 
+                    data-i18n-placeholder="register_password_placeholder"
+                    placeholder="Nhập mật khẩu"
+                    required
+                    autocomplete="new-password"
+                    minlength="6">
+                  <div class="input-icon">
+                    <i class="bi bi-lock-fill"></i>
+                  </div>
+                  <button type="button" class="password-toggle" id="toggle-password" aria-label="Toggle password visibility">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <div class="input-focus-line"></div>
+                </div>
+                <!-- Password Strength Indicator -->
+                <div class="password-strength mt-2">
+                  <div class="strength-bar">
+                    <div class="strength-fill" id="strength-fill"></div>
+                  </div>
+                  <div class="strength-text small" id="strength-text" data-i18n="register_password_hint">Mật khẩu phải có ít nhất 6 ký tự</div>
+                </div>
+                <div class="password-requirements mt-2" id="password-requirements">
+                  <div class="requirement-item" id="req-length">
+                    <i class="bi bi-circle"></i> <span data-i18n="register_password_req_length">Tối thiểu 6 ký tự</span>
+                  </div>
+                  <div class="requirement-item" id="req-upper">
+                    <i class="bi bi-circle"></i> <span data-i18n="register_password_req_upper">Có chữ hoa</span>
+                  </div>
+                  <div class="requirement-item" id="req-number">
+                    <i class="bi bi-circle"></i> <span data-i18n="register_password_req_number">Có số</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Confirm Password Input -->
+              <div class="form-group-wrapper animate-fade-in-up animate-delay-4">
+                <label class="form-label" for="register-confirm">
+                  <i class="bi bi-lock"></i> <span data-i18n="register_confirm">Xác nhận mật khẩu</span>
+                </label>
+                <div class="input-wrapper">
+                  <input 
+                    id="register-confirm" 
+                    type="password" 
+                    class="form-control login-input" 
+                    data-i18n-placeholder="register_confirm_placeholder"
+                    placeholder="Nhập lại mật khẩu"
+                    required
+                    autocomplete="new-password">
+                  <div class="input-icon">
+                    <i class="bi bi-lock-fill"></i>
+                  </div>
+                  <button type="button" class="password-toggle" id="toggle-confirm-password" aria-label="Toggle password visibility">
+                    <i class="bi bi-eye"></i>
+                  </button>
+                  <div class="input-focus-line"></div>
+                </div>
+                <div class="password-match mt-2" id="password-match">
+                  <i class="bi bi-check-circle text-success d-none"></i>
+                  <i class="bi bi-x-circle text-danger d-none"></i>
+                  <span class="small"></span>
+                </div>
+              </div>
+
+              <!-- Terms & Conditions -->
+              <div class="form-options animate-fade-in-up animate-delay-5">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="agree-terms" required>
+                  <label class="form-check-label" for="agree-terms">
+                    <span data-i18n="register_terms">Tôi đồng ý với</span> 
+                    <a href="terms.html" class="text-primary" target="_blank" data-i18n="register_terms_link">Điều khoản dịch vụ</a> 
+                    <span data-i18n="register_and">và</span> 
+                    <a href="privacy.html" class="text-primary" target="_blank" data-i18n="register_privacy_link">Chính sách bảo mật</a>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit Button -->
+              <button class="btn btn-login w-100 animate-fade-in-up animate-delay-6" type="submit">
+                <span class="btn-text">
+                  <i class="bi bi-person-plus"></i>
+                  <span data-i18n="register_submit">Tạo tài khoản</span>
+                </span>
+                <span class="btn-loader d-none">
+                  <span class="spinner-border spinner-border-sm" role="status"></span>
+                  <span data-i18n="register_processing">Đang xử lý...</span>
+                </span>
+              </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="login-divider animate-fade-in-up animate-delay-7">
+              <span data-i18n="register_or">hoặc</span>
+            </div>
+
+            <!-- Social Login -->
+            <div class="social-login animate-fade-in-up animate-delay-8">
+              <button type="button" class="btn btn-social btn-google">
+                <i class="bi bi-google"></i>
+                <span data-i18n="register_google">Google</span>
+              </button>
+              <button type="button" class="btn btn-social btn-facebook">
+                <i class="bi bi-facebook"></i>
+                <span data-i18n="register_facebook">Facebook</span>
+              </button>
+            </div>
+
+            <!-- Login Link -->
+            <div class="login-footer animate-fade-in-up animate-delay-9">
+              <p class="text-center mb-0">
+                <span data-i18n="register_have_account">Đã có tài khoản?</span>
+                <a href="login.html" class="register-link">
+                  <span data-i18n="register_login_link">Đăng nhập ngay</span>
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/register-animations.js"></script>
+</body>
+</html>

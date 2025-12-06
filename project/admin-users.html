@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Quản lý Users - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="admin-layout bg-light d-flex">
+  <div id="header-admin-placeholder"></div>
+  <div class="d-flex flex-grow-1">
+    <div id="sidebar-placeholder"></div>
+    <main class="flex-grow-1 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Quản lý Users</h3>
+      <button class="btn btn-primary" id="btn-add-user">Thêm user</button>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-middle" id="user-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Tên</th><th>Email</th><th>Role</th><th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal fade" id="user-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="user-form">
+            <input type="hidden" id="user-id">
+            <div class="mb-3">
+              <label class="form-label">Tên</label>
+              <input id="user-name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input id="user-email" type="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Mật khẩu</label>
+              <input id="user-password" type="password" class="form-control" placeholder="Để trống nếu không đổi mật khẩu">
+              <small class="text-muted">Khi tạo mới: bắt buộc. Khi sửa: chỉ nhập nếu muốn đổi mật khẩu</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Vai trò (Role)</label>
+              <select id="user-role" class="form-select" required>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" type="submit">Lưu</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/admin-guard.js"></script>
+  <script>
+    $(function() {
+      $("#header-admin-placeholder").load("components/header-admin.html", function() {
+        if (window.APP_SETTINGS) window.APP_SETTINGS.init();
+      });
+      $("#sidebar-placeholder").load("components/sidebar-admin.html");
+    });
+  </script>
+  <script src="assets/js/admin-users.js"></script>
+</body>
+</html>
+

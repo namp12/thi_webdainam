@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chi tiết blog</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="row">
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <article id="blog-detail" class="blog-article">
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="blog.html">Blog</a></li>
+              <li class="breadcrumb-item active" id="blog-breadcrumb">Chi tiết</li>
+            </ol>
+          </nav>
+
+          <!-- Title -->
+          <h1 id="blog-title" class="display-5 fw-bold mb-4">Tiêu đề</h1>
+
+          <!-- Meta Info -->
+          <div class="blog-meta mb-4">
+            <div class="d-flex flex-wrap align-items-center gap-3 text-muted">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-circle"></i>
+                <span id="blog-author">Tác giả</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-calendar3"></i>
+                <span id="blog-date">Ngày đăng</span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-folder"></i>
+                <span id="blog-category">Danh mục</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Featured Image -->
+          <div class="blog-featured-image mb-4">
+            <img id="blog-image" src="" alt="" class="img-fluid rounded-3 shadow-sm">
+          </div>
+
+          <!-- Tags -->
+          <div class="blog-tags mb-4" id="blog-tags"></div>
+
+          <!-- Content -->
+          <div id="blog-content" class="blog-content"></div>
+
+          <!-- Share Buttons -->
+          <div class="blog-share mt-5 pt-4 border-top">
+            <h5 class="mb-3">Chia sẻ bài viết:</h5>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-facebook"></i> Facebook
+              </button>
+              <button class="btn btn-outline-info btn-sm">
+                <i class="bi bi-twitter"></i> Twitter
+              </button>
+              <button class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-pinterest"></i> Pinterest
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <aside class="blog-sidebar">
+          <!-- Related Posts -->
+          <div class="card mb-4">
+            <div class="card-header bg-white">
+              <h5 class="mb-0 fw-bold">Bài viết liên quan</h5>
+            </div>
+            <div class="card-body" id="related-posts">
+              <p class="text-muted">Đang tải...</p>
+            </div>
+          </div>
+
+          <!-- Categories -->
+          <div class="card mb-4">
+            <div class="card-header bg-white">
+              <h5 class="mb-0 fw-bold">Danh mục</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-unstyled mb-0">
+                <li><a href="blog.html?category=Du lịch trong nước" class="text-decoration-none">Du lịch trong nước</a></li>
+                <li><a href="blog.html?category=Du lịch biển đảo" class="text-decoration-none">Du lịch biển đảo</a></li>
+                <li><a href="blog.html?category=Kinh nghiệm du lịch" class="text-decoration-none">Kinh nghiệm du lịch</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="fw-bold mb-3">Đăng ký nhận tin</h5>
+              <p class="text-muted small mb-3">Nhận những bài viết mới nhất về du lịch</p>
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Email của bạn">
+                <button class="btn btn-accent" type="button">Đăng ký</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/blog-detail.js"></script>
+</body>
+</html>
+

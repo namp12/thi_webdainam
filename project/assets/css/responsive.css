@@ -1,0 +1,91 @@
+/* Mobile First Responsive Styles */
+
+/* Mobile (max-width: 576px) */
+@media (max-width: 575.98px) {
+  .hero h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero .lead {
+    font-size: 1rem;
+  }
+
+  .search-dock {
+    flex-direction: column;
+    border-radius: 16px;
+    padding: 12px;
+  }
+
+  .search-dock .divider {
+    display: none;
+  }
+
+  .search-dock > div {
+    width: 100%;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+
+  .feature-card {
+    margin-bottom: 1rem;
+  }
+
+  .navbar-nav {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .topbar {
+    font-size: 0.75rem;
+  }
+
+  .topbar .d-flex {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+/* Tablet (576px - 768px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .search-dock {
+    flex-wrap: wrap;
+  }
+}
+
+/* Desktop (768px+) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Large Desktop (992px+) */
+@media (min-width: 992px) {
+  .hero h1 {
+    font-size: 3rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .topbar,
+  .footer,
+  .btn,
+  .search-dock {
+    display: none;
+  }
+}
+
+
+

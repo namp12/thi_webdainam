@@ -1,0 +1,60 @@
+<div class="sidebar bg-white border-end min-vh-100 p-3" style="width:250px; position: sticky; top: 0;">
+  <div class="mb-4">
+    <h5 class="fw-bold mb-2 text-primary">
+      <i class="bi bi-shield-lock"></i> Admin Panel
+    </h5>
+    <div class="small text-muted" id="sidebar-user-info">
+      <i class="bi bi-person-circle"></i> <span id="sidebar-user-name">Admin</span>
+    </div>
+  </div>
+  
+  <div class="list-group list-group-flush">
+    <a href="admin-dashboard.html" class="list-group-item list-group-item-action" id="nav-dashboard">
+      <i class="bi bi-speedometer2 me-2"></i> Dashboard
+    </a>
+    <a href="admin-users.html" class="list-group-item list-group-item-action" id="nav-users">
+      <i class="bi bi-people me-2"></i> Quản lý Users
+    </a>
+    <a href="admin-tours.html" class="list-group-item list-group-item-action" id="nav-tours">
+      <i class="bi bi-map me-2"></i> Quản lý Tours
+    </a>
+    <a href="admin-reviews.html" class="list-group-item list-group-item-action" id="nav-reviews">
+      <i class="bi bi-star me-2"></i> Quản lý Reviews
+    </a>
+    <a href="admin-booking.html" class="list-group-item list-group-item-action" id="nav-bookings">
+      <i class="bi bi-calendar-check me-2"></i> Quản lý Bookings
+    </a>
+  </div>
+
+  <div class="mt-4 pt-3 border-top">
+    <a href="index.html" class="btn btn-outline-primary btn-sm w-100 mb-2" target="_blank">
+      <i class="bi bi-box-arrow-up-right"></i> Xem Website
+    </a>
+    <button class="btn btn-outline-danger btn-sm w-100" id="sidebar-logout-btn">
+      <i class="bi bi-box-arrow-right"></i> Đăng xuất
+    </button>
+  </div>
+</div>
+
+<script>
+  $(function() {
+    // Highlight active nav item
+    const currentPage = window.location.pathname.split('/').pop();
+    $(`#nav-${currentPage.replace('admin-', '').replace('.html', '')}`).addClass('active');
+    
+    // Load user info
+    if (window.ADMIN_GUARD) {
+      const user = window.ADMIN_GUARD.getCurrentUser();
+      if (user) {
+        $("#sidebar-user-name").text(user.name || user.email || "Admin");
+      }
+
+      // Logout handler
+      $("#sidebar-logout-btn").on("click", function() {
+        if (confirm("Bạn có chắc muốn đăng xuất?")) {
+          window.ADMIN_GUARD.logout();
+        }
+      });
+    }
+  });
+</script>

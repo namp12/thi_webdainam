@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Danh sách tour</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3 data-i18n="tours_title">Danh sách tour</h3>
+      <a href="index.html" class="btn btn-link">← <span data-i18n="nav_home">Trang chủ</span></a>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <select id="tour-destination" class="form-select mb-2">
+          <option value="" data-i18n="tours_filter_destination">Địa điểm</option>
+        </select>
+        <select id="tour-price" class="form-select mb-2">
+          <option value="" data-i18n="tours_filter_price">Giá</option>
+          <option value="0-3000000">&lt; 3 triệu</option>
+          <option value="3000000-7000000">3-7 triệu</option>
+          <option value="7000000-20000000">&gt; 7 triệu</option>
+        </select>
+        <select id="tour-duration" class="form-select mb-2">
+          <option value="" data-i18n="tours_filter_duration">Số ngày</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+        </select>
+        <select id="tour-sort" class="form-select mb-2">
+          <option value="" data-i18n="tours_filter_sort">Sắp xếp</option>
+          <option value="price-asc" data-i18n="tours_sort_price_asc">Giá tăng</option>
+          <option value="price-desc" data-i18n="tours_sort_price_desc">Giá giảm</option>
+          <option value="duration-asc" data-i18n="tours_sort_duration_asc">Thời lượng tăng</option>
+          <option value="duration-desc" data-i18n="tours_sort_duration_desc">Thời lượng giảm</option>
+        </select>
+      </div>
+      <div class="col-md-9">
+        <input id="tour-search" class="form-control mb-3" data-i18n-placeholder="tours_search_placeholder">
+        <div id="tour-loading" class="text-center py-4 d-none">
+          <div class="spinner-border text-primary" role="status"></div>
+          <div class="mt-2" data-i18n="tours_loading">Đang tải...</div>
+        </div>
+        <div id="tour-empty" class="alert alert-info d-none" data-i18n="tours_empty">Không có tour phù hợp</div>
+        <div class="row" id="tour-list"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/tours.js"></script>
+</body>
+</html>
+
+

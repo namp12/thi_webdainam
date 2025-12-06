@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tạo Tài Khoản Admin</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-body p-4">
+            <h2 class="mb-4">🔐 Tạo Tài Khoản Admin</h2>
+            <p class="text-muted mb-4">Điền thông tin bên dưới để tạo tài khoản admin. Sau đó bạn có thể đăng nhập và vào Admin Panel.</p>
+            
+            <form id="create-admin-form">
+              <div class="mb-3">
+                <label class="form-label">Tên</label>
+                <input type="text" class="form-control" id="admin-name" value="Admin User" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="admin-email" value="admin@travel.com" required>
+                <small class="text-muted">Email phải chứa từ "admin" hoặc bạn sẽ chọn role="admin"</small>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="admin-password" value="123456" required>
+                <small class="text-muted">Tối thiểu 6 ký tự</small>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Xác nhận mật khẩu</label>
+                <input type="password" class="form-control" id="admin-confirm" value="123456" required>
+              </div>
+              
+              <div class="alert alert-info">
+                <strong>Lưu ý:</strong> Sau khi tạo thành công, bạn sẽ được chuyển đến trang đăng nhập. 
+                Đăng nhập với email và mật khẩu vừa tạo để vào Admin Panel.
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100" id="btn-create">
+                <span id="btn-text">Tạo Tài Khoản Admin</span>
+                <span id="btn-loading" class="spinner-border spinner-border-sm d-none" role="status"></span>
+              </button>
+            </form>
+
+            <div class="mt-4 text-center">
+              <a href="login.html">Đã có tài khoản? Đăng nhập</a> | 
+              <a href="admin-setup.html">Xem hướng dẫn khác</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    $(function() {
+      const { API } = window.APP_CONFIG;
+      const { http, showToast } = window.APP_UTILS;
+
+      $("#create-admin-form").on("submit", async function(e) {
+        e.preventDefault();
+        
+        const name = $("#admin-name").val().trim();
+        const email = $("#admin-email").val().trim();
+        const password = $("#admin-password").val().trim();
+        const confirm = $("#admin-confirm").val().trim();
+
+        // Validation
+        if (!name || !email || !password || !confirm) {
+          showToast("Vui lòng điền đầy đủ thông tin", "warning");
+          return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          showToast("Email không hợp lệ", "warning");
+          return;
+        }
+
+        if (password.length < 6) {
+          showToast("Mật khẩu tối thiểu 6 ký tự", "warning");
+          return;
+        }
+
+        if (password !== confirm) {
+          showToast("Mật khẩu nhập lại không khớp", "warning");
+          return;
+        }
+
+        // Check if email exists
+        try {
+          $("#btn-create").prop("disabled", true);
+          $("#btn-text").addClass("d-none");
+          $("#btn-loading").removeClass("d-none");
+
+          const exists = await http.get(`${API.users}?email=${encodeURIComponent(email)}`);
+          if (Array.isArray(exists) && exists.length > 0) {
+            showToast("Email đã tồn tại. Vui lòng dùng email khác hoặc đăng nhập.", "warning");
+            $("#btn-create").prop("disabled", false);
+            $("#btn-text").removeClass("d-none");
+            $("#btn-loading").addClass("d-none");
+            return;
+          }
+
+          // Create admin user
+          const user = await http.post(API.users, {
+            name,
+            email,
+            password,
+            role: "admin", // Set role as admin
+            createdAt: new Date().toISOString(),
+          });
+
+          showToast("Tạo tài khoản admin thành công! Đang chuyển đến trang đăng nhập...", "success");
+          
+          setTimeout(() => {
+            window.location.href = `login.html?email=${encodeURIComponent(email)}`;
+          }, 2000);
+
+        } catch (err) {
+          showToast("Lỗi: " + (err.message || "Không thể tạo tài khoản"), "danger");
+          $("#btn-create").prop("disabled", false);
+          $("#btn-text").removeClass("d-none");
+          $("#btn-loading").addClass("d-none");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+

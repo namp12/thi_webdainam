@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Quản lý Tours - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+</head>
+<body class="admin-layout bg-light d-flex">
+  <div id="header-admin-placeholder"></div>
+  <div class="d-flex flex-grow-1">
+    <div id="sidebar-placeholder"></div>
+    <main class="flex-grow-1 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h3>Quản lý Tours</h3>
+      <button class="btn btn-primary" id="btn-add-tour">Thêm tour</button>
+    </div>
+    <div class="table-responsive">
+      <table class="table align-middle" id="tour-table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Tên</th><th>Địa điểm</th><th>Giá</th><th>Thời lượng</th><th>Thao tác</th>
+          </tr>
+        </thead>
+        <tbody id="tours-tbody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <div class="modal fade" id="tour-modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tour</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="tour-form">
+            <input type="hidden" id="tour-id">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Tên tour</label>
+                <input id="tour-form-title" class="form-control" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Địa điểm</label>
+                <input id="tour-form-destination" class="form-control" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Giá</label>
+                <input id="tour-form-price" type="number" class="form-control" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Thời lượng (ngày)</label>
+                <input id="tour-form-duration" type="number" class="form-control" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Ảnh (URL)</label>
+                <input id="tour-form-image" class="form-control">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Mô tả</label>
+                <textarea id="tour-form-description" class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+            <button class="btn btn-primary mt-3" type="submit">Lưu</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/admin-guard.js"></script>
+  <script>
+    $(function() {
+      $("#header-admin-placeholder").load("components/header-admin.html", function() {
+        if (window.APP_SETTINGS) window.APP_SETTINGS.init();
+      });
+      $("#sidebar-placeholder").load("components/sidebar-admin.html");
+    });
+  </script>
+  <script src="assets/js/admin-tours.js"></script>
+</body>
+</html>
+

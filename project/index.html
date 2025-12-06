@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Travel Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+  <link rel="stylesheet" href="assets/css/animation.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <!-- Bootstrap Icons CDN - Link tải icon trái tim và các icon khác -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Hoặc tải về từ: https://icons.getbootstrap.com/ -->
+</head>
+<body class="bg-light">
+  <div id="header-placeholder"></div>
+
+  <main class="container py-5">
+    <section class="hero mb-5">
+      <div class="container text-white">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6">
+            <div class="badge text-bg-light text-primary fw-semibold mb-3 px-3 py-2 shadow-sm text-dark animate-pulse" data-i18n="hero_badge">
+              Ưu đãi mới nhất • Hơn 10,000 khách hài lòng
+            </div>
+            <h1 class="fw-bold display-4 mb-3 text-dark gradient-text" data-i18n="hero_title">Việt Tour Pro • Đi đúng chỗ, giá đúng chuẩn</h1>
+            <p class="lead mb-4 text-dark" data-i18n="hero_subtitle">Tìm kiếm, lọc và đặt tour nhanh như TripAdvisor: sáng sủa, rõ ràng, tin cậy.</p>
+            <form id="hero-search" class="search-dock hover-lift">
+              <div class="d-flex flex-wrap gap-3 align-items-center flex-grow-1">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="text-muted small" data-i18n="lbl_destination">Điểm đến</div>
+                  <select id="tour-destination" class="form-select" aria-label="Điểm đến">
+                    <option value="">Tất cả</option>
+                  </select>
+                </div>
+                <div class="divider d-none d-md-block"></div>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="text-muted small" data-i18n="lbl_date">Ngày đi</div>
+                  <input id="tour-date" type="date" class="form-control" aria-label="Ngày đi">
+                </div>
+                <div class="divider d-none d-md-block"></div>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="text-muted small" data-i18n="lbl_guests">Số người</div>
+                  <select id="tour-guests" class="form-select" aria-label="Số người">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                  </select>
+                </div>
+                <div class="divider d-none d-md-block"></div>
+                <div class="d-flex align-items-center gap-2">
+                  <div class="text-muted small" data-i18n="lbl_keyword">Từ khóa</div>
+                  <input id="tour-search" class="form-control" placeholder="Tên tour hoặc số ngày" data-i18n-placeholder="ph_keyword" aria-label="Từ khóa">
+                </div>
+              </div>
+              <div class="d-flex align-items-center gap-2 ms-auto">
+                <button id="tour-submit" class="btn btn-accent px-4 fw-semibold" type="submit" data-i18n="btn_search">Tìm kiếm</button>
+                <button id="tour-reset" class="btn btn-outline-secondary" type="button" data-i18n="btn_reset">Xóa</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-6 text-center">
+            <div class="hero-visual shadow-lg image-zoom">
+              <img src="assets/img/banners/placeholder.jpg" class="img-fluid rounded-4 loaded" alt="Travel">
+              <div class="floating-card shadow animate-float">
+                <div class="small text-muted">Tour hot</div>
+                <div class="fw-semibold">Khám phá biển đảo</div>
+                <div class="text-primary fw-bold">5.200.000đ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="filter-bar">
+      <div class="d-flex flex-wrap gap-2 align-items-center">
+        <select id="tour-price" class="form-select w-auto" aria-label="Lọc theo giá">
+          <option value="">Giá</option>
+          <option value="0-3000000">&lt; 3 triệu</option>
+          <option value="3000000-7000000">3-7 triệu</option>
+          <option value="7000000-20000000">&gt; 7 triệu</option>
+        </select>
+        <select id="tour-duration" class="form-select w-auto" aria-label="Lọc theo số ngày">
+          <option value="">Số ngày</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="5">5</option>
+        </select>
+        <select id="tour-sort" class="form-select w-auto" aria-label="Sắp xếp">
+          <option value="">Sắp xếp</option>
+          <option value="price-asc">Giá tăng</option>
+          <option value="price-desc">Giá giảm</option>
+          <option value="duration-asc">Thời lượng tăng</option>
+          <option value="duration-desc">Thời lượng giảm</option>
+        </select>
+        <span class="text-muted small" data-i18n="filter_hint">Gợi ý dựa trên bộ lọc của bạn</span>
+      </div>
+    </section>
+
+    <section class="mb-5" id="about">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="stat-card shadow-sm hover-lift reveal animate-delay-1">
+            <div class="small text-muted" data-i18n="stat_total">Tổng tour</div>
+            <div class="stat-value" id="stat-total">--</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-card shadow-sm hover-lift reveal animate-delay-2">
+            <div class="small text-muted" data-i18n="stat_dest">Địa điểm</div>
+            <div class="stat-value" id="stat-dest">--</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-card shadow-sm hover-lift reveal animate-delay-3">
+            <div class="small text-muted" data-i18n="stat_avg">Giá trung bình</div>
+            <div class="stat-value" id="stat-price">--</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5" id="trust">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold" data-i18n="trust_title">Vì sao chọn chúng tôi</h3>
+        <span class="text-muted small" data-i18n="trust_subtitle">Hơn 10,000 khách hàng hài lòng</span>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-3">
+          <div class="feature-card h-100 shadow-sm hover-lift reveal">
+            <div class="icon-circle bg-primary-subtle text-primary mb-2 icon-bounce">💰</div>
+            <h6 class="fw-bold mb-1" data-i18n="trust_item1_title">Giá tốt nhất</h6>
+            <p class="small text-muted mb-0" data-i18n="trust_item1_desc">Cam kết giá minh bạch, ưu đãi liên tục.</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="feature-card h-100 shadow-sm hover-lift reveal animate-delay-1">
+            <div class="icon-circle bg-success-subtle text-success mb-2 icon-rotate">↺</div>
+            <h6 class="fw-bold mb-1" data-i18n="trust_item2_title">Hủy miễn phí</h6>
+            <p class="small text-muted mb-0" data-i18n="trust_item2_desc">Linh hoạt kế hoạch, đổi ý không lo.</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="feature-card h-100 shadow-sm hover-lift reveal animate-delay-2">
+            <div class="icon-circle bg-warning-subtle text-warning mb-2 icon-pulse">⏰</div>
+            <h6 class="fw-bold mb-1" data-i18n="trust_item3_title">Hỗ trợ 24/7</h6>
+            <p class="small text-muted mb-0" data-i18n="trust_item3_desc">Đội ngũ CS luôn sẵn sàng khi bạn cần.</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="feature-card h-100 shadow-sm hover-lift reveal animate-delay-3">
+            <div class="icon-circle bg-info-subtle text-info mb-2 icon-bounce">⭐</div>
+            <h6 class="fw-bold mb-1" data-i18n="trust_item4_title">Đánh giá cao</h6>
+            <p class="small text-muted mb-0" data-i18n="trust_item4_desc">Điểm hài lòng cao từ khách hàng thực.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5" id="promo">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold" data-i18n="hot_title">Tour bán chạy</h3>
+        <a class="btn btn-outline-primary btn-sm" href="tours.html" data-i18n="view_all">Xem tất cả</a>
+      </div>
+      <p class="text-muted mb-3">Những hành trình được đặt nhiều nhất tuần này.</p>
+      <div class="row" id="hot-tour-list"></div>
+    </section>
+
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Điểm đến nổi bật</h3>
+      </div>
+      <p class="text-muted mb-3">Lựa chọn tiêu biểu theo mùa, dễ đi và nhiều trải nghiệm.</p>
+      <div id="destCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="dest-card reveal-scale hover-scale image-zoom">
+                  <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=900&q=80" alt="Đà Nẵng" class="loaded">
+                  <div class="dest-overlay">
+                    <h6 class="mb-1">Đà Nẵng</h6>
+                    <span class="badge bg-light text-dark badge-soft">Biển & Ẩm thực</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="dest-card reveal-scale hover-scale image-zoom animate-delay-1">
+                  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Đà Lạt" class="loaded">
+                  <div class="dest-overlay">
+                    <h6 class="mb-1">Đà Lạt</h6>
+                    <span class="badge bg-light text-dark badge-soft">Núi & Hoa</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="dest-card reveal-scale hover-scale image-zoom animate-delay-2">
+                  <img src="https://images.unsplash.com/photo-1523517832534-89c87f2bffe0?auto=format&fit=crop&w=900&q=80" alt="Phú Quốc" class="loaded">
+                  <div class="dest-overlay">
+                    <h6 class="mb-1">Phú Quốc</h6>
+                    <span class="badge bg-light text-dark badge-soft">Resort & Lặn biển</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="dest-card">
+                  <img src="https://images.unsplash.com/photo-1503197979108-c824168d51a8?auto=format&fit=crop&w=900&q=80" alt="Nha Trang">
+                  <div class="dest-overlay">
+                    <h6 class="mb-1">Nha Trang</h6>
+                    <span class="badge bg-light text-dark">Biển xanh</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="dest-card">
+                  <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=900&q=80" alt="Sapa">
+                  <div class="dest-overlay">
+                    <h6 class="mb-1">Sapa</h6>
+                    <span class="badge bg-light text-dark">Mây & Trekking</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="dest-card">
+                  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Hạ Long">
+                  <div class="dest-overlay">
+                    <h6 class="mb-1">Hạ Long</h6>
+                    <span class="badge bg-light text-dark">Du thuyền</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#destCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#destCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Ưu đãi nổi bật</h3>
+      </div>
+      <p class="text-muted mb-3">Combo và flash sale giới hạn số lượng, kiểm tra ngay.</p>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="deal-card reveal hover-lift" data-deal="combo-bien-dao">
+            <div class="badge bg-light text-dark mb-2 badge-pulse">-20%</div>
+            <h6 class="fw-bold">Combo biển đảo</h6>
+            <p class="small text-muted mb-2">Vé máy bay + Resort 3N2Đ</p>
+            <button class="btn btn-outline-light btn-sm btn-view-deal" data-deal="combo-bien-dao">Xem chi tiết</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="deal-card reveal hover-lift animate-delay-1" data-deal="flash-sale-nui">
+            <div class="badge bg-light text-dark mb-2 badge-pulse">Flash sale</div>
+            <h6 class="fw-bold">Tour miền núi</h6>
+            <p class="small text-muted mb-2">Khởi hành cuối tuần, số lượng có hạn</p>
+            <button class="btn btn-outline-light btn-sm btn-view-deal" data-deal="flash-sale-nui">Xem chi tiết</button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="deal-card reveal hover-lift animate-delay-2" data-deal="voucher-gia-dinh">
+            <div class="badge bg-light text-dark mb-2 badge-pulse">Voucher</div>
+            <h6 class="fw-bold">Ưu đãi gia đình</h6>
+            <p class="small text-muted mb-2">Tặng kèm bữa tối & spa</p>
+            <button class="btn btn-outline-light btn-sm btn-view-deal" data-deal="voucher-gia-dinh">Xem chi tiết</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Khách hàng nói gì?</h3>
+      </div>
+      <p class="text-muted mb-3">Đánh giá thực từ khách đã đi cùng chúng tôi.</p>
+      <div id="testiCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="testi-card">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <img class="avatar" src="https://i.pravatar.cc/80?img=11" alt="avatar">
+                <div>
+                  <div class="fw-bold">Linh Tran</div>
+                  <div class="small text-muted">HCM</div>
+                </div>
+              </div>
+              <p class="mb-2">“Đặt tour nhanh, giá rõ ràng, hỗ trợ 24/7 rất ưng.”</p>
+              <span class="badge bg-warning text-dark">★ 4.8</span>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="testi-card">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <img class="avatar" src="https://i.pravatar.cc/80?img=22" alt="avatar">
+                <div>
+                  <div class="fw-bold">Hoang Nguyen</div>
+                  <div class="small text-muted">HN</div>
+                </div>
+              </div>
+              <p class="mb-2">“Tour biển đi Phú Quốc rất chất, resort xịn, giá hợp lý.”</p>
+              <span class="badge bg-warning text-dark">★ 4.7</span>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="testi-card">
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <img class="avatar" src="https://i.pravatar.cc/80?img=36" alt="avatar">
+                <div>
+                  <div class="fw-bold">An Pham</div>
+                  <div class="small text-muted">Đà Nẵng</div>
+                </div>
+              </div>
+              <p class="mb-2">“Có nhiều lựa chọn trekking, hướng dẫn viên nhiệt tình.”</p>
+              <span class="badge bg-warning text-dark">★ 4.9</span>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#testiCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#testiCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold">Đối tác đồng hành</h3>
+        <a href="partners.html" class="btn btn-outline-primary btn-sm">
+          Xem tất cả <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+      <p class="text-muted mb-3">Hệ sinh thái hãng bay, khách sạn và lữ hành uy tín. <a href="partners.html" class="text-primary text-decoration-none">Tìm hiểu thêm về đối tác của chúng tôi</a></p>
+      <div class="partners">
+        <a href="partners.html" class="badge bg-light text-dark reveal hover-bounce text-decoration-none">Vietnam Airlines</a>
+        <a href="partners.html" class="badge bg-light text-dark reveal animate-delay-1 hover-bounce text-decoration-none">Vietjet Air</a>
+        <a href="partners.html" class="badge bg-light text-dark reveal animate-delay-2 hover-bounce text-decoration-none">Bamboo Airways</a>
+        <a href="partners.html" class="badge bg-light text-dark reveal animate-delay-3 hover-bounce text-decoration-none">Marriott</a>
+        <a href="partners.html" class="badge bg-light text-dark reveal animate-delay-4 hover-bounce text-decoration-none">IHG</a>
+        <a href="partners.html" class="badge bg-light text-dark reveal animate-delay-5 hover-bounce text-decoration-none">Vinpearl</a>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold" data-i18n="category_title">Tour theo chủ đề</h3>
+        <div class="nav nav-pills gap-2" id="category-pills">
+          <button class="btn btn-outline-primary active" type="button" data-category="">Tất cả</button>
+          <button class="btn btn-outline-primary" type="button" data-category="Biển">Du lịch Biển</button>
+          <button class="btn btn-outline-primary" type="button" data-category="Núi">Du lịch Núi</button>
+          <button class="btn btn-outline-primary" type="button" data-category="Văn hóa">Khám phá Văn hóa</button>
+        </div>
+      </div>
+      <p class="text-muted mb-3">Chọn nhanh theo chủ đề bạn quan tâm.</p>
+      <div class="row" id="category-tour-list"></div>
+    </section>
+
+    <section class="mb-5" id="blog">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold" data-i18n="blog_title">Cảm hứng du lịch</h3>
+        <a class="btn btn-link" href="blog.html" data-i18n="view_blog">Xem blog</a>
+      </div>
+      <p class="text-muted mb-3">Cập nhật mẹo hay, lịch trình mẫu và điểm đến mới.</p>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm reveal hover-lift image-zoom">
+            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <div class="card-body">
+              <h6 class="fw-bold">Check-list Đà Nẵng 3N2Đ</h6>
+              <p class="small text-muted">Ăn gì, ở đâu, lịch trình tối ưu cho nhóm bạn trẻ.</p>
+              <a href="blog-detail.html" class="btn btn-outline-primary btn-sm">Đọc thêm</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm reveal hover-lift image-zoom animate-delay-1">
+            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <div class="card-body">
+              <h6 class="fw-bold">Top 5 đảo đẹp nhất Việt Nam</h6>
+              <p class="small text-muted">Danh sách đảo phải đi trong mùa hè này.</p>
+              <a href="blog-detail.html" class="btn btn-outline-primary btn-sm">Đọc thêm</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm reveal hover-lift image-zoom animate-delay-2">
+            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <div class="card-body">
+              <h6 class="fw-bold">Mẹo săn vé & khách sạn rẻ</h6>
+              <p class="small text-muted">Tổng hợp tip tiết kiệm cho gia đình và cặp đôi.</p>
+              <a href="blog-detail.html" class="btn btn-outline-primary btn-sm">Đọc thêm</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-5">
+      <div class="newsletter shadow-sm reveal-scale hover-glow">
+        <div>
+          <h4 class="fw-bold mb-1 gradient-text" data-i18n="news_title">Nhận ưu đãi độc quyền</h4>
+          <p class="text-muted mb-0 small" data-i18n="news_subtitle">Đăng ký để nhận khuyến mãi và gợi ý tour mới mỗi tuần.</p>
+        </div>
+        <form class="d-flex flex-column flex-md-row gap-2 mt-3">
+          <input type="email" class="form-control form-control-lg" placeholder="Nhập email của bạn" aria-label="Email" required data-i18n-placeholder="news_placeholder">
+          <button class="btn btn-primary btn-lg animate-pulse" type="submit" data-i18n="news_cta">Đăng ký</button>
+        </form>
+      </div>
+    </section>
+
+    <section>
+      <div id="tour-loading" class="text-center py-5 d-none">
+        <div class="spinner-border text-primary" role="status"></div>
+        <div class="mt-2 text-muted">Đang tải tour...</div>
+      </div>
+      <div id="tour-empty" class="alert alert-info d-none">Không có tour phù hợp, thử điều chỉnh bộ lọc.</div>
+      <div class="row" id="tour-list"></div>
+    </section>
+  </main>
+
+  <div id="footer-placeholder"></div>
+
+  <!-- Deal Detail Modal -->
+  <div class="modal fade" id="dealDetailModal" tabindex="-1" aria-labelledby="dealDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content deal-modal-content">
+        <div class="modal-header border-0 pb-0">
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="deal-modal-header text-center mb-4">
+            <div class="deal-badge-large mb-3" id="deal-badge"></div>
+            <h2 class="modal-title fw-bold mb-2" id="deal-title"></h2>
+            <p class="text-muted mb-0" id="deal-subtitle"></p>
+          </div>
+          
+          <div class="deal-price-section mb-4">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center text-md-start">
+                <div class="price-original mb-2">
+                  <span class="text-muted small">Giá gốc:</span>
+                  <span class="text-decoration-line-through ms-2" id="deal-price-original"></span>
+                </div>
+                <div class="price-discount">
+                  <span class="text-muted small d-block">Giá sau giảm:</span>
+                  <span class="price-amount fw-bold" id="deal-price-discount"></span>
+                </div>
+                <div class="price-save mt-2">
+                  <span class="badge bg-success" id="deal-save-amount"></span>
+                </div>
+              </div>
+              <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                <div class="discount-percentage" id="deal-discount-percent"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deal-details mb-4">
+            <h5 class="fw-bold mb-3">
+              <i class="bi bi-info-circle"></i> Chi tiết ưu đãi
+            </h5>
+            <div id="deal-description"></div>
+          </div>
+
+          <div class="deal-conditions mb-4">
+            <h5 class="fw-bold mb-3">
+              <i class="bi bi-check-circle"></i> Điều kiện áp dụng
+            </h5>
+            <ul class="list-unstyled" id="deal-conditions"></ul>
+          </div>
+
+          <div class="deal-timeline mb-4">
+            <div class="row">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <div class="timeline-item">
+                  <i class="bi bi-calendar-event text-primary"></i>
+                  <div>
+                    <strong>Thời gian áp dụng:</strong>
+                    <div id="deal-valid-period"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="timeline-item">
+                  <i class="bi bi-box-seam text-warning"></i>
+                  <div>
+                    <strong>Số lượng còn lại:</strong>
+                    <div id="deal-quantity"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deal-actions d-flex gap-2">
+            <button type="button" class="btn btn-primary btn-lg flex-grow-1" id="deal-btn-apply">
+              <i class="bi bi-cart-plus"></i> Áp dụng ngay
+            </button>
+            <a href="tours.html" class="btn btn-outline-primary btn-lg">
+              <i class="bi bi-arrow-right"></i> Xem tours
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/favorites.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script src="assets/js/tours.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/index-animations.js"></script>
+  <script src="assets/js/deal-details.js"></script>
+</body>
+</html>
