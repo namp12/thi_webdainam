@@ -18,7 +18,35 @@
     $(document).trigger('cartUpdated');
   }
 
+  // Helper function to check if user is logged in
+  function checkLogin() {
+    const { getCurrentUser } = window.APP_AUTH || {};
+    if (!getCurrentUser) return false;
+    const user = getCurrentUser();
+    return user !== null && user !== undefined;
+  }
+
+  // Helper function to get i18n text
+  function getI18nText(key, fallback) {
+    if (window.APP_LANG && window.APP_LANG[key]) {
+      return window.APP_LANG[key];
+    }
+    return fallback;
+  }
+
   function addToCart(tourId, quantity = 1, tourData = null) {
+    // Check if user is logged in
+    if (!checkLogin()) {
+      const message = getI18nText("cart_login_required", "Vui lòng đăng nhập để thêm vào giỏ hàng");
+      showToast(message, "warning");
+      // Redirect to login page after a short delay
+      setTimeout(() => {
+        const currentUrl = encodeURIComponent(window.location.href);
+        window.location.href = `login.html?redirect=${currentUrl}`;
+      }, 2000);
+      return false;
+    }
+
     const cart = getCart();
     const existingIndex = cart.findIndex(item => item.tourId === tourId);
 
@@ -42,15 +70,27 @@
             addedAt: new Date().toISOString()
           });
           saveCart(cart);
+          
+          // Track add to cart
+          if (window.TRACKING) {
+            window.TRACKING.trackAddToCart(tourId, tour, quantity);
+          }
         }).catch(() => {
           showToast("Không thể thêm tour vào giỏ hàng", "danger");
         });
-        return;
+        return false;
       }
     }
 
     saveCart(cart);
+    
+    // Track add to cart
+    if (window.TRACKING && tourData) {
+      window.TRACKING.trackAddToCart(tourId, tourData, quantity);
+    }
+    
     showToast("Đã thêm vào giỏ hàng", "success");
+    return true;
   }
 
   function removeFromCart(tourId) {
@@ -81,7 +121,7 @@
   function getCartTotal() {
     const cart = getCart();
     return cart.reduce((total, item) => {
-      const price = Number(item.tour?.price || 0);
+      const price = window.APP_UTILS?.parsePrice(item.tour?.price) || Number(item.tour?.price || 0);
       return total + (price * item.quantity);
     }, 0);
   }

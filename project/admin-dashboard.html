@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="assets/css/animation.css">
   <link rel="stylesheet" href="assets/css/admin.css">
   <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/dashboard-charts.css">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body class="admin-layout bg-light d-flex">
   <div id="header-admin-placeholder"></div>
@@ -159,45 +162,58 @@
                 </a>
               </div>
             </div>
-            <div class="card-body">
-              <div class="mb-4">
-                <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-success border-opacity-25">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                      <i class="bi bi-cash-stack text-success fs-5"></i>
-                      <span class="text-muted small" data-i18n="admin_total_revenue">Tổng doanh thu</span>
+              <div class="card-body">
+                <div class="mb-4">
+                  <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-success border-opacity-25" style="border-width: 2px !important;">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-cash-stack text-success fs-4"></i>
+                        <span class="text-muted small fw-semibold" data-i18n="admin_total_revenue">Tổng doanh thu (Gross)</span>
+                      </div>
+                      <span class="fw-bold text-success fs-5" id="total-revenue">0 ₫</span>
                     </div>
-                    <span class="fw-bold text-success fs-6" id="total-revenue">0đ</span>
+                    <small class="text-muted d-block mt-1">Tổng giá trị giao dịch đã hoàn tất</small>
+                  </div>
+                  <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-primary border-opacity-25">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-check-circle-fill text-primary fs-4"></i>
+                        <span class="text-muted small fw-semibold" data-i18n="admin_paid_revenue">Đã thanh toán (Net)</span>
+                      </div>
+                      <span class="fw-semibold text-primary fs-5" id="paid-revenue">0 ₫</span>
+                    </div>
+                    <small class="text-muted d-block mt-1">Sau khi trừ giảm giá, cộng phí dịch vụ</small>
+                  </div>
+                  <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-danger border-opacity-25">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-tag-fill text-danger fs-4"></i>
+                        <span class="text-muted small fw-semibold">Giá trị giảm giá đã sử dụng</span>
+                      </div>
+                      <span class="fw-bold text-danger fs-5" id="stat-total-discount-given">0 ₫</span>
+                    </div>
+                    <small class="text-muted d-block mt-1">Tổng số tiền đã giảm qua mã khuyến mãi</small>
+                  </div>
+                  <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-warning border-opacity-25">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-clock-history text-warning fs-4"></i>
+                        <span class="text-muted small fw-semibold" data-i18n="admin_pending_revenue">Chờ thanh toán</span>
+                      </div>
+                      <span class="fw-semibold text-warning fs-5" id="pending-revenue">0 ₫</span>
+                    </div>
+                  </div>
+                  <div class="stat-item-card p-3 bg-gradient-info text-white rounded-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-graph-up-arrow fs-4"></i>
+                        <span class="small fw-semibold" data-i18n="admin_conversion_rate">Tỷ lệ chuyển đổi</span>
+                      </div>
+                      <span class="badge bg-white text-info fs-5 px-3 py-2" id="conversion-rate">0%</span>
+                    </div>
+                    <small class="text-white-75 d-block mt-1">Đơn hàng đã thanh toán / Lượt thêm giỏ hàng</small>
                   </div>
                 </div>
-                <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-primary border-opacity-25">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                      <i class="bi bi-check-circle-fill text-primary fs-5"></i>
-                      <span class="text-muted small" data-i18n="admin_paid_revenue">Đã thanh toán</span>
-                    </div>
-                    <span class="fw-semibold text-primary fs-6" id="paid-revenue">0đ</span>
-                  </div>
-                </div>
-                <div class="stat-item-card mb-3 p-3 bg-light rounded-3 border border-warning border-opacity-25">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                      <i class="bi bi-clock-history text-warning fs-5"></i>
-                      <span class="text-muted small" data-i18n="admin_pending_revenue">Chờ thanh toán</span>
-                    </div>
-                    <span class="fw-semibold text-warning fs-6" id="pending-revenue">0đ</span>
-                  </div>
-                </div>
-                <div class="stat-item-card p-3 bg-gradient-info text-white rounded-3">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center gap-2">
-                      <i class="bi bi-graph-up-arrow fs-5"></i>
-                      <span class="small" data-i18n="admin_conversion_rate">Tỷ lệ chuyển đổi</span>
-                    </div>
-                    <span class="badge bg-white text-info fs-6 px-3 py-2" id="conversion-rate">0%</span>
-                  </div>
-                </div>
-              </div>
               <div class="border-top pt-3">
                 <h6 class="small text-muted mb-2" data-i18n="admin_tour_performance">Hiệu suất tour</h6>
                 <div id="tour-performance">
@@ -378,6 +394,105 @@
         </div>
       </div>
 
+      <!-- Charts Section -->
+      <div class="charts-section">
+        <div class="row g-4 mb-4">
+          <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h3 class="fw-bold mb-0">
+                <i class="bi bi-bar-chart-fill text-primary me-2"></i>Biểu đồ thống kê
+              </h3>
+              <button class="btn-export-all" id="export-all-stats">
+                <i class="bi bi-download"></i>
+                Xuất tất cả CSV
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <!-- Revenue Chart -->
+          <div class="col-lg-8">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h4 class="chart-title">
+                  <i class="bi bi-cash-stack"></i>
+                  Doanh thu theo thời gian
+                </h4>
+                <div class="chart-actions">
+                  <div class="chart-filters">
+                    <button class="chart-filter-btn active" data-period="7d">7 ngày</button>
+                    <button class="chart-filter-btn" data-period="30d">30 ngày</button>
+                    <button class="chart-filter-btn" data-period="90d">90 ngày</button>
+                    <button class="chart-filter-btn" data-period="1y">1 năm</button>
+                  </div>
+                  <button class="btn-export-csv" id="export-revenue-csv">
+                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                    Xuất CSV
+                  </button>
+                </div>
+              </div>
+              <div class="chart-container large">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Tours Chart -->
+          <div class="col-lg-4">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h4 class="chart-title">
+                  <i class="bi bi-trophy"></i>
+                  Top 10 Tours phổ biến
+                </h4>
+              </div>
+              <div class="chart-container">
+                <canvas id="topToursChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mb-4">
+          <!-- Bookings Chart -->
+          <div class="col-lg-8">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h4 class="chart-title">
+                  <i class="bi bi-calendar-check"></i>
+                  Bookings theo thời gian
+                </h4>
+                <div class="chart-actions">
+                  <button class="btn-export-csv" id="export-bookings-csv">
+                    <i class="bi bi-file-earmark-spreadsheet"></i>
+                    Xuất CSV
+                  </button>
+                </div>
+              </div>
+              <div class="chart-container large">
+                <canvas id="bookingsChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversion Funnel Chart -->
+          <div class="col-lg-4">
+            <div class="chart-card">
+              <div class="chart-header">
+                <h4 class="chart-title">
+                  <i class="bi bi-funnel"></i>
+                  Conversion Funnel
+                </h4>
+              </div>
+              <div class="chart-container">
+                <canvas id="funnelChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row g-4 mt-1">
         <div class="col-lg-6">
           <div class="card shadow-lg border-0 h-100 hover-lift">
@@ -471,8 +586,10 @@
     });
   </script>
   <script src="assets/js/settings.js"></script>
+  <script src="assets/js/tracking.js"></script>
   <script src="assets/js/admin-dashboard.js"></script>
   <script src="assets/js/dashboard-links.js"></script>
+  <script src="assets/js/dashboard-charts.js"></script>
   <script>
     // Make loadStats available globally for refresh
     window.loadStats = function() {

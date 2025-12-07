@@ -56,12 +56,36 @@
     }
     const html = items
       .map(
-        (t) => `
+        (t) => {
+          // Parse price from API format (handles "21,664,750 VND" format)
+          const parsedPrice = window.APP_UTILS?.parsePrice(t.price) || Number(t.price) || 0;
+          
+          // Calculate pricing with promotions
+          let pricing = { 
+            originalPrice: parsedPrice, 
+            finalPrice: parsedPrice, 
+            discount: 0, 
+            discountPercent: 0, 
+            promotion: null 
+          };
+          if (window.PRICING_MANAGER) {
+            pricing = window.PRICING_MANAGER.calculateFinalPrice(t);
+          }
+
+          const hasPromotion = pricing.promotion !== null;
+          const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
+
+          return `
         <div class="col-md-4 mb-4">
           <div class="card h-100 tour-card">
             <div class="position-relative card-image-wrapper">
               <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
               <div class="card-overlay"></div>
+              ${hasPromotion && badgeText ? `
+              <span class="badge badge-promotion position-absolute top-0 end-0 m-2">
+                <i class="bi bi-tag-fill"></i> ${badgeText}
+              </span>
+              ` : ''}
               <span class="badge badge-destination position-absolute top-0 start-0 m-2">
                 <i class="bi bi-geo-alt-fill"></i> ${t.destination || "Điểm đến"}
               </span>
@@ -70,18 +94,38 @@
               </span>
             </div>
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title fw-bold mb-2">${t.title}</h5>
+              <h5 class="card-title fw-bold mb-2" style="min-height: 3em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${t.title}</h5>
               <div class="d-flex align-items-center gap-2 mb-2">
                 <span class="rating">
                   <i class="bi bi-star-fill"></i> ${t.rating || "4.6"}
                 </span>
                 <span class="small text-muted">(${t.reviews || "128"} đánh giá)</span>
               </div>
-              <p class="small text-muted flex-grow-1 mb-3">${t.description || ""}</p>
+              <p class="small text-muted flex-grow-1 mb-3" style="min-height: 4.2em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6;">${t.description || ""}</p>
               <div class="tour-card-actions">
-                <div class="tour-price">
-                  <span class="price-label text-muted small d-block">Từ</span>
-                  <span class="fw-bold text-primary fs-5">${formatPrice(t.price)}</span>
+                <div class="tour-price ${hasPromotion ? 'has-promotion' : ''}">
+                  ${hasPromotion ? `
+                    <div class="price-container">
+                      <span class="price-label text-muted small">Giá gốc</span>
+                      <div class="price-main">
+                        <span class="price-original text-muted text-decoration-line-through small">${formatPrice(pricing.originalPrice)}</span>
+                      </div>
+                      <span class="price-label text-success small mt-2">Giá khuyến mãi</span>
+                      <div class="price-main">
+                        <span class="fw-bold text-danger" style="font-size: 1.5rem; line-height: 1.2;">${formatPrice(pricing.finalPrice)}</span>
+                        ${pricing.discountPercent > 0 ? `
+                        <span class="price-save-badge">Tiết kiệm ${pricing.discountPercent}%</span>
+                        ` : ''}
+                      </div>
+                    </div>
+                  ` : `
+                    <div class="price-container">
+                      <span class="price-label text-muted small">Từ</span>
+                      <div class="price-main">
+                        <span class="fw-bold text-primary" style="font-size: 1.5rem; line-height: 1.2;">${formatPrice(pricing.finalPrice)}</span>
+                      </div>
+                    </div>
+                  `}
                 </div>
                 <div class="tour-buttons d-flex gap-2">
                   <a href="tour-detail.html?id=${t.id}" class="btn btn-detail btn-sm">
@@ -99,7 +143,8 @@
               </div>
             </div>
           </div>
-        </div>`
+        </div>`;
+        }
       )
       .join("");
     $list.html(html);
@@ -107,25 +152,107 @@
 
   function renderHot(items) {
     if (!$hotList.length) return;
-    const hot = [...items].sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0)).slice(0, 6);
+    const hot = [...items].sort((a, b) => {
+      const priceA = window.APP_UTILS?.parsePrice(a.price) || Number(a.price) || 0;
+      const priceB = window.APP_UTILS?.parsePrice(b.price) || Number(b.price) || 0;
+      return priceB - priceA;
+    }).slice(0, 6);
+    
+    // Use same enhanced render as category tours
     const html = hot
       .map(
-        (t) => `
-        <div class="col-md-4 mb-3">
-          <div class="card h-100 shadow-sm">
-            <div class="position-relative">
+        (t) => {
+          // Parse price from API format
+          const parsedPrice = window.APP_UTILS?.parsePrice(t.price) || Number(t.price) || 0;
+          
+          // Calculate pricing with promotions
+          let pricing = { 
+            originalPrice: parsedPrice, 
+            finalPrice: parsedPrice, 
+            discount: 0, 
+            discountPercent: 0, 
+            promotion: null 
+          };
+          if (window.PRICING_MANAGER) {
+            pricing = window.PRICING_MANAGER.calculateFinalPrice(t);
+          }
+
+          const hasPromotion = pricing.promotion !== null;
+          const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
+
+          return `
+        <div class="tour-card-wrapper">
+          <div class="card h-100 tour-card">
+            <div class="position-relative card-image-wrapper">
               <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
-              <span class="badge bg-danger position-absolute top-0 start-0 m-2">Hot</span>
+              <div class="card-overlay"></div>
+              <span class="badge bg-danger position-absolute top-0 start-0 m-2" style="z-index: 10;">
+                <i class="bi bi-fire"></i> Hot
+              </span>
+              ${hasPromotion && badgeText ? `
+              <span class="badge badge-promotion position-absolute top-0 end-0 m-2">
+                <i class="bi bi-tag-fill"></i> ${badgeText}
+              </span>
+              ` : ''}
+              <span class="badge badge-destination position-absolute top-0 start-0 m-2" style="top: 50px;">
+                <i class="bi bi-geo-alt-fill"></i> ${t.destination || "Điểm đến"}
+              </span>
+              <span class="badge badge-duration position-absolute top-0 end-0 m-2" style="${hasPromotion ? 'top: 50px;' : ''}">
+                <i class="bi bi-clock-fill"></i> ${formatDuration(t.duration)}
+              </span>
             </div>
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title">${t.title}</h5>
-              <p class="small text-muted mb-1">${t.destination}</p>
-              <p class="text-primary fw-bold mb-1">${formatPrice(t.price)}</p>
-              <p class="small text-muted mb-3">${formatDuration(t.duration)}</p>
-              <a href="tour-detail.html?id=${t.id}" class="btn btn-outline-primary btn-sm mt-auto">Xem chi tiết</a>
+              <h5 class="card-title fw-bold mb-2" style="min-height: 3em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${t.title}</h5>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="rating">
+                  <i class="bi bi-star-fill"></i> ${t.rating || "4.6"}
+                </span>
+                <span class="small text-muted">(${t.reviews || "128"} đánh giá)</span>
+              </div>
+              <p class="small text-muted flex-grow-1 mb-3" style="min-height: 4.2em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6;">${t.description || ""}</p>
+              <div class="tour-card-actions">
+                <div class="tour-price ${hasPromotion ? 'has-promotion' : ''}">
+                  ${hasPromotion ? `
+                    <div class="price-container">
+                      <span class="price-label text-muted small">Giá gốc</span>
+                      <div class="price-main">
+                        <span class="price-original text-muted text-decoration-line-through small">
+                          ${formatPrice(pricing.originalPrice)}
+                        </span>
+                      </div>
+                      <span class="price-label text-success small mt-2">Giá khuyến mãi</span>
+                      <div class="price-main">
+                        <span class="fw-bold text-danger" style="font-size: 1.25rem;">${formatPrice(pricing.finalPrice)}</span>
+                        ${pricing.discountPercent > 0 ? `
+                        <span class="price-save-badge">Tiết kiệm ${pricing.discountPercent}%</span>
+                        ` : ''}
+                      </div>
+                    </div>
+                  ` : `
+                    <div class="price-container">
+                      <span class="price-label text-muted small">Từ</span>
+                      <div class="price-main">
+                        <span class="fw-bold text-primary" style="font-size: 1.25rem;">${formatPrice(pricing.finalPrice)}</span>
+                      </div>
+                    </div>
+                  `}
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                  <a href="tour-detail.html?id=${t.id}" class="btn btn-primary btn-sm flex-grow-1">
+                    <i class="bi bi-eye"></i> Chi tiết
+                  </a>
+                  <button class="btn btn-outline-success btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
+                    <i class="bi bi-cart-plus"></i>
+                  </button>
+                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}">
+                    <i class="bi bi-heart"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>`
+        </div>`;
+        }
       )
       .join("");
     $hotList.html(html);
@@ -137,29 +264,117 @@
     if (category) {
       filtered = filtered.filter((t) => (t.theme || t.destination || "").toLowerCase().includes(category.toLowerCase()));
     }
+    
+    // Use same enhanced render as main tour list
     const html = filtered.slice(0, 6)
       .map(
-        (t) => `
-        <div class="col-md-4 mb-3">
-          <div class="card h-100">
-            <div class="position-relative">
+        (t) => {
+          // Parse price from API format
+          const parsedPrice = window.APP_UTILS?.parsePrice(t.price) || Number(t.price) || 0;
+          
+          // Calculate pricing with promotions
+          let pricing = { 
+            originalPrice: parsedPrice, 
+            finalPrice: parsedPrice, 
+            discount: 0, 
+            discountPercent: 0, 
+            promotion: null 
+          };
+          if (window.PRICING_MANAGER) {
+            pricing = window.PRICING_MANAGER.calculateFinalPrice(t);
+          }
+
+          const hasPromotion = pricing.promotion !== null;
+          const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
+
+          return `
+        <div class="tour-card-wrapper">
+          <div class="card h-100 tour-card">
+            <div class="position-relative card-image-wrapper">
               <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
-              <span class="badge badge-soft position-absolute top-0 start-0 m-2">${t.destination || "Chủ đề"}</span>
+              <div class="card-overlay"></div>
+              ${hasPromotion && badgeText ? `
+              <span class="badge badge-promotion position-absolute top-0 end-0 m-2">
+                <i class="bi bi-tag-fill"></i> ${badgeText}
+              </span>
+              ` : ''}
+              <span class="badge badge-destination position-absolute top-0 start-0 m-2">
+                <i class="bi bi-geo-alt-fill"></i> ${t.destination || "Điểm đến"}
+              </span>
+              <span class="badge badge-duration position-absolute top-0 end-0 m-2" style="${hasPromotion ? 'top: 50px;' : ''}">
+                <i class="bi bi-clock-fill"></i> ${formatDuration(t.duration)}
+              </span>
             </div>
             <div class="card-body d-flex flex-column">
-              <h6 class="fw-bold mb-1">${t.title}</h6>
-              <div class="small text-muted mb-1">${t.destination}</div>
-              <div class="d-flex justify-content-between align-items-center mt-auto">
-                <span class="fw-semibold text-primary">${formatPrice(t.price)}</span>
-                <span class="small text-muted">${formatDuration(t.duration)}</span>
+              <h5 class="card-title fw-bold mb-2" style="min-height: 3em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${t.title}</h5>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="rating">
+                  <i class="bi bi-star-fill"></i> ${t.rating || "4.6"}
+                </span>
+                <span class="small text-muted">(${t.reviews || "128"} đánh giá)</span>
+              </div>
+              <p class="small text-muted flex-grow-1 mb-3" style="min-height: 4.2em; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6;">${t.description || ""}</p>
+              <div class="tour-card-actions">
+                <div class="tour-price ${hasPromotion ? 'has-promotion' : ''}">
+                  ${hasPromotion ? `
+                    <div class="price-container">
+                      <span class="price-label text-muted small">Giá gốc</span>
+                      <div class="price-main">
+                        <span class="price-original text-muted text-decoration-line-through small">
+                          ${formatPrice(pricing.originalPrice)}
+                        </span>
+                      </div>
+                      <span class="price-label text-success small mt-2">Giá khuyến mãi</span>
+                      <div class="price-main">
+                        <span class="fw-bold text-danger" style="font-size: 1.25rem;">${formatPrice(pricing.finalPrice)}</span>
+                        ${pricing.discountPercent > 0 ? `
+                        <span class="price-save-badge">Tiết kiệm ${pricing.discountPercent}%</span>
+                        ` : ''}
+                      </div>
+                    </div>
+                  ` : `
+                    <div class="price-container">
+                      <span class="price-label text-muted small">Từ</span>
+                      <div class="price-main">
+                        <span class="fw-bold text-primary" style="font-size: 1.25rem;">${formatPrice(pricing.finalPrice)}</span>
+                      </div>
+                    </div>
+                  `}
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                  <a href="tour-detail.html?id=${t.id}" class="btn btn-primary btn-sm flex-grow-1">
+                    <i class="bi bi-eye"></i> Chi tiết
+                  </a>
+                  <button class="btn btn-outline-success btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
+                    <i class="bi bi-cart-plus"></i>
+                  </button>
+                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}">
+                    <i class="bi bi-heart"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>`
+        </div>`;
+        }
       )
       .join("");
-    $catList.html(html || `<div class="text-muted">Chưa có tour phù hợp</div>`);
+    $catList.html(html || `
+      <div class="category-empty-state">
+        <div class="category-empty-icon">
+          <i class="bi bi-inbox"></i>
+        </div>
+        <div class="category-empty-title">Chưa có tour phù hợp</div>
+        <div class="category-empty-text">Không tìm thấy tour nào cho chủ đề này. Hãy thử chọn chủ đề khác.</div>
+        <a href="tours.html" class="btn btn-primary">
+          <i class="bi bi-compass me-1"></i>Xem tất cả tour
+        </a>
+      </div>
+    `);
   }
+  
+  // Expose renderCategory globally for homepage.js
+  window.renderCategory = renderCategory;
 
   function applyFilter() {
     let filtered = [...tours];
@@ -233,16 +448,34 @@
       applyFilter();
     });
 
+    // Support both old button pills and new category tab cards
+    // Support both old button pills and new category tab cards
     $catPills.on("click", "button", function () {
       $catPills.find("button").removeClass("active");
       $(this).addClass("active");
       renderCategory(tours, $(this).data("category"));
     });
 
+    // Support new category tab cards
+    $(document).on("click", ".category-tab-card", function () {
+      $(".category-tab-card").removeClass("active");
+      $(this).addClass("active");
+      renderCategory(tours, $(this).data("category"));
+    });
+
+    // Support new category tab cards
+    $(document).on("click", ".category-tab-card", function () {
+      $(".category-tab-card").removeClass("active");
+      $(this).addClass("active");
+      renderCategory(tours, $(this).data("category"));
+    });
+
     $list.on("click", ".add-fav", function () {
       const id = $(this).data("id");
+      const tourData = $(this).closest('.tour-card').find('.add-cart').data('tour');
       if (window.APP_FAVORITES) {
-        window.APP_FAVORITES.add(id);
+        window.APP_FAVORITES.add(id, "", tourData);
+        
         const $btn = $(this);
         $btn.html('<i class="bi bi-heart-fill"></i>').addClass("btn-favorite-active").removeClass("btn-favorite");
         $btn.find('i').addClass('heart-beat-animation');
@@ -258,6 +491,12 @@
       const tourData = $(this).data("tour");
       if (window.APP_CART) {
         window.APP_CART.addToCart(id, 1, tourData);
+        
+        // Track add to cart
+        if (window.TRACKING) {
+          window.TRACKING.trackAddToCart(id, tourData, 1);
+        }
+        
         const $btn = $(this);
         const originalHtml = $btn.html();
         $btn.html('<i class="bi bi-check-circle-fill"></i> <span>Đã thêm</span>').prop("disabled", true).addClass("btn-cart-added");

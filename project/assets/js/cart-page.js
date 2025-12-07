@@ -24,18 +24,44 @@
 
     const html = cart.map((item, index) => {
       const tour = item.tour || {};
-      const price = Number(tour.price || 0);
-      const total = price * item.quantity;
+      
+      // Parse price from API format
+      const parsedPrice = window.APP_UTILS?.parsePrice(tour.price) || Number(tour.price) || 0;
+      
+      // Calculate pricing with promotions
+      let pricing = { 
+        originalPrice: parsedPrice, 
+        finalPrice: parsedPrice, 
+        discount: 0, 
+        discountPercent: 0, 
+        promotion: null 
+      };
+      
+      if (window.PRICING_MANAGER) {
+        pricing = window.PRICING_MANAGER.calculateFinalPrice(tour);
+      }
+      
+      const hasPromotion = pricing.promotion !== null;
+      const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
+      
+      const unitPrice = pricing.finalPrice;
+      const total = unitPrice * item.quantity;
+      const originalTotal = pricing.originalPrice * item.quantity;
 
       return `
         <div class="card shadow-sm mb-3 cart-item" data-tour-id="${item.tourId}">
           <div class="card-body">
             <div class="row g-3">
-              <div class="col-md-3">
+              <div class="col-md-3 position-relative">
                 <img src="${tour.image || 'assets/img/banners/placeholder.jpg'}" 
                      class="img-fluid rounded" 
                      alt="${tour.title}" 
                      style="height: 120px; object-fit: cover; width: 100%;">
+                ${hasPromotion && badgeText ? `
+                <span class="badge badge-promotion position-absolute top-0 end-0 m-2" style="font-size: 0.75rem;">
+                  <i class="bi bi-tag-fill"></i> ${badgeText}
+                </span>
+                ` : ''}
               </div>
               <div class="col-md-6">
                 <h5 class="mb-2">${tour.title || 'Tour'}</h5>
@@ -60,15 +86,33 @@
                 </div>
               </div>
               <div class="col-md-3 text-end">
-                <div class="mb-2">
-                  <span class="text-muted small">Giá:</span>
-                  <div class="fw-bold text-primary">${formatPrice(price)}</div>
+                <div class="price-display ${hasPromotion ? 'has-promotion' : ''}">
+                  <div class="mb-3">
+                    <span class="price-unit text-muted small d-block mb-2">Giá ${item.quantity > 1 ? 'mỗi người' : ''}</span>
+                    ${hasPromotion ? `
+                      <div class="mb-2">
+                        <span class="price-original text-muted text-decoration-line-through small">${formatPrice(pricing.originalPrice)}</span>
+                      </div>
+                      <div class="price-final text-danger">${formatPrice(unitPrice)}</div>
+                      <span class="price-save-badge">Tiết kiệm ${pricing.discountPercent}%</span>
+                    ` : `
+                      <div class="price-final text-primary">${formatPrice(unitPrice)}</div>
+                    `}
+                  </div>
+                  <div class="price-total-container">
+                    <span class="price-unit text-muted small d-block mb-2">Thành tiền</span>
+                    ${hasPromotion ? `
+                      <div class="mb-2">
+                        <span class="price-original text-muted text-decoration-line-through small">${formatPrice(originalTotal)}</span>
+                      </div>
+                      <div class="price-total text-danger">${formatPrice(total)}</div>
+                      <span class="price-save-badge">Tiết kiệm ${formatPrice(originalTotal - total)}</span>
+                    ` : `
+                      <div class="price-total text-primary">${formatPrice(total)}</div>
+                    `}
+                  </div>
                 </div>
-                <div class="mb-3">
-                  <span class="text-muted small">Thành tiền:</span>
-                  <div class="fw-bold fs-5">${formatPrice(total)}</div>
-                </div>
-                <button class="btn btn-outline-danger btn-sm" onclick="removeCartItem('${item.tourId}')">
+                <button class="btn btn-outline-danger btn-sm mt-3" onclick="removeCartItem('${item.tourId}')">
                   <i class="bi bi-trash"></i> Xóa
                 </button>
               </div>
@@ -83,8 +127,58 @@
   }
 
   function updateSummary() {
-    const total = APP_CART.getCartTotal();
-    $("#cart-subtotal").text(formatPrice(total));
+    const cart = APP_CART.getCart();
+    let subtotal = 0;
+    let originalSubtotal = 0;
+    let totalDiscount = 0;
+
+    cart.forEach(item => {
+      const tour = item.tour || {};
+      
+      // Parse price from API format
+      const parsedPrice = window.APP_UTILS?.parsePrice(tour.price) || Number(tour.price || 0);
+      
+      // Calculate pricing with promotions
+      let pricing = { 
+        originalPrice: parsedPrice, 
+        finalPrice: parsedPrice, 
+        discount: 0, 
+        discountPercent: 0, 
+        promotion: null 
+      };
+      
+      if (window.PRICING_MANAGER) {
+        pricing = window.PRICING_MANAGER.calculateFinalPrice(tour);
+      }
+      
+      const itemOriginalTotal = pricing.originalPrice * item.quantity;
+      const itemFinalTotal = pricing.finalPrice * item.quantity;
+      
+      originalSubtotal += itemOriginalTotal;
+      subtotal += itemFinalTotal;
+      totalDiscount += (itemOriginalTotal - itemFinalTotal);
+    });
+
+    // Service fee (5%)
+    const serviceFee = subtotal * 0.05;
+    const total = subtotal + serviceFee;
+
+    // Update summary display with proper order: Subtotal -> Discount -> Service Fee -> Total
+    $("#cart-subtotal").text(formatPrice(subtotal));
+    
+    // Show discount row between Subtotal and Service Fee (if discount exists)
+    const $discountRow = $("#cart-discount-row");
+    if (totalDiscount > 0) {
+      $discountRow.show();
+      $("#cart-discount-amount").text(`-${formatPrice(totalDiscount)}`);
+    } else {
+      $discountRow.hide();
+    }
+    
+    // Show service fee
+    $("#cart-service-fee").text(formatPrice(serviceFee));
+    
+    // Total
     $("#cart-total").text(formatPrice(total));
     $("#btn-checkout").prop("disabled", total === 0);
   }
@@ -119,5 +213,9 @@
     renderCart();
   });
 })();
+
+
+
+
 
 

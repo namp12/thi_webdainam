@@ -1,0 +1,554 @@
+/**
+ * Promotions & Discounts Styling
+ * UI/UX for promotions page
+ */
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.promotions-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 4rem 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.promotions-hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.promotions-hero h1 {
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.promo-stats {
+  margin-top: 2rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem 2rem;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-5px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   Filter Tabs
+   ============================================ */
+.promo-filters {
+  margin-bottom: 2rem;
+}
+
+.promo-filters .nav-pills .nav-link {
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  margin: 0 0.5rem;
+  border: 2px solid #e0e0e0;
+  background: white;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.promo-filters .nav-pills .nav-link:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+  transform: translateY(-2px);
+}
+
+.promo-filters .nav-pills .nav-link.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* ============================================
+   Search Bar
+   ============================================ */
+.promo-search {
+  margin-bottom: 2rem;
+}
+
+.promo-search .input-group {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.promo-search .form-control {
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+}
+
+.promo-search .input-group-text {
+  border: none;
+  padding: 1rem 1.5rem;
+}
+
+.promo-search .btn {
+  border-radius: 0 12px 12px 0;
+  padding: 1rem 2rem;
+  font-weight: 600;
+}
+
+/* ============================================
+   Promotion Cards
+   ============================================ */
+.promo-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+.promo-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  border-color: #667eea;
+}
+
+.promo-card-header {
+  position: relative;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.promo-card-header.flash-sale {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+}
+
+.promo-card-header.combo {
+  background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+}
+
+.promo-card-header.voucher {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.promo-card-header.discount {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.promo-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.promo-badge.flash {
+  background: rgba(255, 255, 255, 0.3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.promo-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.promo-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.promo-card-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-price-section {
+  margin-bottom: 1rem;
+}
+
+.promo-price-original {
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-decoration: line-through;
+}
+
+.promo-price-discount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #28a745;
+  margin-top: 0.25rem;
+}
+
+.promo-discount-amount {
+  display: inline-block;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.promo-description {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.promo-conditions {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.promo-conditions li {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.promo-conditions li i {
+  color: #28a745;
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.promo-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.promo-expiry {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promo-quantity {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promo-card-footer {
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+}
+
+.promo-btn {
+  width: 100%;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.promo-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.promo-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  color: white;
+}
+
+.promo-btn-outline {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.promo-btn-outline:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* ============================================
+   Discount Code Cards
+   ============================================ */
+.discount-code-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.discount-code-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+}
+
+.discount-code-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 15s linear infinite;
+}
+
+.discount-code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.discount-code-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.discount-code-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.discount-code-badge {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.discount-code-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 1rem 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.discount-code-input-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.discount-code-input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.2em;
+}
+
+.discount-code-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.discount-code-btn {
+  padding: 1rem 2rem;
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.discount-code-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.discount-code-conditions {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  opacity: 0.9;
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================================
+   Modal
+   ============================================ */
+.promo-modal-content {
+  border-radius: 20px;
+  overflow: hidden;
+  border: none;
+}
+
+.promo-modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.promo-modal-body {
+  padding: 2rem;
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .promo-card {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .promo-card-body {
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .promo-description {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .promo-conditions li {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .promo-meta {
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .promo-card-footer {
+  background: var(--dark-bg-secondary);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .promo-filters .nav-pills .nav-link {
+  background: var(--dark-bg-card);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .promo-search .form-control {
+  background: var(--dark-bg-secondary);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .promo-search .input-group-text {
+  background: var(--dark-bg-secondary);
+  border-color: var(--dark-border);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  .promotions-hero {
+    padding: 2rem 1rem;
+  }
+
+  .stat-item {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-number {
+    font-size: 2rem;
+  }
+
+  .promo-filters .nav-pills .nav-link {
+    margin: 0.25rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .discount-code-value {
+    font-size: 2rem;
+  }
+
+  .discount-code-input-group {
+    flex-direction: column;
+  }
+}
+

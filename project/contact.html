@@ -9,115 +9,282 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/contact.css">
+  <link rel="stylesheet" href="assets/css/icons.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Iconify - Free Icons (load trước để icons hiển thị ngay) -->
+  <script src="https://code.iconify.design/3/iconify.min.js"></script>
+  <script>
+    // Đảm bảo Iconify load xong trước khi render
+    if (typeof Iconify === 'undefined') {
+      document.addEventListener('DOMContentLoaded', function() {
+        // Retry loading icons after a delay
+        setTimeout(function() {
+          if (typeof Iconify !== 'undefined' && Iconify.scan) {
+            Iconify.scan();
+          }
+        }, 500);
+      });
+    }
+  </script>
 </head>
 <body class="bg-light">
   <div id="header-placeholder"></div>
 
   <main class="container py-5">
-    <div class="row">
-      <div class="col-lg-10 mx-auto">
-        <h1 class="display-5 fw-bold mb-4 text-center" data-i18n="contact_title">Liên Hệ Với Chúng Tôi</h1>
-        <p class="lead text-center text-muted mb-5" data-i18n="contact_subtitle">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
-        
-        <div class="row g-4">
-          <div class="col-md-7">
-            <div class="card shadow-sm border-0">
-              <div class="card-body p-4">
-                <h4 class="mb-4" data-i18n="contact_send_message">Gửi tin nhắn</h4>
-                <form id="contact-form">
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold"><span data-i18n="contact_name">Họ và tên</span> <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" id="contact-name" required data-i18n-placeholder="contact_name_placeholder">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold"><span data-i18n="contact_email">Email</span> <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" id="contact-email" required placeholder="your.email@example.com">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold" data-i18n="contact_phone">Số điện thoại</label>
-                    <input type="tel" class="form-control" id="contact-phone" placeholder="0123456789">
-                  </div>
-                  <div class="mb-3">
-                    <label class="form-label fw-semibold"><span data-i18n="contact_message">Nội dung tin nhắn</span> <span class="text-danger">*</span></label>
-                    <textarea class="form-control" id="contact-message" rows="5" required data-i18n-placeholder="contact_message_placeholder"></textarea>
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-lg w-100">
-                    <i class="bi bi-send"></i> <span data-i18n="contact_send">Gửi tin nhắn</span>
-                  </button>
-                </form>
+    <!-- Hero Section -->
+    <div class="contact-hero">
+      <div class="contact-hero-content">
+        <h1 class="contact-hero-title" data-i18n="contact_title">Liên Hệ Với Chúng Tôi</h1>
+        <p class="contact-hero-subtitle" data-i18n="contact_subtitle">Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn</p>
+      </div>
+    </div>
+
+    <!-- Quick Contact Options -->
+    <section class="quick-contact-section">
+      <div class="quick-contact-grid">
+        <div class="quick-contact-card" onclick="window.location.href='tel:1900123456'">
+          <div class="quick-contact-icon">
+            <i class="bi bi-telephone-fill" style="font-size: 2rem;"></i>
+          </div>
+          <h3 class="quick-contact-title">Gọi ngay</h3>
+          <p class="quick-contact-text">Hotline hỗ trợ 24/7</p>
+          <a href="tel:1900123456" class="quick-contact-link">
+            <span>1900 123 456</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        <div class="quick-contact-card" onclick="window.location.href='mailto:info@travelbooking.com'">
+          <div class="quick-contact-icon">
+            <i class="bi bi-envelope-fill" style="font-size: 2rem;"></i>
+          </div>
+          <h3 class="quick-contact-title">Gửi email</h3>
+          <p class="quick-contact-text">Phản hồi trong 24h</p>
+          <a href="mailto:info@travelbooking.com" class="quick-contact-link">
+            <span>info@travelbooking.com</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+        <div class="quick-contact-card" onclick="document.getElementById('contact-form').scrollIntoView({behavior: 'smooth'})">
+          <div class="quick-contact-icon">
+            <i class="bi bi-chat-dots-fill" style="font-size: 2rem;"></i>
+          </div>
+          <h3 class="quick-contact-title">Gửi tin nhắn</h3>
+          <p class="quick-contact-text">Điền form bên dưới</p>
+          <a href="#contact-form" class="quick-contact-link">
+            <span>Gửi ngay</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Contact Section -->
+    <div class="row g-4">
+      <div class="col-lg-7">
+        <div class="contact-form-section" id="contact-form">
+          <div class="contact-form-header">
+            <h2 class="contact-form-title">
+              <i class="bi bi-send-fill"></i>
+              <span data-i18n="contact_send_message">Gửi tin nhắn</span>
+            </h2>
+            <p class="contact-form-subtitle">Điền thông tin bên dưới, chúng tôi sẽ phản hồi sớm nhất có thể</p>
+          </div>
+          <form id="contact-form-element">
+            <div class="contact-form-group">
+              <label class="contact-form-label" for="contact-name">
+                <i class="bi bi-person-fill"></i>
+                <span data-i18n="contact_name">Họ và tên</span>
+                <span class="required">*</span>
+              </label>
+              <input type="text" class="contact-form-control" id="contact-name" required data-i18n-placeholder="contact_name_placeholder">
+              <div class="contact-form-feedback invalid-feedback" style="display: none;">
+                <i class="bi bi-exclamation-circle"></i>
+                Vui lòng nhập họ và tên
               </div>
             </div>
+            <div class="contact-form-group">
+              <label class="contact-form-label" for="contact-email">
+                <i class="bi bi-envelope-fill" style="color: #667eea;"></i>
+                <span data-i18n="contact_email">Email</span>
+                <span class="required">*</span>
+              </label>
+              <input type="email" class="contact-form-control" id="contact-email" required placeholder="your.email@example.com">
+              <div class="contact-form-feedback invalid-feedback" style="display: none;">
+                <i class="bi bi-exclamation-circle"></i>
+                Vui lòng nhập email hợp lệ
+              </div>
+            </div>
+            <div class="contact-form-group">
+              <label class="contact-form-label" for="contact-phone">
+                <i class="bi bi-telephone-fill" style="color: #667eea;"></i>
+                <span data-i18n="contact_phone">Số điện thoại</span>
+              </label>
+              <input type="tel" class="contact-form-control" id="contact-phone" placeholder="0123456789">
+            </div>
+            <div class="contact-form-group">
+              <label class="contact-form-label" for="contact-message">
+                <i class="bi bi-chat-left-text-fill" style="color: #667eea;"></i>
+                <span data-i18n="contact_message">Nội dung tin nhắn</span>
+                <span class="required">*</span>
+              </label>
+              <textarea class="contact-form-control" id="contact-message" rows="6" required data-i18n-placeholder="contact_message_placeholder" style="resize: vertical;"></textarea>
+              <div class="contact-form-feedback invalid-feedback" style="display: none;">
+                <i class="bi bi-exclamation-circle"></i>
+                Vui lòng nhập nội dung tin nhắn
+              </div>
+            </div>
+            <button type="submit" class="contact-form-submit">
+              <i class="bi bi-send-fill"></i>
+              <span data-i18n="contact_send">Gửi tin nhắn</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="col-lg-5">
+        <div class="contact-info-section">
+          <div class="contact-info-header">
+            <h2 class="contact-info-title">
+              <i class="bi bi-info-circle-fill"></i>
+              <span data-i18n="contact_info">Thông tin liên hệ</span>
+            </h2>
           </div>
           
-          <div class="col-md-5">
-            <div class="card shadow-sm border-0 h-100">
-              <div class="card-body p-4">
-                <h4 class="mb-4" data-i18n="contact_info">Thông tin liên hệ</h4>
-                
-                <div class="mb-4">
-                  <h6 class="fw-bold mb-2">
-                    <i class="bi bi-geo-alt-fill text-primary"></i> <span data-i18n="contact_address">Địa chỉ</span>
-                  </h6>
-                  <p class="text-muted mb-0">
-                    123 Đường ABC, Phường XYZ<br>
-                    Quận 1, TP. Hồ Chí Minh<br>
-                    Việt Nam
-                  </p>
-                </div>
-
-                <div class="mb-4">
-                  <h6 class="fw-bold mb-2">
-                    <i class="bi bi-telephone-fill text-primary"></i> <span data-i18n="contact_phone_label">Điện thoại</span>
-                  </h6>
-                  <p class="text-muted mb-0">
-                    Hotline: <a href="tel:1900123456" class="text-decoration-none">1900 123 456</a><br>
-                    Di động: <a href="tel:0912345678" class="text-decoration-none">0912 345 678</a>
-                  </p>
-                </div>
-
-                <div class="mb-4">
-                  <h6 class="fw-bold mb-2">
-                    <i class="bi bi-envelope-fill text-primary"></i> Email
-                  </h6>
-                  <p class="text-muted mb-0">
-                    <a href="mailto:info@travelbooking.com" class="text-decoration-none">info@travelbooking.com</a><br>
-                    <a href="mailto:support@travelbooking.com" class="text-decoration-none">support@travelbooking.com</a>
-                  </p>
-                </div>
-
-                <div class="mb-4">
-                  <h6 class="fw-bold mb-2">
-                    <i class="bi bi-clock-fill text-primary"></i> <span data-i18n="contact_working_hours">Giờ làm việc</span>
-                  </h6>
-                  <p class="text-muted mb-0">
-                    Thứ 2 - Thứ 6: 8:00 - 18:00<br>
-                    Thứ 7: 8:00 - 12:00<br>
-                    Chủ nhật: Nghỉ
-                  </p>
-                </div>
-
-                <div>
-                  <h6 class="fw-bold mb-2">
-                    <i class="bi bi-share-fill text-primary"></i> <span data-i18n="contact_social">Mạng xã hội</span>
-                  </h6>
-                  <div class="d-flex gap-2">
-                    <a href="#" class="btn btn-outline-primary btn-sm">
-                      <i class="bi bi-facebook"></i> Facebook
-                    </a>
-                    <a href="#" class="btn btn-outline-info btn-sm">
-                      <i class="bi bi-twitter"></i> Twitter
-                    </a>
-                    <a href="#" class="btn btn-outline-danger btn-sm">
-                      <i class="bi bi-instagram"></i> Instagram
-                    </a>
-                  </div>
-                </div>
+          <div class="contact-info-item">
+            <div class="contact-info-item-header">
+              <div class="contact-info-icon">
+                <i class="bi bi-geo-alt-fill"></i>
               </div>
+              <h3 class="contact-info-item-title" data-i18n="contact_address">Địa chỉ</h3>
+            </div>
+            <p class="contact-info-content">
+              123 Đường ABC, Phường XYZ<br>
+              Quận 1, TP. Hồ Chí Minh<br>
+              Việt Nam
+            </p>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-item-header">
+              <div class="contact-info-icon">
+                <i class="bi bi-telephone-fill"></i>
+              </div>
+              <h3 class="contact-info-item-title" data-i18n="contact_phone_label">Điện thoại</h3>
+            </div>
+            <p class="contact-info-content">
+              Hotline: <a href="tel:1900123456">1900 123 456</a><br>
+              Di động: <a href="tel:0912345678">0912 345 678</a>
+            </p>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-item-header">
+              <div class="contact-info-icon">
+                <i class="bi bi-envelope-fill"></i>
+              </div>
+              <h3 class="contact-info-item-title">Email</h3>
+            </div>
+            <p class="contact-info-content">
+              <a href="mailto:info@travelbooking.com">info@travelbooking.com</a><br>
+              <a href="mailto:support@travelbooking.com">support@travelbooking.com</a>
+            </p>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-item-header">
+              <div class="contact-info-icon">
+                <i class="bi bi-clock-fill"></i>
+              </div>
+              <h3 class="contact-info-item-title" data-i18n="contact_working_hours">Giờ làm việc</h3>
+            </div>
+            <p class="contact-info-content">
+              Thứ 2 - Thứ 6: 8:00 - 18:00<br>
+              Thứ 7: 8:00 - 12:00<br>
+              Chủ nhật: Nghỉ
+            </p>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="contact-info-item-header">
+              <div class="contact-info-icon">
+                <i class="bi bi-share-fill"></i>
+              </div>
+              <h3 class="contact-info-item-title" data-i18n="contact_social">Mạng xã hội</h3>
+            </div>
+            <div class="contact-social-links">
+              <a href="#" class="contact-social-link facebook" title="Facebook">
+                <i class="bi bi-facebook"></i>
+              </a>
+              <a href="#" class="contact-social-link twitter" title="Twitter">
+                <i class="bi bi-twitter"></i>
+              </a>
+              <a href="#" class="contact-social-link instagram" title="Instagram">
+                <i class="bi bi-instagram"></i>
+              </a>
+              <a href="#" class="contact-social-link" title="LinkedIn">
+                <i class="bi bi-linkedin"></i>
+              </a>
+              <a href="#" class="contact-social-link" title="YouTube">
+                <i class="bi bi-youtube"></i>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Map Section -->
+    <section class="contact-map-section">
+      <div class="contact-map-wrapper">
+        <iframe 
+          src="https://www.google.com/maps?q=Đại+học+Đại+Nam+Phú+Lãm+Hà+Đông+Hà+Nội&output=embed"
+          width="100%" 
+          height="400" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Bản đồ Đại học Đại Nam">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="contact-faq-section">
+      <h2 class="contact-faq-title">Câu hỏi thường gặp</h2>
+      <div class="contact-faq-grid">
+        <div class="contact-faq-item">
+          <div class="contact-faq-question">
+            <i class="bi bi-question-circle-fill"></i>
+            <span>Làm thế nào để đặt tour?</span>
+          </div>
+          <p class="contact-faq-answer">Bạn có thể đặt tour trực tuyến trên website, qua hotline 1900 123 456, hoặc đến văn phòng của chúng tôi.</p>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-question">
+            <i class="bi bi-question-circle-fill"></i>
+            <span>Thời gian xử lý yêu cầu là bao lâu?</span>
+          </div>
+          <p class="contact-faq-answer">Chúng tôi sẽ phản hồi email trong vòng 24 giờ. Với hotline, bạn sẽ được hỗ trợ ngay lập tức.</p>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-question">
+            <i class="bi bi-question-circle-fill"></i>
+            <span>Có hỗ trợ hủy/đổi tour không?</span>
+          </div>
+          <p class="contact-faq-answer">Có, chúng tôi hỗ trợ hủy và đổi tour miễn phí trong vòng 7 ngày trước ngày khởi hành.</p>
+        </div>
+        <div class="contact-faq-item">
+          <div class="contact-faq-question">
+            <i class="bi bi-question-circle-fill"></i>
+            <span>Thanh toán như thế nào?</span>
+          </div>
+          <p class="contact-faq-answer">Chúng tôi chấp nhận thanh toán qua thẻ tín dụng, chuyển khoản ngân hàng, hoặc ví điện tử.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <div id="footer-placeholder"></div>
@@ -127,6 +294,7 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/settings.js"></script>
+  <script src="assets/js/icons-loader.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/contact.js"></script>
 </body>

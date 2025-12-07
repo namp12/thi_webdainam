@@ -1,0 +1,186 @@
+/**
+ * Free Icons Integration
+ * Tích hợp icon từ Iconify (hỗ trợ nhiều icon packs miễn phí)
+ * Website: https://iconify.design/
+ */
+
+/* Iconify sẽ được load qua script tag, không cần CSS import */
+
+/* ============================================
+   Iconify Integration
+   ============================================ */
+.iconify-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ============================================
+   Icon Sizes
+   ============================================ */
+.icon-xs {
+  font-size: 0.75rem;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.icon-sm {
+  font-size: 1rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.icon-md {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.icon-lg {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.icon-xl {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+}
+
+/* ============================================
+   Icon Colors
+   ============================================ */
+.icon-primary {
+  color: #667eea;
+}
+
+.icon-success {
+  color: #28a745;
+}
+
+.icon-danger {
+  color: #dc3545;
+}
+
+.icon-warning {
+  color: #ffc107;
+}
+
+.icon-info {
+  color: #17a2b8;
+}
+
+.icon-secondary {
+  color: #6c757d;
+}
+
+/* ============================================
+   Icon Animations
+   ============================================ */
+.icon-spin {
+  animation: iconSpin 1s linear infinite;
+}
+
+@keyframes iconSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-pulse {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.icon-bounce {
+  animation: iconBounce 1s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ============================================
+   Icon Wrapper Styles
+   ============================================ */
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.icon-wrapper-circle {
+  border-radius: 50%;
+}
+
+.icon-wrapper-rounded {
+  border-radius: 12px;
+}
+
+.icon-wrapper-square {
+  border-radius: 4px;
+}
+
+.icon-wrapper-primary {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+}
+
+.icon-wrapper-primary:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: scale(1.1);
+}
+
+.icon-wrapper-success {
+  background: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+}
+
+.icon-wrapper-success:hover {
+  background: #28a745;
+  color: white;
+}
+
+.icon-wrapper-danger {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.icon-wrapper-danger:hover {
+  background: #dc3545;
+  color: white;
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .icon-wrapper-primary {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+}
+
+[data-bs-theme="dark"] .icon-secondary {
+  color: var(--dark-text-secondary);
+}
+

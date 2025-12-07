@@ -1,6 +1,7 @@
 <div class="topbar py-2 border-bottom bg-light">
   <div class="container d-flex justify-content-end align-items-center gap-3">
     <div class="d-flex align-items-center gap-2">
+      <i class="bi bi-translate" style="color: #6c757d;"></i>
       <label for="lang-select" class="small text-muted mb-0" data-i18n="lang_label">Ngôn ngữ</label>
       <select id="lang-select" class="form-select form-select-sm w-auto">
         <option value="vi">VI</option>
@@ -9,9 +10,13 @@
     </div>
     <div class="form-check form-switch d-flex align-items-center gap-2">
       <input class="form-check-input" type="checkbox" id="toggle-dark">
+      <i class="bi bi-moon-stars" style="color: #6c757d;"></i>
       <label class="form-check-label small text-muted mb-0" for="toggle-dark" data-i18n="dark_mode">Dark</label>
     </div>
-    <a class="small text-muted" href="contact.html" data-i18n="support">Hỗ trợ</a>
+    <a class="small text-muted d-flex align-items-center gap-1" href="contact.html" data-i18n="support">
+      <i class="bi bi-question-circle"></i>
+      Hỗ trợ
+    </a>
   </div>
 </div>
 <nav class="navbar navbar-expand-lg bg-white">
@@ -24,7 +29,7 @@
       <ul class="navbar-nav mx-auto">
         <li class="nav-item"><a class="nav-link active" href="index.html" data-i18n="nav_home">Trang chủ</a></li>
         <li class="nav-item"><a class="nav-link" href="tours.html" data-i18n="nav_alltours">Danh sách tour</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.html#promo" data-i18n="nav_deals">Khuyến mãi</a></li>
+        <li class="nav-item"><a class="nav-link" href="promotions.html" data-i18n="nav_deals">Khuyến mãi</a></li>
         <li class="nav-item"><a class="nav-link" href="blog.html" data-i18n="nav_blog">Blog</a></li>
         <li class="nav-item"><a class="nav-link" href="about.html" data-i18n="nav_about">Giới thiệu</a></li>
       </ul>
@@ -33,8 +38,12 @@
           <i class="bi bi-cart"></i> Giỏ hàng
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge d-none" style="font-size: 0.65rem;">0</span>
         </a>
-        <a class="btn btn-outline-primary btn-sm" href="favorites.html" data-i18n="nav_fav">♥ Yêu thích</a>
-        <a class="btn btn-primary btn-sm" href="login.html" data-i18n="nav_login" id="btn-login">Đăng nhập</a>
+        <a class="btn btn-outline-primary btn-sm" href="favorites.html" data-i18n="nav_fav">
+          <i class="bi bi-heart-fill"></i> Yêu thích
+        </a>
+        <a class="btn btn-primary btn-sm" href="login.html" data-i18n="nav_login" id="btn-login">
+          <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+        </a>
       </div>
     </div>
   </div>

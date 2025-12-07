@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/booking-forms.css">
 </head>
 <body class="bg-light">
   <div id="header-placeholder"></div>
@@ -16,38 +17,113 @@
   <main class="container py-5">
     <div class="row g-4">
       <div class="col-lg-7">
-        <h4 class="mb-3">Thông tin khách hàng</h4>
-        <form id="booking-form" class="card p-3 shadow-sm">
-          <div class="mb-3">
-            <label class="form-label">Họ tên</label>
-            <input class="form-control" id="bk-name" required>
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <div class="flex-grow-1">
+            <h2 class="mb-1">
+              <i class="bi bi-calendar-check text-primary me-2"></i>Đặt tour
+            </h2>
+            <p class="text-muted small mb-0">Điền thông tin để hoàn tất đặt tour</p>
+          </div>
+        </div>
+        <form id="booking-form" class="card booking-card p-4">
+          <div class="card-header booking-card-header mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
+            <h5 class="mb-0"><i class="bi bi-info-circle"></i> Thông tin tour</h5>
+          </div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label"><i class="bi bi-calendar-event"></i> Ngày đi <span class="text-danger">*</span></label>
+              <div class="input-group-icon">
+                <i class="bi bi-calendar-event"></i>
+                <input type="date" class="form-control" id="bk-departure-date" required>
+              </div>
+              <div class="invalid-feedback d-none" id="bk-departure-date-error"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><i class="bi bi-calendar-check"></i> Ngày về <span class="text-danger">*</span></label>
+              <div class="input-group-icon">
+                <i class="bi bi-calendar-check"></i>
+                <input type="date" class="form-control" id="bk-return-date" required>
+              </div>
+              <div class="invalid-feedback d-none" id="bk-return-date-error"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><i class="bi bi-people"></i> Số lượng khách <span class="text-danger">*</span></label>
+              <div class="input-group-icon">
+                <i class="bi bi-people"></i>
+                <input type="number" class="form-control" id="bk-quantity" min="1" max="100" value="1" required>
+              </div>
+              <div class="invalid-feedback d-none" id="bk-quantity-error"></div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label"><i class="bi bi-tag"></i> Mã giảm giá (nếu có)</label>
+              <div class="discount-input-group">
+                <input type="text" class="form-control" id="bk-discount-code" placeholder="Nhập mã giảm giá">
+                <button type="button" class="discount-apply-btn" id="btn-apply-discount-booking">
+                  <i class="bi bi-check-lg me-1"></i>Áp dụng
+                </button>
+              </div>
+              <div class="invalid-feedback d-none" id="bk-discount-error"></div>
+              <div class="valid-feedback d-none" id="bk-discount-success"></div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="card-header booking-card-header mb-4" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); border-radius: 12px;">
+            <h5 class="mb-0"><i class="bi bi-person-circle"></i> Thông tin khách hàng</h5>
           </div>
           <div class="mb-3">
-            <label class="form-label">Email</label>
-            <input type="email" class="form-control" id="bk-email" required>
+            <label class="form-label"><i class="bi bi-person"></i> Họ tên <span class="text-danger">*</span></label>
+            <div class="input-group-icon">
+              <i class="bi bi-person"></i>
+              <input class="form-control" id="bk-name" required>
+            </div>
+            <div class="invalid-feedback d-none" id="bk-name-error"></div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Số điện thoại</label>
-            <input class="form-control" id="bk-phone" required>
+            <label class="form-label"><i class="bi bi-envelope"></i> Email <span class="text-danger">*</span></label>
+            <div class="input-group-icon">
+              <i class="bi bi-envelope"></i>
+              <input type="email" class="form-control" id="bk-email" required>
+            </div>
+            <div class="invalid-feedback d-none" id="bk-email-error"></div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Phương thức thanh toán</label>
-            <select class="form-select" id="bk-payment">
-              <option>Thẻ</option>
-              <option>Momo</option>
-              <option>ZaloPay</option>
+            <label class="form-label"><i class="bi bi-phone"></i> Số điện thoại <span class="text-danger">*</span></label>
+            <div class="input-group-icon">
+              <i class="bi bi-phone"></i>
+              <input type="tel" class="form-control" id="bk-phone" required>
+            </div>
+            <div class="invalid-feedback d-none" id="bk-phone-error"></div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"><i class="bi bi-card-text"></i> Ghi chú</label>
+            <textarea class="form-control" id="bk-note" rows="3" placeholder="Ghi chú thêm (nếu có)"></textarea>
+          </div>
+          <div class="mb-4">
+            <label class="form-label"><i class="bi bi-credit-card"></i> Phương thức thanh toán <span class="text-danger">*</span></label>
+            <select class="form-select" id="bk-payment" required>
+              <option value="card">Thẻ tín dụng/Ghi nợ</option>
+              <option value="momo">MoMo</option>
+              <option value="zalopay">ZaloPay</option>
+              <option value="bank">Chuyển khoản</option>
             </select>
           </div>
-          <button class="btn btn-primary" type="submit">Xác nhận</button>
+          <button class="btn btn-booking w-100" type="submit">
+            <i class="bi bi-check-circle me-2"></i>Xác nhận đặt tour
+          </button>
         </form>
       </div>
       <div class="col-lg-5">
-        <div class="card shadow-sm">
+        <div class="card booking-card">
+          <div class="card-header booking-card-header" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
+            <h5 class="mb-0"><i class="bi bi-receipt"></i> Tóm tắt tour</h5>
+          </div>
           <div class="card-body" id="bk-summary">
-            <h5 class="mb-3">Tóm tắt tour</h5>
-            <div id="bk-tour-title" class="fw-bold"></div>
-            <div id="bk-tour-price" class="text-primary fw-semibold"></div>
-            <div id="bk-tour-duration" class="text-muted"></div>
+            <div id="bk-tour-title" class="fw-bold mb-2 fs-5"></div>
+            <div id="bk-tour-price" class="text-primary fw-semibold mb-2 fs-4"></div>
+            <div id="bk-tour-duration" class="text-muted mb-3"></div>
+            <div id="bk-tour-stock"></div>
           </div>
         </div>
       </div>
@@ -61,7 +137,10 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/settings.js"></script>
+  <script src="assets/js/auth.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/booking-validation.js"></script>
+  <script src="assets/js/booking-manager.js"></script>
   <script src="assets/js/booking.js"></script>
 </body>
 </html>
