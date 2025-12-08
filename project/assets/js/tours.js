@@ -19,6 +19,10 @@
   const $catList = $("#category-tour-list");
   const $catPills = $("#category-pills");
 
+  // Sử dụng IMAGE_MAPPING từ image-mapping.js
+  const getTourImage = (tour) => window.IMAGE_MAPPING?.getTourImage(tour) || `assets/img/tours/${tour.id}.jpg`;
+  const getTourFallbackImage = (tour) => window.IMAGE_MAPPING?.getTourFallbackImage(tour) || 'assets/img/banners/placeholder.jpg';
+
   let tours = [];
 
   function showLoading(isLoading) {
@@ -75,11 +79,19 @@
           const hasPromotion = pricing.promotion !== null;
           const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
 
+          // Lấy ảnh từ mapping hoặc auto-detect
+          const imageSrc = getTourImage(t);
+          const fallbackImage = getTourFallbackImage(t);
+          
           return `
         <div class="col-md-4 mb-4">
           <div class="card h-100 tour-card">
             <div class="position-relative card-image-wrapper">
-              <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
+              <img src="${imageSrc}" 
+                   class="card-img-top" 
+                   alt="${t.title}"
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='${fallbackImage}';">
               <div class="card-overlay"></div>
               ${hasPromotion && badgeText ? `
               <span class="badge badge-promotion position-absolute top-0 end-0 m-2">
@@ -136,7 +148,7 @@
                     <i class="bi bi-cart-plus"></i>
                     <span>Giỏ hàng</span>
                   </button>
-                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}" title="Thêm vào yêu thích">
+                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}' title="Thêm vào yêu thích">
                     <i class="bi bi-heart-fill"></i>
                   </button>
                 </div>
@@ -180,11 +192,19 @@
           const hasPromotion = pricing.promotion !== null;
           const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
 
+          // Ưu tiên ảnh local trước, nếu không có thì dùng ảnh từ JSON
+          const localImage = `assets/img/tours/${t.id}.jpg`;
+          const imageSrc = localImage; // Luôn ưu tiên ảnh local trước
+
           return `
         <div class="tour-card-wrapper">
           <div class="card h-100 tour-card">
             <div class="position-relative card-image-wrapper">
-              <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
+              <img src="${imageSrc}" 
+                   class="card-img-top" 
+                   alt="${t.title}"
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='${t.image || `assets/img/banners/placeholder.jpg`}';">
               <div class="card-overlay"></div>
               <span class="badge bg-danger position-absolute top-0 start-0 m-2" style="z-index: 10;">
                 <i class="bi bi-fire"></i> Hot
@@ -244,7 +264,7 @@
                   <button class="btn btn-outline-success btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
                     <i class="bi bi-cart-plus"></i>
                   </button>
-                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}">
+                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}' title="Thêm vào yêu thích">
                     <i class="bi bi-heart"></i>
                   </button>
                 </div>
@@ -287,11 +307,19 @@
           const hasPromotion = pricing.promotion !== null;
           const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
 
+          // Ưu tiên ảnh local trước, nếu không có thì dùng ảnh từ JSON
+          const localImage = `assets/img/tours/${t.id}.jpg`;
+          const imageSrc = localImage; // Luôn ưu tiên ảnh local trước
+
           return `
         <div class="tour-card-wrapper">
           <div class="card h-100 tour-card">
             <div class="position-relative card-image-wrapper">
-              <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
+              <img src="${imageSrc}" 
+                   class="card-img-top" 
+                   alt="${t.title}"
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='${t.image || `assets/img/banners/placeholder.jpg`}';">
               <div class="card-overlay"></div>
               ${hasPromotion && badgeText ? `
               <span class="badge badge-promotion position-absolute top-0 end-0 m-2">
@@ -348,7 +376,7 @@
                   <button class="btn btn-outline-success btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
                     <i class="bi bi-cart-plus"></i>
                   </button>
-                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}">
+                  <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}' title="Thêm vào yêu thích">
                     <i class="bi bi-heart"></i>
                   </button>
                 </div>
@@ -410,10 +438,101 @@
     render(filtered);
   }
 
+  // Render Destinations - HOÀN TOÀN ĐỘC LẬP, chỉ load từ file tùy chỉnh, chỉ dùng ảnh local từ thư mục img
+  // Tham số items KHÔNG được sử dụng, chỉ để tương thích với code cũ
+  async function renderDestinations(items) {
+    const $destGrid = $("#destinations-grid");
+    if (!$destGrid.length) return;
+    
+    let destinations = [];
+    
+    // CHỈ load từ file tùy chỉnh, KHÔNG phụ thuộc vào API
+    try {
+      const response = await fetch('data/destinations-custom.json');
+      const data = await response.json();
+      if (data.destinations && data.destinations.length > 0) {
+        destinations = data.destinations;
+        console.log("Đã load destinations từ file tùy chỉnh");
+      } else {
+        // File tồn tại nhưng rỗng
+        console.log("File destinations-custom.json rỗng, hiển thị empty state");
+        $destGrid.html(`
+          <div class="col-12 text-center py-5">
+            <div class="text-muted">
+              <i class="bi bi-image" style="font-size: 3rem;"></i>
+              <p class="mt-3">Chưa có điểm đến nổi bật nào. Vui lòng thêm trong Admin Panel.</p>
+              <a href="admin-destinations.html" class="btn btn-primary btn-sm">
+                <i class="bi bi-plus-circle"></i> Thêm Điểm Đến
+              </a>
+            </div>
+          </div>
+        `);
+        return;
+      }
+    } catch (err) {
+      // Không có file tùy chỉnh - hiển thị empty state
+      console.log("Không tìm thấy file destinations-custom.json. Vui lòng tạo file trong Admin Panel.", err);
+      $destGrid.html(`
+        <div class="col-12 text-center py-5">
+          <div class="text-muted">
+            <i class="bi bi-image" style="font-size: 3rem;"></i>
+            <p class="mt-3">Chưa có điểm đến nổi bật nào. Vui lòng thêm trong Admin Panel.</p>
+            <a href="admin-destinations.html" class="btn btn-primary btn-sm">
+              <i class="bi bi-plus-circle"></i> Thêm Điểm Đến
+            </a>
+          </div>
+        </div>
+      `);
+      return;
+    }
+    
+    // Render HTML từ file tùy chỉnh - Đảm bảo ảnh hiển thị
+    const html = destinations
+      .map((dest, index) => {
+        // Đảm bảo đường dẫn ảnh đúng format
+        const imageSrc = dest.image || dest.fallbackImage || 'assets/img/banners/banner.jpg';
+        const fallbackImage = dest.fallbackImage || dest.image || 'assets/img/banners/banner.jpg';
+        const link = dest.link || `tours.html?destination=${encodeURIComponent(dest.name)}`;
+        
+        return `
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal-scale hover-scale image-zoom ${index > 0 ? `animate-delay-${index}` : ''}" 
+               onclick="window.location.href='${link}'" style="cursor: pointer;">
+            <img src="${imageSrc}" 
+                 alt="${dest.name}" 
+                 class="loaded"
+                 loading="lazy"
+                 onerror="this.onerror=null; this.src='${fallbackImage}'; this.onerror=null; this.src='assets/img/banners/banner.jpg';">
+            <div class="dest-overlay">
+              <h6 class="mb-1">${dest.name}</h6>
+              <span class="badge bg-light text-dark badge-soft">${dest.theme || "Du lịch"}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      })
+      .join("");
+    
+    if (html) {
+      $destGrid.html(html);
+      console.log(`✅ Đã render ${destinations.length} destinations với ảnh từ file local`);
+    } else {
+      console.warn("⚠️ Không có HTML để render");
+    }
+  }
+
   async function loadTours() {
     showLoading(true);
     try {
+      // Load image mapping trước (từ file JSON - fallback)
+      if (window.IMAGE_MAPPING) {
+        await window.IMAGE_MAPPING.load();
+      }
+      
+      // Load tours từ API - LUÔN LUÔN load mới nhất để có tours mới và ảnh mới
       tours = await http.get(API.tours);
+      console.log(`✅ Đã load ${tours.length} tours từ API cho index.html`);
+      
       renderStats(tours);
       fillDestinations(tours);
       render(tours);
@@ -421,10 +540,22 @@
       renderCategory(tours, "");
     } catch (err) {
       showToast("Không tải được tour", "danger");
+      console.error("❌ Lỗi khi load tours:", err);
     } finally {
       showLoading(false);
     }
+    
+    // Render destinations - HOÀN TOÀN ĐỘC LẬP, chỉ dùng ảnh local từ file JSON, KHÔNG phụ thuộc API
+    // Load riêng để không bị ảnh hưởng bởi lỗi API
+    await renderDestinations([]);
   }
+  
+  // Listen for tour image updates từ dashboard
+  $(document).on('tourImageUpdated toursImagesUpdated', function(e, data) {
+    console.log('📢 Nhận được thông báo cập nhật ảnh tour, reload tours...');
+    // Reload tours để hiển thị ảnh mới
+    loadTours();
+  });
 
   $(function () {
     if (!$list.length) return;
@@ -470,21 +601,160 @@
       renderCategory(tours, $(this).data("category"));
     });
 
-    $list.on("click", ".add-fav", function () {
-      const id = $(this).data("id");
-      const tourData = $(this).closest('.tour-card').find('.add-cart').data('tour');
-      if (window.APP_FAVORITES) {
-        window.APP_FAVORITES.add(id, "", tourData);
-        
-        const $btn = $(this);
-        $btn.html('<i class="bi bi-heart-fill"></i>').addClass("btn-favorite-active").removeClass("btn-favorite");
-        $btn.find('i').addClass('heart-beat-animation');
-        showToast("Đã thêm vào yêu thích", "success");
-        setTimeout(() => {
-          $btn.find('i').removeClass('heart-beat-animation');
-        }, 600);
+    // Event handler cho nút yêu thích - sử dụng event delegation
+    $(document).on("click", ".add-fav", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const $btn = $(this);
+      const id = $btn.data("id");
+      
+      console.log("❤️ Click thêm vào yêu thích, tour ID:", id);
+      
+      if (!window.APP_FAVORITES) {
+        console.error("❌ APP_FAVORITES không tồn tại");
+        showToast("Hệ thống yêu thích chưa sẵn sàng", "danger");
+        return;
       }
+      
+      // Lấy tourData từ nhiều nguồn để đảm bảo có dữ liệu
+      let tourData = null;
+      
+      // 1. Ưu tiên: Lấy từ data-tour trên chính nút yêu thích
+      const favTourData = $btn.data("tour");
+      if (favTourData) {
+        // Nếu là string (JSON), parse lại
+        if (typeof favTourData === 'string') {
+          try {
+            tourData = JSON.parse(favTourData.replace(/&#39;/g, "'"));
+            console.log("✅ Lấy tourData từ data-tour trên nút yêu thích");
+          } catch (err) {
+            console.warn("⚠️ Không thể parse tourData từ data-tour:", err);
+          }
+        } else {
+          tourData = favTourData;
+          console.log("✅ Lấy tourData từ data-tour (object)");
+        }
+      }
+      
+      // 2. Nếu không có, thử lấy từ .add-cart button trong cùng card
+      if (!tourData) {
+        const $cartBtn = $btn.closest('.tour-card').find('.add-cart');
+        if ($cartBtn.length) {
+          const cartTourData = $cartBtn.data('tour');
+          if (cartTourData) {
+            // Nếu là string (JSON), parse lại
+            if (typeof cartTourData === 'string') {
+              try {
+                tourData = JSON.parse(cartTourData.replace(/&#39;/g, "'"));
+                console.log("✅ Lấy tourData từ .add-cart button");
+              } catch (err) {
+                console.warn("⚠️ Không thể parse tourData từ .add-cart:", err);
+              }
+            } else {
+              tourData = cartTourData;
+              console.log("✅ Lấy tourData từ .add-cart (object)");
+            }
+          }
+        }
+      }
+      
+      // 3. Nếu không có, lấy từ tours array
+      if (!tourData && tours && tours.length) {
+        const tour = tours.find(t => String(t.id) === String(id));
+        if (tour) {
+          tourData = tour;
+          console.log("✅ Tìm thấy tour từ tours array:", tour.title);
+        }
+      }
+      
+      // 4. Nếu vẫn không có, thử load từ API (async)
+      if (!tourData && window.APP_CONFIG && window.APP_UTILS) {
+        const { API } = window.APP_CONFIG;
+        const { http } = window.APP_UTILS;
+        console.log("⚠️ Không tìm thấy tourData, đang load từ API...");
+        http.get(`${API.tours}/${id}`).then(tour => {
+          tourData = tour;
+          console.log("✅ Đã load tour từ API:", tour.title);
+          addToFavorites(id, tourData, $btn);
+        }).catch(err => {
+          console.error("❌ Không thể load tour từ API:", err);
+          // Vẫn thử thêm với tourData null
+          addToFavorites(id, null, $btn);
+        });
+        return;
+      }
+      
+      // Thêm vào yêu thích ngay lập tức
+      addToFavorites(id, tourData, $btn);
     });
+    
+    // Hàm helper để thêm vào yêu thích
+    function addToFavorites(id, tourData, $btn) {
+      // Kiểm tra APP_FAVORITES có tồn tại không
+      if (!window.APP_FAVORITES) {
+        console.error("❌ APP_FAVORITES không tồn tại. Vui lòng đảm bảo favorites.js đã được load.");
+        showToast("Hệ thống yêu thích chưa sẵn sàng. Vui lòng tải lại trang.", "danger");
+        return false;
+      }
+      
+      // Kiểm tra hàm add có tồn tại không
+      if (typeof window.APP_FAVORITES.add !== 'function') {
+        console.error("❌ APP_FAVORITES.add không phải là function");
+        showToast("Hệ thống yêu thích chưa sẵn sàng", "danger");
+        return false;
+      }
+      
+      console.log("❤️ Thêm vào yêu thích:", {
+        id: id,
+        hasTourData: !!tourData,
+        tourTitle: tourData ? tourData.title : "null",
+        APP_FAVORITES_exists: !!window.APP_FAVORITES,
+        add_function_exists: typeof window.APP_FAVORITES.add === 'function'
+      });
+      
+      try {
+        // Gọi hàm add từ APP_FAVORITES
+        const result = window.APP_FAVORITES.add(id, "", tourData);
+        
+        console.log("📋 Kết quả thêm vào yêu thích:", result);
+        
+        if (result === true) {
+          // Cập nhật UI khi thành công
+          $btn.html('<i class="bi bi-heart-fill"></i>')
+              .addClass("btn-favorite-active")
+              .removeClass("btn-favorite")
+              .prop("title", "Đã thêm vào yêu thích");
+          $btn.find('i').addClass('heart-beat-animation');
+          
+          setTimeout(() => {
+            $btn.find('i').removeClass('heart-beat-animation');
+          }, 600);
+          
+          console.log("✅ Đã thêm vào yêu thích thành công");
+          return true;
+        } else if (result === false) {
+          // Nếu đã có trong yêu thích hoặc có lỗi (ví dụ: chưa đăng nhập)
+          // Vẫn cập nhật UI để hiển thị trạng thái
+          const favorites = window.APP_FAVORITES.getAll();
+          const isInFavorites = favorites.some(f => String(f.id) === String(id));
+          
+          if (isInFavorites) {
+            $btn.html('<i class="bi bi-heart-fill"></i>')
+                .addClass("btn-favorite-active")
+                .removeClass("btn-favorite")
+                .prop("title", "Đã có trong yêu thích");
+            console.log("ℹ️ Tour đã có trong yêu thích");
+          }
+          return false;
+        }
+      } catch (error) {
+        console.error("❌ Lỗi khi thêm vào yêu thích:", error);
+        console.error("Error stack:", error.stack);
+        showToast("Có lỗi xảy ra khi thêm vào yêu thích: " + error.message, "danger");
+        return false;
+      }
+    }
 
     $list.on("click", ".add-cart", function () {
       const id = $(this).data("id");

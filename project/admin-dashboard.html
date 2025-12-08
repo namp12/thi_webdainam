@@ -400,11 +400,11 @@
           <div class="col-12">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h3 class="fw-bold mb-0">
-                <i class="bi bi-bar-chart-fill text-primary me-2"></i>Biểu đồ thống kê
+                <i class="bi bi-bar-chart-fill text-primary me-2"></i><span data-i18n="admin_charts_title">Biểu đồ thống kê</span>
               </h3>
               <button class="btn-export-all" id="export-all-stats">
                 <i class="bi bi-download"></i>
-                Xuất tất cả CSV
+                <span data-i18n="admin_export_all_csv">Xuất tất cả CSV</span>
               </button>
             </div>
           </div>
@@ -417,18 +417,18 @@
               <div class="chart-header">
                 <h4 class="chart-title">
                   <i class="bi bi-cash-stack"></i>
-                  Doanh thu theo thời gian
+                  <span data-i18n="admin_revenue_chart">Doanh thu theo thời gian</span>
                 </h4>
                 <div class="chart-actions">
                   <div class="chart-filters">
-                    <button class="chart-filter-btn active" data-period="7d">7 ngày</button>
-                    <button class="chart-filter-btn" data-period="30d">30 ngày</button>
-                    <button class="chart-filter-btn" data-period="90d">90 ngày</button>
-                    <button class="chart-filter-btn" data-period="1y">1 năm</button>
+                    <button class="chart-filter-btn active" data-period="7d" data-i18n="admin_period_7d">7 ngày</button>
+                    <button class="chart-filter-btn" data-period="30d" data-i18n="admin_period_30d">30 ngày</button>
+                    <button class="chart-filter-btn" data-period="90d" data-i18n="admin_period_90d">90 ngày</button>
+                    <button class="chart-filter-btn" data-period="1y" data-i18n="admin_period_1y">1 năm</button>
                   </div>
                   <button class="btn-export-csv" id="export-revenue-csv">
                     <i class="bi bi-file-earmark-spreadsheet"></i>
-                    Xuất CSV
+                    <span data-i18n="admin_export_csv">Xuất CSV</span>
                   </button>
                 </div>
               </div>
@@ -444,7 +444,7 @@
               <div class="chart-header">
                 <h4 class="chart-title">
                   <i class="bi bi-trophy"></i>
-                  Top 10 Tours phổ biến
+                  <span data-i18n="admin_top_tours_chart">Top 10 Tours phổ biến</span>
                 </h4>
               </div>
               <div class="chart-container">
@@ -461,12 +461,12 @@
               <div class="chart-header">
                 <h4 class="chart-title">
                   <i class="bi bi-calendar-check"></i>
-                  Bookings theo thời gian
+                  <span data-i18n="admin_bookings_chart">Bookings theo thời gian</span>
                 </h4>
                 <div class="chart-actions">
                   <button class="btn-export-csv" id="export-bookings-csv">
                     <i class="bi bi-file-earmark-spreadsheet"></i>
-                    Xuất CSV
+                    <span data-i18n="admin_export_csv">Xuất CSV</span>
                   </button>
                 </div>
               </div>
@@ -482,7 +482,7 @@
               <div class="chart-header">
                 <h4 class="chart-title">
                   <i class="bi bi-funnel"></i>
-                  Conversion Funnel
+                  <span data-i18n="admin_funnel_chart">Conversion Funnel</span>
                 </h4>
               </div>
               <div class="chart-container">
@@ -590,6 +590,7 @@
   <script src="assets/js/admin-dashboard.js"></script>
   <script src="assets/js/dashboard-links.js"></script>
   <script src="assets/js/dashboard-charts.js"></script>
+  <script src="assets/js/dashboard-image-management.js"></script>
   <script>
     // Make loadStats available globally for refresh
     window.loadStats = function() {

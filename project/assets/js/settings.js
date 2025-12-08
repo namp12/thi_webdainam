@@ -11,19 +11,36 @@
     try {
       const res = await fetch(`assets/lang/${lang}.json`);
       const dict = await res.json();
-      // Store dictionary globally for JS access
+      // Lưu từ điển toàn cục để truy cập từ JS
       window.APP_LANG = dict;
       
       $("[data-i18n]").each(function () {
         const key = $(this).data("i18n");
-        if (dict[key]) $(this).text(dict[key]);
+        if (dict[key]) {
+          // Nếu là button với text riêng, chỉ cập nhật text không có icon
+          if ($(this).is('button') && $(this).children('i').length > 0) {
+            $(this).contents().filter(function() {
+              return this.nodeType === 3; // Text node
+            }).replaceWith(dict[key]);
+          } else {
+            $(this).text(dict[key]);
+          }
+        }
       });
       $("[data-i18n-placeholder]").each(function () {
         const key = $(this).data("i18n-placeholder");
         if (dict[key]) $(this).attr("placeholder", dict[key]);
       });
+      // Cập nhật các button có data-i18n nhưng có icon
+      $("button[data-i18n], .btn[data-i18n]").each(function() {
+        const key = $(this).data("i18n");
+        if (dict[key] && $(this).children('i').length > 0) {
+          const icon = $(this).children('i').first();
+          $(this).html(icon.prop('outerHTML') + ' ' + dict[key]);
+        }
+      });
       
-      // Trigger custom event for other scripts
+      // Kích hoạt sự kiện tùy chỉnh cho các script khác
       $(document).trigger('langChanged', [lang, dict]);
     } catch (err) {
       console.warn("Lang load fail", err);

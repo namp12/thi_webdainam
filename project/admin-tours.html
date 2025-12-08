@@ -58,8 +58,17 @@
                 <input id="tour-form-duration" type="number" class="form-control" required>
               </div>
               <div class="col-md-4">
-                <label class="form-label">Ảnh (URL)</label>
-                <input id="tour-form-image" class="form-control">
+                <label class="form-label">Ảnh</label>
+                <div class="input-group">
+                  <select id="tour-form-image-select" class="form-select">
+                    <option value="">-- Chọn ảnh từ danh sách --</option>
+                  </select>
+                  <button class="btn btn-outline-secondary" type="button" onclick="window.open('admin-image-manager.html', '_blank')" title="Quản lý ảnh">
+                    <i class="bi bi-images"></i>
+                  </button>
+                </div>
+                <input type="text" id="tour-form-image" class="form-control mt-2" placeholder="Hoặc nhập URL/đường dẫn ảnh">
+                <small class="text-muted">Chọn từ danh sách hoặc nhập URL/đường dẫn thủ công</small>
               </div>
               <div class="col-12">
                 <label class="form-label">Mô tả</label>

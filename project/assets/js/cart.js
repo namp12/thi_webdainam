@@ -95,7 +95,12 @@
 
   function removeFromCart(tourId) {
     const cart = getCart();
-    const filtered = cart.filter(item => item.tourId !== tourId);
+    // Normalize tourId để so sánh đúng (xử lý cả string và number)
+    const normalizedTourId = String(tourId);
+    const filtered = cart.filter(item => {
+      const itemId = String(item.tourId);
+      return itemId !== normalizedTourId;
+    });
     saveCart(filtered);
     showToast("Đã xóa khỏi giỏ hàng", "success");
   }
@@ -106,16 +111,39 @@
       return;
     }
     const cart = getCart();
-    const item = cart.find(item => item.tourId === tourId);
+    // Normalize tourId để so sánh đúng
+    const normalizedTourId = String(tourId);
+    const item = cart.find(item => {
+      const itemId = String(item.tourId);
+      return itemId === normalizedTourId;
+    });
     if (item) {
       item.quantity = quantity;
       saveCart(cart);
+    } else {
+      console.warn("Không tìm thấy tour để cập nhật số lượng:", { tourId, normalizedTourId, cart: cart.map(i => ({ id: i.tourId, type: typeof i.tourId })) });
     }
   }
 
   function clearCart() {
+    // Xóa cart từ localStorage
     storage.remove(CART_KEY);
+    
+    // Xóa cart từ sessionStorage (nếu có)
+    try {
+      sessionStorage.removeItem("checkout_cart");
+      sessionStorage.removeItem("checkout_cart_backup");
+    } catch (e) {
+      console.warn("Không thể xóa sessionStorage cart:", e);
+    }
+    
+    // Cập nhật badge
     updateCartBadge();
+    
+    // Trigger event để các component khác biết cart đã được clear
+    $(document).trigger('cartUpdated');
+    
+    console.log("✅ Đã xóa giỏ hàng");
   }
 
   function getCartTotal() {

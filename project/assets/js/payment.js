@@ -57,12 +57,24 @@
       // Xóa dữ liệu tạm
       sessionStorage.removeItem("pending_booking");
       sessionStorage.removeItem("checkout_cart_backup");
+      sessionStorage.removeItem("checkout_cart");
       sessionStorage.removeItem("applied_discount");
       sessionStorage.removeItem("applied_discount_code");
 
-      // Clear cart
+      // Clear cart - Xóa giỏ hàng sau khi thanh toán thành công
       if (window.APP_CART) {
         window.APP_CART.clearCart();
+        console.log("✅ Đã xóa giỏ hàng sau khi thanh toán thành công");
+      } else {
+        // Fallback: Xóa trực tiếp nếu APP_CART chưa sẵn sàng
+        try {
+          localStorage.removeItem("travel_cart");
+          sessionStorage.removeItem("checkout_cart");
+          sessionStorage.removeItem("checkout_cart_backup");
+          console.log("✅ Đã xóa giỏ hàng (fallback)");
+        } catch (e) {
+          console.error("❌ Lỗi khi xóa giỏ hàng:", e);
+        }
       }
 
       // Update progress step

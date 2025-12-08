@@ -74,7 +74,7 @@
           </div>
           <div class="col-lg-6 text-center">
             <div class="hero-visual shadow-lg image-zoom">
-              <img src="assets/img/banners/placeholder.jpg" class="img-fluid rounded-4 loaded" alt="Travel">
+              <img src="assets/img/banners/banner.jpg" class="img-fluid rounded-4 loaded" alt="Travel">
               <div class="floating-card shadow animate-float">
                 <div class="small text-muted">Tour hot</div>
                 <div class="fw-semibold">Khám phá biển đảo</div>
@@ -192,58 +192,10 @@
         </div>
       </div>
       <div class="category-tours-grid" id="destinations-grid">
-        <div class="dest-card-wrapper">
-          <div class="dest-card reveal-scale hover-scale image-zoom">
-            <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=900&q=80" alt="Đà Nẵng" class="loaded">
-            <div class="dest-overlay">
-              <h6 class="mb-1">Đà Nẵng</h6>
-              <span class="badge bg-light text-dark badge-soft">Biển & Ẩm thực</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card-wrapper">
-          <div class="dest-card reveal-scale hover-scale image-zoom animate-delay-1">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Đà Lạt" class="loaded">
-            <div class="dest-overlay">
-              <h6 class="mb-1">Đà Lạt</h6>
-              <span class="badge bg-light text-dark badge-soft">Núi & Hoa</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card-wrapper">
-          <div class="dest-card reveal-scale hover-scale image-zoom animate-delay-2">
-            <img src="https://images.unsplash.com/photo-1523517832534-89c87f2bffe0?auto=format&fit=crop&w=900&q=80" alt="Phú Quốc" class="loaded">
-            <div class="dest-overlay">
-              <h6 class="mb-1">Phú Quốc</h6>
-              <span class="badge bg-light text-dark badge-soft">Resort & Lặn biển</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card-wrapper">
-          <div class="dest-card reveal-scale hover-scale image-zoom">
-            <img src="https://images.unsplash.com/photo-1503197979108-c824168d51a8?auto=format&fit=crop&w=900&q=80" alt="Nha Trang">
-            <div class="dest-overlay">
-              <h6 class="mb-1">Nha Trang</h6>
-              <span class="badge bg-light text-dark">Biển xanh</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card-wrapper">
-          <div class="dest-card reveal-scale hover-scale image-zoom">
-            <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=900&q=80" alt="Sapa">
-            <div class="dest-overlay">
-              <h6 class="mb-1">Sapa</h6>
-              <span class="badge bg-light text-dark">Mây & Trekking</span>
-            </div>
-          </div>
-        </div>
-        <div class="dest-card-wrapper">
-          <div class="dest-card reveal-scale hover-scale image-zoom">
-            <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Hạ Long">
-            <div class="dest-overlay">
-              <h6 class="mb-1">Hạ Long</h6>
-              <span class="badge bg-light text-dark">Du thuyền</span>
-            </div>
+        <!-- Destinations được render từ file destinations-custom.json, chỉ dùng ảnh local từ thư mục img, KHÔNG phụ thuộc API -->
+        <div class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Đang tải...</span>
           </div>
         </div>
       </div>
@@ -688,6 +640,7 @@
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/pricing-manager.js"></script>
   <script src="assets/js/icons-loader.js"></script>
+  <script src="assets/js/image-mapping.js"></script>
   <script src="assets/js/tours.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/index-animations.js"></script>

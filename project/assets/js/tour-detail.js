@@ -34,11 +34,15 @@
     $("#tour-description").text(tour.description || "Chưa có mô tả.");
     $("#tour-start").text(tour.startDate || "Liên hệ");
 
-    // Gallery
+    // Gallery - Lấy ảnh từ mapping hoặc auto-detect
+    const imageSrc = window.IMAGE_MAPPING?.getTourImage(tour) || `assets/img/tours/${tour.id}.jpg`;
+    const fallbackImage = window.IMAGE_MAPPING?.getTourFallbackImage(tour) || 'assets/img/banners/placeholder.jpg';
     const galleryHtml = `
       <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
-        <img src="${tour.image || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800"}" 
-             class="w-100 h-100 object-fit-cover" alt="${tour.title}">
+        <img src="${imageSrc}" 
+             class="w-100 h-100 object-fit-cover" 
+             alt="${tour.title}"
+             onerror="this.onerror=null; this.src='${fallbackImage}';">
       </div>
     `;
     $("#tour-gallery").html(galleryHtml);

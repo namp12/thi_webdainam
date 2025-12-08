@@ -40,11 +40,19 @@
           const hasPromotion = pricing.promotion !== null;
           const badgeText = hasPromotion ? window.PRICING_MANAGER?.getPromotionBadge(pricing.promotion) : null;
 
+          // Lấy ảnh từ mapping hoặc auto-detect
+          const imageSrc = window.IMAGE_MAPPING?.getTourImage(t) || `assets/img/tours/${t.id}.jpg`;
+          const fallbackImage = window.IMAGE_MAPPING?.getTourFallbackImage(t) || 'assets/img/banners/placeholder.jpg';
+
           return `
         <div class="col-md-4 mb-3">
           <div class="card h-100 shadow-sm tour-card">
             <div class="position-relative">
-              <img src="${t.image || "assets/img/banners/placeholder.jpg"}" class="card-img-top" alt="${t.title}">
+              <img src="${imageSrc}" 
+                   class="card-img-top" 
+                   alt="${t.title}"
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='${fallbackImage}';">
               ${hasPromotion && badgeText ? `
               <span class="badge badge-promotion position-absolute top-0 end-0 m-2">
                 <i class="bi bi-tag-fill"></i> ${badgeText}

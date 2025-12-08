@@ -1,0 +1,149 @@
+/**
+ * Cart Enhancements CSS
+ * Cải thiện UX cho tính năng cập nhật số lượng giỏ hàng
+ */
+
+/* Animation cho cập nhật số lượng */
+.qty-input.qty-updated {
+  animation: qtyPulse 0.3s ease;
+  background-color: #e7f3ff;
+  border-color: #0d6efd;
+}
+
+@keyframes qtyPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Animation cho cập nhật giá */
+.price-total.price-updating {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.price-total.price-updating::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #0d6efd;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Nút +/- với hover effect */
+.qty-btn-decrease,
+.qty-btn-increase {
+  transition: all 0.2s ease;
+  min-width: 32px;
+}
+
+.qty-btn-decrease:hover:not(:disabled),
+.qty-btn-increase:hover:not(:disabled) {
+  background-color: #0d6efd;
+  color: white;
+  transform: scale(1.1);
+}
+
+.qty-btn-decrease:disabled,
+.qty-btn-increase:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Input số lượng */
+.qty-input {
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.qty-input:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Cart item với animation khi cập nhật */
+.cart-item {
+  transition: all 0.3s ease;
+}
+
+.cart-item.updating {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Toast notification improvements */
+.toast-container {
+  z-index: 9999;
+}
+
+/* Loading state cho nút */
+.qty-btn-decrease.loading,
+.qty-btn-increase.loading {
+  position: relative;
+  color: transparent;
+}
+
+.qty-btn-decrease.loading::after,
+.qty-btn-increase.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Animation cho cập nhật giá trị trong summary */
+.value-updating {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.value-highlight {
+  animation: valueHighlight 0.5s ease;
+}
+
+@keyframes valueHighlight {
+  0%, 100% {
+    transform: scale(1);
+    color: inherit;
+  }
+  50% {
+    transform: scale(1.1);
+    color: #0d6efd;
+  }
+}
+
+/* Dark mode support */
+[data-theme="dark"] .qty-input.qty-updated {
+  background-color: #1a1a2e;
+  border-color: #667eea;
+}
+
+[data-theme="dark"] .qty-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+

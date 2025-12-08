@@ -1,10 +1,10 @@
 /**
- * Dashboard Charts & Export Styles
+ * Styles cho Biểu đồ Dashboard & Xuất CSV
  * Styling cho biểu đồ và nút xuất CSV
  */
 
 /* ============================================
-   Charts Section
+   Phần Biểu đồ
    ============================================ */
 .charts-section {
   margin-top: 2rem;
@@ -69,7 +69,7 @@
   height: 250px;
 }
 
-/* Chart Legend */
+/* Chú giải Biểu đồ */
 .chart-legend {
   display: flex;
   justify-content: center;
@@ -95,7 +95,7 @@
 }
 
 /* ============================================
-   Export CSV Buttons
+   Nút Xuất CSV
    ============================================ */
 .btn-export-csv {
   background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
@@ -127,7 +127,7 @@
   font-size: 1rem;
 }
 
-/* Export All Button */
+/* Nút Xuất Tất cả */
 .btn-export-all {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -151,7 +151,7 @@
 }
 
 /* ============================================
-   Chart Filters
+   Bộ lọc Biểu đồ
    ============================================ */
 .chart-filters {
   display: flex;
@@ -184,7 +184,7 @@
 }
 
 /* ============================================
-   Responsive Design
+   Thiết kế Responsive
    ============================================ */
 @media (max-width: 768px) {
   .chart-container {
@@ -216,33 +216,6 @@
 }
 
 /* ============================================
-   Dark Mode
+   Chế độ Tối (đã được xử lý trong dark-mode.css)
    ============================================ */
-[data-bs-theme="dark"] .chart-card {
-  background: var(--dark-card);
-  border-color: var(--dark-border);
-}
-
-[data-bs-theme="dark"] .chart-title {
-  color: var(--dark-text-primary);
-}
-
-[data-bs-theme="dark"] .chart-header {
-  border-bottom-color: var(--dark-border);
-}
-
-[data-bs-theme="dark"] .chart-legend {
-  border-top-color: var(--dark-border);
-}
-
-[data-bs-theme="dark"] .chart-filter-btn {
-  background: var(--dark-card);
-  border-color: var(--dark-border);
-  color: var(--dark-text-primary);
-}
-
-[data-bs-theme="dark"] .chart-filter-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
-}
 

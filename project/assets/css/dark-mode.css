@@ -663,3 +663,137 @@
   box-shadow: 0 8px 24px var(--dark-shadow) !important;
 }
 
+/* ============================================
+   Charts Section - Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .charts-section {
+  background: transparent;
+}
+
+[data-bs-theme="dark"] .chart-card {
+  background: var(--dark-bg-card) !important;
+  border-color: var(--dark-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-bs-theme="dark"] .chart-card:hover {
+  background: var(--dark-bg-hover) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+  border-color: var(--dark-accent) !important;
+}
+
+[data-bs-theme="dark"] .chart-title {
+  color: var(--dark-text-primary) !important;
+}
+
+[data-bs-theme="dark"] .chart-title i {
+  color: var(--dark-accent) !important;
+}
+
+[data-bs-theme="dark"] .chart-header {
+  border-bottom-color: var(--dark-border) !important;
+}
+
+[data-bs-theme="dark"] .chart-legend {
+  border-top-color: var(--dark-border) !important;
+}
+
+[data-bs-theme="dark"] .chart-legend-item {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .chart-filter-btn {
+  background: var(--dark-bg-card) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+[data-bs-theme="dark"] .chart-filter-btn:hover {
+  border-color: var(--dark-accent) !important;
+  color: var(--dark-accent) !important;
+  background: var(--dark-bg-hover) !important;
+}
+
+[data-bs-theme="dark"] .chart-filter-btn.active {
+  background: linear-gradient(135deg, var(--dark-accent) 0%, #2bc98a 100%) !important;
+  border-color: var(--dark-accent) !important;
+  color: #0f1419 !important;
+  font-weight: 700;
+}
+
+[data-bs-theme="dark"] .btn-export-csv {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+  color: white !important;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4) !important;
+}
+
+[data-bs-theme="dark"] .btn-export-csv:hover {
+  background: linear-gradient(135deg, #20c997 0%, #28a745 100%) !important;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.5) !important;
+}
+
+[data-bs-theme="dark"] .btn-export-all {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+}
+
+[data-bs-theme="dark"] .btn-export-all:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+}
+
+/* Chart.js canvas dark mode adjustments */
+[data-bs-theme="dark"] canvas {
+  filter: brightness(0.95);
+}
+
+/* ============================================
+   Admin Dashboard - Dark Mode Enhancements
+   ============================================ */
+[data-bs-theme="dark"] .admin-layout main {
+  background: var(--dark-bg-primary) !important;
+  background-attachment: fixed;
+}
+
+[data-bs-theme="dark"] .hero-card {
+  background: linear-gradient(135deg, #1a1f2e 0%, #252b3b 50%, #1e2330 100%) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+[data-bs-theme="dark"] .hero-card .text-white-75 {
+  color: var(--dark-text-secondary) !important;
+}
+
+[data-bs-theme="dark"] .stat-item-card {
+  background: var(--dark-bg-card) !important;
+  border-color: var(--dark-border) !important;
+}
+
+[data-bs-theme="dark"] .stat-item-card.bg-light {
+  background: var(--dark-bg-secondary) !important;
+}
+
+[data-bs-theme="dark"] .quick-link-card {
+  background: var(--dark-bg-card) !important;
+  border: 1px solid var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+[data-bs-theme="dark"] .quick-link-card:hover {
+  background: var(--dark-bg-hover) !important;
+  border-color: var(--dark-accent) !important;
+  transform: translateY(-2px);
+}
+
+[data-bs-theme="dark"] .todo-item {
+  background: var(--dark-bg-card) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+[data-bs-theme="dark"] .todo-item .badge {
+  background: var(--dark-bg-secondary) !important;
+  color: var(--dark-text-secondary) !important;
+}
+

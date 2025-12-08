@@ -136,11 +136,18 @@
         .map(
           (item) => {
             const hasPromotion = item.pricing.promotion !== null;
+            // Lấy ảnh từ mapping hoặc auto-detect
+            const imageSrc = window.IMAGE_MAPPING?.getTourImage(item.tour) || `assets/img/tours/${item.tour.id}.jpg`;
+            const fallbackImage = window.IMAGE_MAPPING?.getTourFallbackImage(item.tour) || 'assets/img/banners/placeholder.jpg';
+            
             return `
           <div class="favorite-card">
             <div class="favorite-card-body">
               <div class="favorite-card-image-wrapper">
-                <img src="${item.tour.image || "assets/img/banners/placeholder.jpg"}" alt="${item.tour.title}">
+                <img src="${imageSrc}" 
+                     alt="${item.tour.title}"
+                     loading="lazy"
+                     onerror="this.onerror=null; this.src='${fallbackImage}';">
                 <div class="favorite-heart-badge">
                   <i class="bi bi-heart-fill"></i>
                 </div>

@@ -1,0 +1,196 @@
+/**
+ * Cart Summary Styles
+ * Cải thiện UI/UX cho bảng tóm tắt đơn hàng
+ */
+
+/* ============================================
+   Order Summary Card
+   ============================================ */
+.order-summary-details {
+  padding: 0.5rem 0;
+}
+
+.order-summary-details > div {
+  transition: all 0.2s ease;
+}
+
+.order-summary-details > div:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  margin: 0 -0.5rem;
+}
+
+/* Tổng tiền (Subtotal) */
+#cart-subtotal {
+  color: #212529;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* Phí dịch vụ */
+#cart-service-fee {
+  color: #6c757d;
+  font-weight: 600;
+}
+
+/* Chiết khấu/Mã giảm giá - Nổi bật với màu xanh lá */
+#cart-discount-row {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border-left: 3px solid #28a745;
+  animation: slideInDown 0.3s ease;
+}
+
+#cart-discount-row .text-success {
+  color: #28a745 !important;
+  font-weight: 700;
+}
+
+#cart-discount-amount {
+  color: #28a745 !important;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tổng thanh toán - Nổi bật */
+#cart-total {
+  color: #0d6efd !important;
+  font-weight: 900;
+  font-size: 1.75rem;
+  text-shadow: 0 2px 4px rgba(13, 110, 253, 0.2);
+  letter-spacing: -0.5px;
+}
+
+/* Nút Thanh toán - CTA nổi bật */
+#btn-checkout {
+  background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+  border: none;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.4);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.875rem 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#btn-checkout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+#btn-checkout:hover::before {
+  left: 100%;
+}
+
+#btn-checkout:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(13, 110, 253, 0.5);
+  background: linear-gradient(135deg, #0a58ca 0%, #084298 100%);
+}
+
+#btn-checkout:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(13, 110, 253, 0.4);
+}
+
+#btn-checkout:disabled {
+  background: #6c757d;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Currency symbol consistency */
+.order-summary-details span[id^="cart-"] {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Separator line */
+.order-summary-details hr {
+  border-color: #dee2e6;
+  opacity: 0.5;
+  margin: 1rem 0;
+}
+
+/* ============================================
+   Real-time Update Animation
+   ============================================ */
+.value-updating {
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.value-highlight {
+  animation: valueHighlight 0.5s ease;
+}
+
+@keyframes valueHighlight {
+  0%, 100% {
+    transform: scale(1);
+    color: inherit;
+  }
+  50% {
+    transform: scale(1.05);
+    color: #0d6efd;
+  }
+}
+
+/* ============================================
+   Dark Mode Support
+   ============================================ */
+[data-bs-theme="dark"] .order-summary-details > div:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] #cart-discount-row {
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.2) 0%, rgba(40, 167, 69, 0.1) 100%);
+  border-left-color: #28a745;
+}
+
+[data-bs-theme="dark"] #cart-subtotal {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+[data-bs-theme="dark"] #cart-service-fee {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+[data-bs-theme="dark"] .order-summary-details hr {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  #cart-total {
+    font-size: 1.5rem;
+  }
+  
+  #btn-checkout {
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+  }
+}
+

@@ -142,7 +142,7 @@
   }
 }
 
-/* Price with promotion - enhanced layout */
+/* Giá có khuyến mãi - layout nâng cao */
 .tour-price.has-promotion {
   background: linear-gradient(135deg, rgba(220, 53, 69, 0.08) 0%, rgba(255, 107, 107, 0.05) 100%);
   border-color: rgba(220, 53, 69, 0.2);
@@ -153,7 +153,7 @@
   font-weight: 700;
 }
 
-/* Price container for better spacing */
+/* Container giá để spacing tốt hơn */
 .price-container {
   display: flex;
   flex-direction: column;
@@ -325,7 +325,7 @@
   font-weight: 800;
 }
 
-/* Cart Price Display */
+/* Hiển thị Giá trong Giỏ hàng */
 .cart-item .price-display {
   padding: 1rem;
   background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);

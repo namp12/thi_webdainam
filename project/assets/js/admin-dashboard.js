@@ -502,7 +502,8 @@
       </li>
     `).join("");
 
-    $(".list-group").html(html || '<li class="list-group-item text-muted text-center">Chưa có dữ liệu</li>');
+    // Sửa selector để chỉ target vào #top-destinations, không ảnh hưởng đến sidebar
+    $("#top-destinations").html(html || '<li class="list-group-item text-muted text-center">Chưa có dữ liệu</li>');
   }
 
   $(function () {

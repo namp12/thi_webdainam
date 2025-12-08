@@ -4,7 +4,7 @@
  */
 
 (function() {
-  // Load Iconify script
+  // Tải script Iconify
   if (!window.Iconify) {
     const script = document.createElement('script');
     script.src = 'https://code.iconify.design/3/iconify.min.js';
@@ -25,13 +25,13 @@
   // - fa: Font Awesome (free icons)
   // - jam: Jam Icons (hơn 900 icons)
   
-  // Helper function để sử dụng icon
+  // Hàm helper để sử dụng icon
   window.APP_ICONS = {
     /**
      * Render icon từ Iconify
-     * @param {string} icon - Icon name (format: "pack:icon-name")
-     * @param {object} options - Options (width, height, color, class)
-     * @returns {string} HTML string
+     * @param {string} icon - Tên icon (định dạng: "pack:icon-name")
+     * @param {object} options - Tùy chọn (width, height, color, class)
+     * @returns {string} Chuỗi HTML
      */
     render: function(icon, options = {}) {
       const width = options.width || options.size || '1em';
@@ -44,10 +44,10 @@
     },
     
     /**
-     * Popular icon shortcuts
+     * Các icon phổ biến (shortcuts)
      */
     icons: {
-      // Travel & Tourism
+      // Du lịch & Du lịch
       airplane: 'mdi:airplane',
       hotel: 'mdi:hotel',
       map: 'mdi:map',
@@ -58,7 +58,7 @@
       beach: 'mdi:beach',
       mountain: 'mdi:terrain',
       
-      // Actions
+      // Hành động
       heart: 'mdi:heart',
       heartOutline: 'mdi:heart-outline',
       cart: 'mdi:cart',
@@ -68,13 +68,13 @@
       star: 'mdi:star',
       starOutline: 'mdi:star-outline',
       
-      // Communication
+      // Giao tiếp
       phone: 'mdi:phone',
       email: 'mdi:email',
       message: 'mdi:message',
       chat: 'mdi:chat',
       
-      // UI Elements
+      // Phần tử UI
       menu: 'mdi:menu',
       close: 'mdi:close',
       check: 'mdi:check',
@@ -85,37 +85,37 @@
       arrowUp: 'mdi:arrow-up',
       arrowDown: 'mdi:arrow-down',
       
-      // Social Media
+      // Mạng xã hội
       facebook: 'mdi:facebook',
       twitter: 'mdi:twitter',
       instagram: 'mdi:instagram',
       youtube: 'mdi:youtube',
       linkedin: 'mdi:linkedin',
       
-      // Payment & Money
+      // Thanh toán & Tiền
       creditCard: 'mdi:credit-card',
       cash: 'mdi:cash',
       wallet: 'mdi:wallet',
       
-      // Time & Date
+      // Thời gian & Ngày
       clock: 'mdi:clock',
       calendar: 'mdi:calendar',
       calendarCheck: 'mdi:calendar-check',
       
-      // User & Account
+      // Người dùng & Tài khoản
       user: 'mdi:account',
       userCircle: 'mdi:account-circle',
       login: 'mdi:login',
       logout: 'mdi:logout',
       settings: 'mdi:cog',
       
-      // Status & Info
+      // Trạng thái & Thông tin
       info: 'mdi:information',
       warning: 'mdi:alert',
       error: 'mdi:alert-circle',
       success: 'mdi:check-circle',
       
-      // Navigation
+      // Điều hướng
       home: 'mdi:home',
       bookmark: 'mdi:bookmark',
       bookmarkOutline: 'mdi:bookmark-outline',
@@ -124,7 +124,7 @@
     }
   };
   
-  // Wait for Iconify to load
+  // Chờ Iconify load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function() {
       setTimeout(initIcons, 100);
@@ -134,9 +134,9 @@
   }
   
   function initIcons() {
-    // Iconify is ready
+    // Iconify đã sẵn sàng
     if (window.Iconify) {
-      console.log('Iconify loaded successfully');
+      console.log('Iconify đã load thành công');
     }
   }
 })();
