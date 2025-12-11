@@ -191,11 +191,60 @@
           <p class="category-section-subtitle">Lựa chọn tiêu biểu theo mùa, dễ đi và nhiều trải nghiệm</p>
         </div>
       </div>
+      <!-- Static HTML so bạn tự thay ảnh/điểm đến, không phụ thuộc API -->
       <div class="category-tours-grid" id="destinations-grid">
-        <!-- Destinations được render từ file destinations-custom.json, chỉ dùng ảnh local từ thư mục img, KHÔNG phụ thuộc API -->
-        <div class="text-center py-5">
-          <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Đang tải...</span>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom" onclick="window.location.href='tours.html?destination=Đà Nẵng'">
+            <img src="assets/img/tours/10.jpg" alt="Đà Nẵng" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Đà Nẵng</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-1" onclick="window.location.href='tours.html?destination=Sapa'">
+            <img src="assets/img/tours/11.jpg" alt="Sapa" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Sapa</h6>
+              <span class="badge bg-light text-dark">Du lịch Núi</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-2" onclick="window.location.href='tours.html?destination=Phú Quốc'">
+            <img src="assets/img/tours/12.jpg" alt="Phú Quốc" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Phú Quốc</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-3" onclick="window.location.href='tours.html?destination=Hạ Long'">
+            <img src="assets/img/tours/13.jpg" alt="Hạ Long" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Hạ Long</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-4" onclick="window.location.href='tours.html?destination=Nha Trang'">
+            <img src="assets/img/tours/14.jpg" alt="Nha Trang" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Nha Trang</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-5" onclick="window.location.href='tours.html?destination=Đà Lạt'">
+            <img src="assets/img/tours/15.jpg" alt="Đà Lạt" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Đà Lạt</h6>
+              <span class="badge bg-light text-dark">Du lịch Núi</span>
+            </div>
           </div>
         </div>
       </div>
@@ -486,7 +535,7 @@
       <div class="row g-3">
         <div class="col-md-4">
           <div class="card h-100 shadow-sm reveal hover-lift image-zoom">
-            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <img src="assets/img/tours/24.jpg" class="card-img-top loaded" alt="blog">
             <div class="card-body">
               <h6 class="fw-bold">Check-list Đà Nẵng 3N2Đ</h6>
               <p class="small text-muted">Ăn gì, ở đâu, lịch trình tối ưu cho nhóm bạn trẻ.</p>
@@ -496,7 +545,7 @@
         </div>
         <div class="col-md-4">
           <div class="card h-100 shadow-sm reveal hover-lift image-zoom animate-delay-1">
-            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <img src="assets/img/tours/25.jpg" class="card-img-top loaded" alt="blog">
             <div class="card-body">
               <h6 class="fw-bold">Top 5 đảo đẹp nhất Việt Nam</h6>
               <p class="small text-muted">Danh sách đảo phải đi trong mùa hè này.</p>
@@ -506,7 +555,7 @@
         </div>
         <div class="col-md-4">
           <div class="card h-100 shadow-sm reveal hover-lift image-zoom animate-delay-2">
-            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <img src="assets/img/tours/26.jpg" class="card-img-top loaded" alt="blog">
             <div class="card-body">
               <h6 class="fw-bold">Mẹo săn vé & khách sạn rẻ</h6>
               <p class="small text-muted">Tổng hợp tip tiết kiệm cho gia đình và cặp đôi.</p>

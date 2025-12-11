@@ -85,7 +85,7 @@
           
           return `
         <div class="col-md-4 mb-4">
-          <div class="card h-100 tour-card">
+          <div class="card h-100 tour-card tour-card-clickable" data-id="${t.id}">
             <div class="position-relative card-image-wrapper">
               <img src="${imageSrc}" 
                    class="card-img-top" 
@@ -140,10 +140,6 @@
                   `}
                 </div>
                 <div class="tour-buttons d-flex gap-2">
-                  <a href="tour-detail.html?id=${t.id}" class="btn btn-detail btn-sm">
-                    <i class="bi bi-eye"></i>
-                    <span>Chi tiết</span>
-                  </a>
                   <button class="btn btn-cart btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
                     <i class="bi bi-cart-plus"></i>
                     <span>Giỏ hàng</span>
@@ -198,7 +194,7 @@
 
           return `
         <div class="tour-card-wrapper">
-          <div class="card h-100 tour-card">
+          <div class="card h-100 tour-card tour-card-clickable" data-id="${t.id}">
             <div class="position-relative card-image-wrapper">
               <img src="${imageSrc}" 
                    class="card-img-top" 
@@ -258,11 +254,8 @@
                   `}
                 </div>
                 <div class="d-flex gap-2 mt-3">
-                  <a href="tour-detail.html?id=${t.id}" class="btn btn-primary btn-sm flex-grow-1">
-                    <i class="bi bi-eye"></i> Chi tiết
-                  </a>
-                  <button class="btn btn-outline-success btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
-                    <i class="bi bi-cart-plus"></i>
+                  <button class="btn btn-outline-success btn-sm add-cart flex-grow-1" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
+                    <i class="bi bi-cart-plus"></i> Thêm giỏ
                   </button>
                   <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}' title="Thêm vào yêu thích">
                     <i class="bi bi-heart"></i>
@@ -313,7 +306,7 @@
 
           return `
         <div class="tour-card-wrapper">
-          <div class="card h-100 tour-card">
+          <div class="card h-100 tour-card tour-card-clickable" data-id="${t.id}">
             <div class="position-relative card-image-wrapper">
               <img src="${imageSrc}" 
                    class="card-img-top" 
@@ -370,11 +363,8 @@
                   `}
                 </div>
                 <div class="d-flex gap-2 mt-3">
-                  <a href="tour-detail.html?id=${t.id}" class="btn btn-primary btn-sm flex-grow-1">
-                    <i class="bi bi-eye"></i> Chi tiết
-                  </a>
-                  <button class="btn btn-outline-success btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
-                    <i class="bi bi-cart-plus"></i>
+                  <button class="btn btn-outline-success btn-sm add-cart flex-grow-1" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
+                    <i class="bi bi-cart-plus"></i> Thêm giỏ
                   </button>
                   <button class="btn btn-favorite btn-sm add-fav" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}' title="Thêm vào yêu thích">
                     <i class="bi bi-heart"></i>
@@ -444,46 +434,34 @@
     const $destGrid = $("#destinations-grid");
     if (!$destGrid.length) return;
     
+    // Fallback cứng để luôn có dữ liệu khi fetch bị chặn (file:// hoặc lỗi mạng)
+    const defaultDestinations = [
+      { name: "Đà Nẵng", image: "assets/img/tours/10.jpg", fallbackImage: "assets/img/banners/banner.jpg", theme: "Du lịch Biển", link: "tours.html?destination=Đà Nẵng" },
+      { name: "Sapa", image: "assets/img/tours/11.jpg", fallbackImage: "assets/img/banners/banner.jpg", theme: "Du lịch Núi", link: "tours.html?destination=Sapa" },
+      { name: "Phú Quốc", image: "assets/img/tours/12.jpg", fallbackImage: "assets/img/banners/banner.jpg", theme: "Du lịch Biển", link: "tours.html?destination=Phú Quốc" },
+      { name: "Hạ Long", image: "assets/img/tours/13.jpg", fallbackImage: "assets/img/banners/banner.jpg", theme: "Du lịch Biển", link: "tours.html?destination=Hạ Long" },
+      { name: "Nha Trang", image: "assets/img/tours/14.jpg", fallbackImage: "assets/img/banners/banner.jpg", theme: "Du lịch Biển", link: "tours.html?destination=Nha Trang" },
+      { name: "Đà Lạt", image: "assets/img/tours/15.jpg", fallbackImage: "assets/img/banners/banner.jpg", theme: "Du lịch Núi", link: "tours.html?destination=Đà Lạt" },
+    ];
+    
     let destinations = [];
     
     // CHỈ load từ file tùy chỉnh, KHÔNG phụ thuộc vào API
     try {
       const response = await fetch('data/destinations-custom.json');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       if (data.destinations && data.destinations.length > 0) {
         destinations = data.destinations;
         console.log("Đã load destinations từ file tùy chỉnh");
       } else {
-        // File tồn tại nhưng rỗng
-        console.log("File destinations-custom.json rỗng, hiển thị empty state");
-        $destGrid.html(`
-          <div class="col-12 text-center py-5">
-            <div class="text-muted">
-              <i class="bi bi-image" style="font-size: 3rem;"></i>
-              <p class="mt-3">Chưa có điểm đến nổi bật nào. Vui lòng thêm trong Admin Panel.</p>
-              <a href="admin-destinations.html" class="btn btn-primary btn-sm">
-                <i class="bi bi-plus-circle"></i> Thêm Điểm Đến
-              </a>
-            </div>
-          </div>
-        `);
-        return;
+        console.warn("File destinations-custom.json rỗng, dùng fallback mặc định");
+        destinations = defaultDestinations;
       }
     } catch (err) {
-      // Không có file tùy chỉnh - hiển thị empty state
-      console.log("Không tìm thấy file destinations-custom.json. Vui lòng tạo file trong Admin Panel.", err);
-      $destGrid.html(`
-        <div class="col-12 text-center py-5">
-          <div class="text-muted">
-            <i class="bi bi-image" style="font-size: 3rem;"></i>
-            <p class="mt-3">Chưa có điểm đến nổi bật nào. Vui lòng thêm trong Admin Panel.</p>
-            <a href="admin-destinations.html" class="btn btn-primary btn-sm">
-              <i class="bi bi-plus-circle"></i> Thêm Điểm Đến
-            </a>
-          </div>
-        </div>
-      `);
-      return;
+      // Không có file hoặc bị chặn (file://), dùng fallback
+      console.warn("Không tải được destinations-custom.json, dùng fallback mặc định.", err);
+      destinations = defaultDestinations;
     }
     
     // Render HTML từ file tùy chỉnh - Đảm bảo ảnh hiển thị
@@ -545,9 +523,8 @@
       showLoading(false);
     }
     
-    // Render destinations - HOÀN TOÀN ĐỘC LẬP, chỉ dùng ảnh local từ file JSON, KHÔNG phụ thuộc API
-    // Load riêng để không bị ảnh hưởng bởi lỗi API
-    await renderDestinations([]);
+    // Render destinations - hiện đã dùng HTML tĩnh trong index.html, bỏ qua JS render
+    // await renderDestinations([]);
   }
   
   // Listen for tour image updates từ dashboard
@@ -592,6 +569,16 @@
       $(".category-tab-card").removeClass("active");
       $(this).addClass("active");
       renderCategory(tours, $(this).data("category"));
+    });
+
+    // Click toàn bộ thẻ tour để mở chi tiết (trừ khi bấm vào nút)
+    $(document).on("click", ".tour-card-clickable", function (e) {
+      const isAction = $(e.target).closest("a, button").length > 0;
+      if (isAction) return;
+      const id = $(this).data("id");
+      if (id) {
+        window.location.href = `tour-detail.html?id=${id}`;
+      }
     });
 
     // Support new category tab cards
