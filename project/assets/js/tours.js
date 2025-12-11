@@ -743,24 +743,39 @@
       }
     }
 
-    $list.on("click", ".add-cart", function () {
-      const id = $(this).data("id");
-      const tourData = $(this).data("tour");
-      if (window.APP_CART) {
+    // Event add to cart cho toàn bộ danh sách (list, hot, category)
+    $(document).on("click", ".add-cart", function (e) {
+      e.preventDefault();
+      e.stopPropagation(); // tránh click card mở trang chi tiết
+      const $btn = $(this);
+      const id = $btn.data("id");
+
+      let tourData = $btn.data("tour");
+      if (typeof tourData === "string") {
+        try {
+          tourData = JSON.parse(tourData.replace(/&#39;/g, "'"));
+        } catch (err) {
+          console.warn("Không parse được tourData từ data-tour, dùng object trống.", err);
+          tourData = {};
+        }
+      }
+
+      if (window.APP_CART && typeof window.APP_CART.addToCart === "function") {
         window.APP_CART.addToCart(id, 1, tourData);
         
         // Track add to cart
-        if (window.TRACKING) {
+        if (window.TRACKING && typeof window.TRACKING.trackAddToCart === "function") {
           window.TRACKING.trackAddToCart(id, tourData, 1);
         }
         
-        const $btn = $(this);
         const originalHtml = $btn.html();
         $btn.html('<i class="bi bi-check-circle-fill"></i> <span>Đã thêm</span>').prop("disabled", true).addClass("btn-cart-added");
         showToast("Đã thêm vào giỏ hàng", "success");
         setTimeout(() => {
           $btn.html(originalHtml).prop("disabled", false).removeClass("btn-cart-added");
         }, 2000);
+      } else {
+        showToast("Giỏ hàng chưa sẵn sàng", "warning");
       }
     });
   });
