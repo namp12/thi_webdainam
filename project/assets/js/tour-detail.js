@@ -18,11 +18,40 @@
     }
 
     try {
+      // Try to fetch individual tour first
       const tour = await http.get(`${API.tours}/${id}`);
       renderTour(tour);
     } catch (err) {
-      showToast("Không tải được tour", "danger");
-      setTimeout(() => (window.location.href = "tours.html"), 2000);
+      console.warn("Không thể load tour trực tiếp, thử fallback...", err);
+      
+      // Fallback: Load all tours and filter by ID
+      try {
+        const allTours = await http.get(API.tours);
+        const tour = allTours.find(t => String(t.id) === String(id));
+        
+        if (tour) {
+          console.log("✅ Đã tìm thấy tour từ danh sách:", tour.title);
+          renderTour(tour);
+        } else {
+          // Try loading from local sample data as last resort
+          const fallbackRes = await fetch("data/sample-tours.json");
+          const fallbackData = await fallbackRes.json();
+          const localTour = fallbackData.find(t => String(t.id) === String(id));
+          
+          if (localTour) {
+            console.log("✅ Đã tìm thấy tour từ dữ liệu mẫu:", localTour.title);
+            showToast("Đang dùng dữ liệu mẫu", "warning");
+            renderTour(localTour);
+          } else {
+            showToast("Không tìm thấy tour", "danger");
+            setTimeout(() => (window.location.href = "tours.html"), 2000);
+          }
+        }
+      } catch (fallbackErr) {
+        console.error("❌ Tất cả phương thức load đều thất bại:", fallbackErr);
+        showToast("Không tải được tour", "danger");
+        setTimeout(() => (window.location.href = "tours.html"), 2000);
+      }
     }
   }
 
