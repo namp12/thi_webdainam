@@ -1,0 +1,469 @@
+/**
+ * Pricing & Promotion Display Styles
+ * Visual enhancements for price and discount display
+ */
+
+/* ============================================
+   Promotion Badge
+   ============================================ */
+.badge-promotion {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
+  color: white !important;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  animation: pulse-badge 2s infinite;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  }
+}
+
+/* ============================================
+   Price Display - Enhanced
+   ============================================ */
+.tour-price {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tour-card:hover .tour-price {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-color: rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.price-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.price-label::before {
+  content: "💰";
+  font-size: 0.75rem;
+}
+
+.price-original {
+  font-size: 0.85rem;
+  color: #adb5bd !important;
+  text-decoration: line-through;
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  position: relative;
+  padding: 0 0.25rem;
+}
+
+.price-original::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #dc3545 0%, transparent 100%);
+  opacity: 0.6;
+}
+
+.price-final,
+.tour-price .fw-bold.text-primary,
+.tour-price .fw-bold.text-danger {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  margin: 0.25rem 0;
+  letter-spacing: -0.5px;
+}
+
+.tour-price .fw-bold.text-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-save-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  animation: slideInUp 0.4s ease;
+}
+
+.price-save-badge::before {
+  content: "✓";
+  font-size: 0.875rem;
+  font-weight: 900;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Giá có khuyến mãi - layout nâng cao */
+.tour-price.has-promotion {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.08) 0%, rgba(255, 107, 107, 0.05) 100%);
+  border-color: rgba(220, 53, 69, 0.2);
+}
+
+.tour-price.has-promotion .price-label {
+  color: #dc3545;
+  font-weight: 700;
+}
+
+/* Container giá để spacing tốt hơn */
+.price-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.price-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.price-currency {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6c757d;
+  margin-left: 0.25rem;
+}
+
+/* ============================================
+   Discount Code Input Real-time
+   ============================================ */
+.discount-code-preview {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1.25rem;
+  border-radius: 16px;
+  margin-top: 1rem;
+  display: none;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.discount-code-preview::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.discount-code-preview.active {
+  display: block;
+  animation: slideDown 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.discount-code-preview .discount-amount {
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin: 0.5rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.discount-code-preview .discount-label {
+  font-size: 0.875rem;
+  opacity: 0.95;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.discount-code-preview .discount-label::before {
+  content: "🎉";
+  font-size: 1rem;
+}
+
+/* ============================================
+   Price Comparison - Enhanced
+   ============================================ */
+.price-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.price-row:hover {
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 8px;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.price-row:last-child {
+  border-bottom: none;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  border-top: 2px solid #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  border-radius: 8px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.price-row-label {
+  color: #495057;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-row-value {
+  font-weight: 700;
+  color: #212529;
+  font-size: 1rem;
+  letter-spacing: -0.3px;
+}
+
+.price-row-value.text-success {
+  color: #28a745;
+  font-weight: 800;
+}
+
+.price-row-value.text-danger {
+  color: #dc3545;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+/* Hiển thị Giá trong Giỏ hàng */
+.cart-item .price-display {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 12px;
+  border-left: 3px solid #667eea;
+}
+
+.cart-item .price-display.has-promotion {
+  border-left-color: #dc3545;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.08) 0%, rgba(255, 107, 107, 0.05) 100%);
+}
+
+.cart-item .price-unit {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.cart-item .price-original {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.cart-item .price-final {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0.25rem 0;
+}
+
+.cart-item .price-total {
+  font-size: 1.75rem;
+  font-weight: 900;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 2px dashed #dee2e6;
+}
+
+.cart-item .price-save-badge {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  padding: 0.3rem 0.7rem;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .tour-price {
+    padding: 0.5rem;
+  }
+  
+  .price-final,
+  .tour-price .fw-bold.text-primary,
+  .tour-price .fw-bold.text-danger {
+    font-size: 1.5rem;
+  }
+  
+  .price-value {
+    font-size: 1.5rem;
+  }
+  
+  .cart-item .price-final {
+    font-size: 1.25rem;
+  }
+  
+  .cart-item .price-total {
+    font-size: 1.5rem;
+  }
+  
+  .price-save-badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .price-main {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .price-final,
+  .tour-price .fw-bold.text-primary,
+  .tour-price .fw-bold.text-danger {
+    font-size: 1.35rem;
+  }
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .tour-price {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+[data-bs-theme="dark"] .tour-card:hover .tour-price {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.25) 100%);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+[data-bs-theme="dark"] .price-original {
+  color: #868e96 !important;
+}
+
+[data-bs-theme="dark"] .price-row {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .price-comparison {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .price-row:hover {
+  background: rgba(102, 126, 234, 0.15);
+}
+
+[data-bs-theme="dark"] .price-row-label {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+[data-bs-theme="dark"] .price-row-value {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+[data-bs-theme="dark"] .discount-code-preview {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+}
+
+[data-bs-theme="dark"] .cart-item .price-display {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  border-left-color: #667eea;
+}
+
+[data-bs-theme="dark"] .cart-item .price-display.has-promotion {
+  border-left-color: #dc3545;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.15) 0%, rgba(255, 107, 107, 0.1) 100%);
+}
+

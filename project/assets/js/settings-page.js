@@ -2,7 +2,7 @@
   const APP_SETTINGS = window.APP_SETTINGS;
 
   $(function () {
-    // Initialize dark mode toggle
+    // Khởi tạo toggle dark mode
     const darkMode = APP_SETTINGS.getTheme() === "dark";
     $("#toggle-dark").prop("checked", darkMode);
 
@@ -10,7 +10,7 @@
       APP_SETTINGS.setTheme(this.checked ? "dark" : "light");
     });
 
-    // Initialize language select
+    // Khởi tạo chọn ngôn ngữ
     const lang = APP_SETTINGS.getLang() || "vi";
     $("#lang-select").val(lang);
 
@@ -19,6 +19,10 @@
     });
   });
 })();
+
+
+
+
 
 
 

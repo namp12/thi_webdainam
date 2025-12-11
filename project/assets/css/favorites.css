@@ -1,0 +1,546 @@
+/**
+ * Favorites Page - Enhanced UI/UX
+ * Cải thiện trang yêu thích với icon trái tim và layout đẹp hơn
+ */
+
+/* ============================================
+   Favorites Hero Section
+   ============================================ */
+.favorites-hero {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.favorites-hero h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.favorites-hero .heart-icon {
+  font-size: 2.5rem;
+  color: #dc3545;
+  animation: heartPulse 2s infinite;
+}
+
+@keyframes heartPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ============================================
+   Favorites Stats
+   ============================================ */
+.favorites-stats {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.fav-stat-card {
+  flex: 1;
+  min-width: 200px;
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.fav-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border-color: #dc3545;
+}
+
+.fav-stat-card .stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
+  color: #dc3545;
+}
+
+.fav-stat-card .stat-value {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #dc3545;
+  margin-bottom: 0.25rem;
+}
+
+.fav-stat-card .stat-label {
+  font-size: 0.875rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* ============================================
+   Favorite Card - Enhanced
+   ============================================ */
+.favorite-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.favorite-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: #dc3545;
+}
+
+.favorite-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #dc3545 0%, #ff6b6b 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.favorite-card:hover::before {
+  opacity: 1;
+}
+
+.favorite-card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.favorite-card-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.favorite-card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.favorite-card:hover .favorite-card-image-wrapper img {
+  transform: scale(1.1);
+}
+
+/* Badge icon trái tim trên ảnh */
+.favorite-heart-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(220, 53, 69, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 16px rgba(220, 53, 69, 0.4);
+  animation: heartFloat 3s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes heartFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.favorite-card-content {
+  flex: 1;
+}
+
+.favorite-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 1rem;
+}
+
+.favorite-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.favorite-card-destination {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.favorite-card-destination i {
+  color: #667eea;
+}
+
+.favorite-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.favorite-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #f4b400;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.favorite-duration {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #6c757d;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  background: #f8f9fa;
+  border-radius: 20px;
+}
+
+/* Phần Giá */
+.favorite-price-section {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+  margin-bottom: 1rem;
+}
+
+.favorite-price-label {
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.favorite-price-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.favorite-price-original {
+  font-size: 0.9rem;
+  color: #adb5bd;
+  text-decoration: line-through;
+  margin-bottom: 0.25rem;
+}
+
+.favorite-price-discount {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+}
+
+/* Phần Ghi chú */
+.favorite-note-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.favorite-note-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.favorite-note-label i {
+  color: #667eea;
+}
+
+.favorite-note-input {
+  width: 100%;
+  min-height: 80px;
+  padding: 0.75rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.favorite-note-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Hành động */
+.favorite-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn-favorite-detail {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  min-width: 140px;
+}
+
+.btn-favorite-detail:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-favorite-remove {
+  background: #fff;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.btn-favorite-remove:hover {
+  background: #dc3545;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.btn-favorite-cart {
+  flex: 1;
+  background: linear-gradient(135deg, #34e0a1 0%, #00a680 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(52, 224, 161, 0.3);
+  min-width: 140px;
+}
+
+.btn-favorite-cart:hover {
+  background: linear-gradient(135deg, #00a680 0%, #34e0a1 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 224, 161, 0.4);
+}
+
+/* ============================================
+   Empty State - Enhanced
+   ============================================ */
+.favorites-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.05) 0%, rgba(255, 107, 107, 0.02) 100%);
+  border-radius: 16px;
+  border: 2px dashed #dc3545;
+}
+
+.favorites-empty-icon {
+  font-size: 5rem;
+  color: #dc3545;
+  margin-bottom: 1.5rem;
+  animation: heartPulse 2s infinite;
+  opacity: 0.6;
+}
+
+.favorites-empty h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #495057;
+  margin-bottom: 0.75rem;
+}
+
+.favorites-empty p {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.favorites-empty-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .favorites-hero {
+    padding: 1.5rem;
+  }
+  
+  .favorites-stats {
+    flex-direction: column;
+  }
+  
+  .fav-stat-card {
+    width: 100%;
+  }
+  
+  .favorite-card-body {
+    padding: 1rem;
+  }
+  
+  .favorite-card-image-wrapper {
+    height: 180px;
+  }
+  
+  .favorite-card-actions {
+    flex-direction: column;
+  }
+  
+  .btn-favorite-detail,
+  .btn-favorite-cart,
+  .btn-favorite-remove {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .favorites-hero {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.15) 0%, rgba(255, 107, 107, 0.08) 100%);
+  border-color: rgba(220, 53, 69, 0.3);
+}
+
+[data-bs-theme="dark"] .fav-stat-card {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .favorite-card {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .favorite-card:hover {
+  border-color: #dc3545;
+}
+
+[data-bs-theme="dark"] .favorite-card-title {
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .favorite-price-section {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+[data-bs-theme="dark"] .favorite-note-input {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .favorite-note-input:focus {
+  border-color: #667eea;
+}
+
+[data-bs-theme="dark"] .favorites-empty {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(255, 107, 107, 0.05) 100%);
+  border-color: rgba(220, 53, 69, 0.3);
+}
+
+[data-bs-theme="dark"] .btn-favorite-remove {
+  background: var(--dark-card);
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+[data-bs-theme="dark"] .btn-favorite-remove:hover {
+  background: #dc3545;
+  color: white;
+}
+

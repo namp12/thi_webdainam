@@ -43,16 +43,65 @@
     tbody.html(html);
   }
 
-  window.editTour = function (id) {
+  // Load danh sách ảnh có sẵn
+  async function loadAvailableImages() {
+    try {
+      // Giả lập danh sách ảnh - trong thực tế cần scan thư mục
+      const images = [
+        '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg',
+        'da-nang.jpg', 'sapa.jpg', 'phu-quoc.jpg', 'ha-long.jpg', 'nha-trang.jpg', 'da-lat.jpg'
+      ];
+      
+      const $select = $("#tour-form-image-select");
+      $select.html('<option value="">-- Chọn ảnh từ danh sách --</option>');
+      images.forEach(img => {
+        $select.append(`<option value="assets/img/tours/${img}">${img}</option>`);
+      });
+    } catch (err) {
+      console.warn("Không load được danh sách ảnh", err);
+    }
+  }
+
+  // Load image mapping để hiển thị ảnh đã chọn
+  async function loadImageMapping() {
+    try {
+      const response = await fetch('data/image-mapping.json');
+      const data = await response.json();
+      return data.mapping || {};
+    } catch (err) {
+      return {};
+    }
+  }
+
+  window.editTour = async function (id) {
     const tour = tours.find((t) => t.id === id);
     if (!tour) return;
     editingId = id;
+    
+    await loadAvailableImages();
+    const mapping = await loadImageMapping();
+    const mappedImage = mapping[String(id)];
+    
     $("#tour-form-title").val(tour.title || "");
     $("#tour-form-destination").val(tour.destination || "");
     $("#tour-form-price").val(tour.price || "");
     $("#tour-form-duration").val(tour.duration || "");
-    $("#tour-form-image").val(tour.image || "");
+    
+    // Nếu có mapping, set vào select
+    if (mappedImage) {
+      $("#tour-form-image-select").val(`assets/img/tours/${mappedImage}`);
+      $("#tour-form-image").val(`assets/img/tours/${mappedImage}`);
+    } else {
+      $("#tour-form-image").val(tour.image || "");
+    }
+    
     $("#tour-form-description").val(tour.description || "");
+    
+    // Bind event cho select
+    $("#tour-form-image-select").off('change').on('change', function() {
+      $("#tour-form-image").val($(this).val());
+    });
+    
     new bootstrap.Modal(document.getElementById("tour-modal")).show();
   };
 
@@ -104,6 +153,7 @@
 
   $(function () {
     loadTours();
+    loadAvailableImages();
   });
 })();
 

@@ -30,7 +30,8 @@
 
       // Update cart stats
       const cartTotal = cart.reduce((sum, item) => {
-        return sum + (Number(item.tour?.price || 0) * item.quantity);
+        const parsedPrice = window.APP_UTILS?.parsePrice(item.tour?.price) || Number(item.tour?.price || 0);
+        return sum + (parsedPrice * item.quantity);
       }, 0);
       const cartAvg = cart.length > 0 ? cartTotal / cart.length : 0;
       

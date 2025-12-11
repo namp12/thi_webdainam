@@ -144,15 +144,10 @@ body {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
-/* Tour Card Specific Styles */
+/* Tour Card Specific Styles - Base styles, enhanced in tours-list.css */
 .tour-card {
   border-radius: 16px;
-  overflow: hidden;
-}
-
-.tour-card .card-image-wrapper {
-  overflow: hidden;
-  height: 220px;
+  overflow: visible; /* Changed to visible to prevent clipping */
 }
 
 .tour-card .card-img-top {

@@ -1,9 +1,9 @@
 /**
- * Deal Details Modal Handler
- * Displays detailed information about promotional deals
+ * Xử lý Modal Chi tiết Deal
+ * Hiển thị thông tin chi tiết về các ưu đãi khuyến mãi
  */
 (function () {
-  // Deal data
+  // Dữ liệu deal
   const deals = {
     'combo-bien-dao': {
       title: 'Combo biển đảo',
@@ -180,4 +180,8 @@
     });
   });
 })();
+
+
+
+
 

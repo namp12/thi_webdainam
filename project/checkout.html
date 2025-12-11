@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/booking-forms.css">
+  <link rel="stylesheet" href="assets/css/pricing.css">
 </head>
 <body class="bg-light">
   <div id="header-placeholder"></div>
@@ -32,31 +34,65 @@
     </div>
     <div class="row g-4">
       <div class="col-lg-7">
-        <div class="card shadow-sm mb-4">
-          <div class="card-header bg-primary text-white">
+        <div class="card booking-card mb-4">
+          <div class="card-header booking-card-header">
             <h5 class="mb-0"><i class="bi bi-person-circle"></i> <span data-i18n="checkout_customer_info">Thông tin khách hàng</span></h5>
           </div>
           <div class="card-body">
             <form id="checkout-form">
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label class="form-label"><span data-i18n="checkout_name">Họ và tên</span> <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="checkout-name" required>
+                  <label class="form-label"><i class="bi bi-person"></i> <span data-i18n="checkout_name">Họ và tên</span> <span class="text-danger">*</span></label>
+                  <div class="input-group-icon">
+                    <i class="bi bi-person"></i>
+                    <input type="text" class="form-control" id="checkout-name" required>
+                  </div>
+                  <div class="invalid-feedback d-none" id="checkout-name-error"></div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label"><span data-i18n="checkout_email">Email</span> <span class="text-danger">*</span></label>
-                  <input type="email" class="form-control" id="checkout-email" required>
+                  <label class="form-label"><i class="bi bi-envelope"></i> <span data-i18n="checkout_email">Email</span> <span class="text-danger">*</span></label>
+                  <div class="input-group-icon">
+                    <i class="bi bi-envelope"></i>
+                    <input type="email" class="form-control" id="checkout-email" required>
+                  </div>
+                  <div class="invalid-feedback d-none" id="checkout-email-error"></div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label"><span data-i18n="checkout_phone">Số điện thoại</span> <span class="text-danger">*</span></label>
-                  <input type="tel" class="form-control" id="checkout-phone" required>
+                  <label class="form-label"><i class="bi bi-phone"></i> <span data-i18n="checkout_phone">Số điện thoại</span> <span class="text-danger">*</span></label>
+                  <div class="input-group-icon">
+                    <i class="bi bi-phone"></i>
+                    <input type="tel" class="form-control" id="checkout-phone" required>
+                  </div>
+                  <div class="invalid-feedback d-none" id="checkout-phone-error"></div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label"><span data-i18n="checkout_date">Ngày khởi hành</span></label>
-                  <input type="date" class="form-control" id="checkout-date">
+                  <label class="form-label"><i class="bi bi-calendar-event"></i> <span data-i18n="checkout_date">Ngày khởi hành</span> <span class="text-danger">*</span></label>
+                  <div class="input-group-icon">
+                    <i class="bi bi-calendar-event"></i>
+                    <input type="date" class="form-control" id="checkout-date" required>
+                  </div>
+                  <div class="invalid-feedback d-none" id="checkout-date-error"></div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><i class="bi bi-calendar-check"></i> <span data-i18n="checkout_return_date">Ngày về</span></label>
+                  <div class="input-group-icon">
+                    <i class="bi bi-calendar-check"></i>
+                    <input type="date" class="form-control" id="checkout-return-date">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><i class="bi bi-tag"></i> <span data-i18n="checkout_discount_code">Mã giảm giá</span></label>
+                  <div class="discount-input-group">
+                    <input type="text" class="form-control" id="checkout-discount-code" placeholder="Nhập mã giảm giá (nếu có)">
+                    <button type="button" class="discount-apply-btn" id="btn-apply-discount">
+                      <i class="bi bi-check-lg me-1"></i>Áp dụng
+                    </button>
+                  </div>
+                  <div class="invalid-feedback d-none" id="checkout-discount-error"></div>
+                  <div class="valid-feedback d-none" id="checkout-discount-success"></div>
                 </div>
                 <div class="col-12">
-                  <label class="form-label"><span data-i18n="checkout_note">Ghi chú</span></label>
+                  <label class="form-label"><i class="bi bi-card-text"></i> <span data-i18n="checkout_note">Ghi chú</span></label>
                   <textarea class="form-control" id="checkout-note" rows="3" data-i18n-placeholder="checkout_note_placeholder"></textarea>
                 </div>
               </div>
@@ -64,8 +100,8 @@
           </div>
         </div>
 
-        <div class="card shadow-sm">
-          <div class="card-header bg-success text-white">
+        <div class="card booking-card">
+          <div class="card-header booking-card-header" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
             <h5 class="mb-0"><i class="bi bi-credit-card"></i> <span data-i18n="checkout_payment_method">Phương thức thanh toán</span></h5>
           </div>
           <div class="card-body">
@@ -112,35 +148,35 @@
       </div>
 
       <div class="col-lg-5">
-        <div class="card shadow-sm sticky-top" style="top: 100px;">
-          <div class="card-header bg-info text-white">
+        <div class="card booking-card order-summary">
+          <div class="card-header booking-card-header" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);">
             <h5 class="mb-0"><i class="bi bi-cart-check"></i> <span data-i18n="checkout_order">Đơn hàng của bạn</span></h5>
           </div>
           <div class="card-body">
             <div id="checkout-items"></div>
             <hr>
-            <div class="d-flex justify-content-between mb-2">
+            <div class="summary-item">
               <span data-i18n="checkout_subtotal_label">Tạm tính:</span>
-              <span id="checkout-subtotal">0 đ</span>
+              <span class="fw-semibold" id="checkout-subtotal">0 đ</span>
             </div>
-            <div class="d-flex justify-content-between mb-2">
-              <span data-i18n="checkout_service_fee">Phí dịch vụ:</span>
-              <span>0 đ</span>
+            <div class="summary-item">
+              <span data-i18n="checkout_service_fee">Phí dịch vụ (5%):</span>
+              <span class="fw-semibold" id="checkout-service-fee">0 đ</span>
             </div>
-            <div class="d-flex justify-content-between mb-2">
+            <div class="summary-item">
               <span data-i18n="checkout_discount">Giảm giá:</span>
-              <span class="text-success" id="checkout-discount">0 đ</span>
+              <span class="text-success fw-semibold" id="checkout-discount">0 đ</span>
             </div>
             <hr>
-            <div class="d-flex justify-content-between mb-4">
+            <div class="summary-item">
               <strong data-i18n="checkout_total">Tổng thanh toán:</strong>
-              <strong class="text-primary fs-5" id="checkout-total">0 đ</strong>
+              <strong class="summary-total" id="checkout-total">0 đ</strong>
             </div>
-            <button class="btn btn-primary w-100 btn-lg" id="btn-process-payment">
-              <i class="bi bi-lock"></i> <span data-i18n="checkout_process">Thanh toán ngay</span>
+            <button class="btn btn-booking w-100 btn-lg mt-4" id="btn-process-payment">
+              <i class="bi bi-lock me-2"></i> <span data-i18n="checkout_process">Thanh toán ngay</span>
             </button>
             <div class="mt-3 text-center">
-              <small class="text-muted">
+              <small class="text-muted d-flex align-items-center justify-content-center gap-2">
                 <i class="bi bi-shield-check"></i> <span data-i18n="checkout_secure">Thanh toán được bảo mật SSL</span>
               </small>
             </div>
@@ -157,8 +193,13 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/settings.js"></script>
+  <script src="assets/js/auth.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/cart.js"></script>
+  <script src="assets/js/pricing-manager.js"></script>
+  <script src="assets/js/tracking.js"></script>
+  <script src="assets/js/booking-validation.js"></script>
+  <script src="assets/js/booking-manager.js"></script>
   <script src="assets/js/checkout.js"></script>
   <script src="assets/js/dashboard-links.js"></script>
 </body>

@@ -2,7 +2,7 @@
  * Partners Page Styles
  */
 
-/* Hero Section - Enhanced */
+/* Phần Hero - Nâng cao */
 .partners-hero {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 4rem 0;
@@ -64,7 +64,7 @@
   letter-spacing: 0.5px;
 }
 
-/* Search and Filter Controls */
+/* Điều khiển Tìm kiếm và Lọc */
 .partners-controls {
   background: white;
   padding: 1.5rem;
@@ -125,7 +125,7 @@
   }
 }
 
-/* Filter */
+/* Bộ lọc */
 .partners-filter {
   padding: 0;
 }
@@ -153,7 +153,7 @@
   box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
-/* Partner Card */
+/* Thẻ Đối tác */
 .partner-card-wrapper {
   margin-bottom: 1.5rem;
 }
@@ -300,7 +300,7 @@
   padding: 0.5rem;
 }
 
-/* Trust Section - Compact */
+/* Phần Tin cậy - Gọn */
 .trust-section {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -329,7 +329,7 @@
   margin-bottom: 1rem;
 }
 
-/* Modal Styles */
+/* Styles Modal */
 .partner-modal-header {
   padding-bottom: 1.5rem;
   border-bottom: 1px solid #e9ecef;
@@ -376,7 +376,7 @@
   flex-shrink: 0;
 }
 
-/* Loading State */
+/* Trạng thái Đang tải */
 #partners-loading {
   min-height: 300px;
   display: flex;
@@ -391,7 +391,7 @@
   border-width: 0.3rem;
 }
 
-/* Empty State */
+/* Trạng thái Trống */
 .empty-state {
   padding: 3rem 1rem;
 }
@@ -401,7 +401,7 @@
   margin: 0 auto;
 }
 
-/* Animations */
+/* Hoạt ảnh */
 @keyframes float {
   0%, 100% {
     transform: translateY(0);
@@ -461,7 +461,7 @@
   }
 }
 
-/* Dark Mode */
+/* Chế độ Tối */
 [data-bs-theme="dark"] .partner-card {
   background: #1f1f1f;
   border-color: #2a2a2a;

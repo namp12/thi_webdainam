@@ -1,0 +1,221 @@
+/**
+ * Styles cho Biểu đồ Dashboard & Xuất CSV
+ * Styling cho biểu đồ và nút xuất CSV
+ */
+
+/* ============================================
+   Phần Biểu đồ
+   ============================================ */
+.charts-section {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e9ecef;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.chart-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.chart-title i {
+  color: #667eea;
+  font-size: 1.5rem;
+}
+
+.chart-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  margin-bottom: 1rem;
+}
+
+.chart-container.large {
+  height: 400px;
+}
+
+.chart-container.small {
+  height: 250px;
+}
+
+/* Chú giải Biểu đồ */
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.chart-legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: block;
+}
+
+/* ============================================
+   Nút Xuất CSV
+   ============================================ */
+.btn-export-csv {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+.btn-export-csv:hover {
+  background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+.btn-export-csv:active {
+  transform: translateY(0);
+}
+
+.btn-export-csv i {
+  font-size: 1rem;
+}
+
+/* Nút Xuất Tất cả */
+.btn-export-all {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-export-all:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* ============================================
+   Bộ lọc Biểu đồ
+   ============================================ */
+.chart-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.chart-filter-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  background: white;
+  color: #495057;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chart-filter-btn:hover {
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.chart-filter-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+}
+
+/* ============================================
+   Thiết kế Responsive
+   ============================================ */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 250px;
+  }
+  
+  .chart-container.large {
+    height: 300px;
+  }
+  
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .chart-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .chart-filters {
+    flex-direction: column;
+  }
+  
+  .chart-filter-btn {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Chế độ Tối (đã được xử lý trong dark-mode.css)
+   ============================================ */
+

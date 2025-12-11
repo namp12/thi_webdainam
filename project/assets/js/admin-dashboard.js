@@ -14,43 +14,76 @@
       const cart = JSON.parse(localStorage.getItem("travel_cart") || "[]");
       const favorites = JSON.parse(localStorage.getItem("travel_favorites") || "[]");
 
-      // Calculate revenue statistics
-      const totalRevenue = bookings.reduce((sum, b) => sum + (Number(b.total) || 0), 0);
-      const confirmedBookings = bookings.filter(b => b.status === "confirmed" || b.status === "paid");
-      const paidRevenue = confirmedBookings.reduce((sum, b) => sum + (Number(b.total) || 0), 0);
-      const pendingBookings = bookings.filter(b => b.status === "pending");
-      const pendingRevenue = pendingBookings.reduce((sum, b) => sum + (Number(b.total) || 0), 0);
+      // Calculate revenue statistics - CORRECTED
+      // Gross Revenue: Tổng giá trị tất cả giao dịch đã hoàn tất (Completed)
+      const completedBookings = bookings.filter(b => 
+        b.status === "confirmed" || 
+        b.status === "paid" || 
+        b.status === "completed"
+      );
+      const grossRevenue = completedBookings.reduce((sum, b) => {
+        const parsedPrice = window.APP_UTILS?.parsePrice(b.total) || Number(b.total || 0);
+        return sum + parsedPrice;
+      }, 0);
       
-      // Calculate conversion rate (bookings / (bookings + cart items))
-      const totalCartItems = cart.length;
-      const totalInteractions = bookings.length + totalCartItems;
-      const conversionRate = totalInteractions > 0 
-        ? Math.round((bookings.length / totalInteractions) * 100) 
+      // Calculate total discount given from all bookings
+      const totalDiscountGiven = completedBookings.reduce((sum, b) => {
+        const discount = Number(b.discount || 0);
+        return sum + discount;
+      }, 0);
+      
+      // Net Revenue: Gross Revenue - Discounts + Service Fee (5%)
+      // Service fee is already included in total, so we calculate it
+      const netRevenue = grossRevenue - totalDiscountGiven;
+      
+      // Paid Revenue (same as gross for completed bookings)
+      const paidRevenue = grossRevenue;
+      
+      // Pending Revenue
+      const pendingBookings = bookings.filter(b => b.status === "pending");
+      const pendingRevenue = pendingBookings.reduce((sum, b) => {
+        const parsedPrice = window.APP_UTILS?.parsePrice(b.total) || Number(b.total || 0);
+        return sum + parsedPrice;
+      }, 0);
+      
+      // Conversion Rate: (Số đơn hàng đã thanh toán / Số lượt Thêm giỏ hàng)
+      const totalAddToCart = window.TRACKING ? window.TRACKING.getStats('all').addToCart.count : cart.length;
+      const conversionRate = totalAddToCart > 0 
+        ? Math.round((completedBookings.length / totalAddToCart) * 100 * 100) / 100
         : 0;
 
       // Update stats
       $("#stat-users").text(users.length || 0);
       $("#stat-tours").text(tours.length || 0);
       $("#stat-bookings").text(bookings.length || 0);
-      $("#stat-revenue").text(formatPrice(totalRevenue));
+      $("#stat-revenue").text(formatPrice(grossRevenue));
       
       // Update booking description
-      const confirmedCount = confirmedBookings.length;
+      const confirmedCount = completedBookings.length;
       const pendingCount = pendingBookings.length;
       $("#stat-bookings-desc").text(`${confirmedCount} đã xác nhận, ${pendingCount} chờ duyệt`);
       
       // Update revenue description
       $("#stat-revenue-desc").text(`${formatPrice(paidRevenue)} đã thanh toán`);
 
-      // Update payment statistics
-      $("#total-revenue").text(formatPrice(totalRevenue));
+      // Update payment statistics with correct calculations
+      $("#total-revenue").text(formatPrice(grossRevenue));
       $("#paid-revenue").text(formatPrice(paidRevenue));
       $("#pending-revenue").text(formatPrice(pendingRevenue));
       $("#conversion-rate").text(`${conversionRate}%`);
+      
+      // Update discount and net revenue if elements exist
+      if ($("#stat-total-discount-given").length) {
+        $("#stat-total-discount-given").text(formatPrice(totalDiscountGiven));
+      }
+      if ($("#stat-net-revenue").length) {
+        $("#stat-net-revenue").text(formatPrice(netRevenue));
+      }
 
       // Update cart statistics
       const cartTotal = cart.reduce((sum, item) => {
-        return sum + (Number(item.tour?.price || 0) * item.quantity);
+        const parsedPrice = window.APP_UTILS?.parsePrice(item.tour?.price) || Number(item.tour?.price || 0);
+        return sum + (parsedPrice * item.quantity);
       }, 0);
       const cartAvg = cart.length > 0 ? cartTotal / cart.length : 0;
       $("#stat-cart-count").text(cart.length);
@@ -78,54 +111,232 @@
       
       // Update top destinations
       updateTopDestinations(tours);
+
+      // Update tracking and analytics
+      if (window.TRACKING) {
+        updateTrackingStats();
+        updatePromotionPerformance();
+        updateDiscountCodeAnalytics();
+      }
     } catch (err) {
       showToast("Không tải được thống kê", "danger");
     }
   }
 
+  // Update tracking statistics
+  function updateTrackingStats() {
+    if (!window.TRACKING) return;
+
+    const stats = window.TRACKING.getStats('all');
+    
+    // Update funnel tracking if elements exist
+    if ($("#stat-add-to-cart").length) {
+      $("#stat-add-to-cart").text(stats.addToCart.count);
+    }
+    if ($("#stat-add-to-favorites").length) {
+      $("#stat-add-to-favorites").text(stats.addToFavorites.count);
+    }
+    if ($("#stat-checkout-started").length) {
+      $("#stat-checkout-started").text(stats.checkoutStarted.count);
+    }
+    if ($("#stat-checkout-completed").length) {
+      $("#stat-checkout-completed").text(stats.checkoutCompleted.count);
+    }
+    if ($("#stat-conversion-rate-funnel").length) {
+      $("#stat-conversion-rate-funnel").text(`${stats.conversionRate}%`);
+      // Update progress bar
+      const $progressBar = $("#conversion-progress-bar");
+      if ($progressBar.length) {
+        $progressBar.css("width", `${stats.conversionRate}%`).attr("aria-valuenow", stats.conversionRate);
+      }
+    }
+  }
+
+  // Update promotion performance
+  function updatePromotionPerformance() {
+    if (!window.TRACKING) return;
+
+    const stats = window.TRACKING.getStats('all');
+    
+    // Update promotion stats if elements exist
+    if ($("#stat-discount-codes-used").length) {
+      $("#stat-discount-codes-used").text(stats.discountCodesUsed.count);
+    }
+    if ($("#stat-discount-usage-rate").length) {
+      $("#stat-discount-usage-rate").text(`${stats.discountUsageRate}%`);
+    }
+    if ($("#stat-total-discount-given").length) {
+      $("#stat-total-discount-given").text(formatPrice(stats.totalDiscountGiven));
+    }
+    if ($("#stat-net-revenue").length) {
+      $("#stat-net-revenue").text(formatPrice(stats.netRevenue));
+    }
+  }
+
+  // Update discount code analytics
+  function updateDiscountCodeAnalytics() {
+    if (!window.TRACKING) return;
+
+    const discounts = JSON.parse(localStorage.getItem("travel_discounts") || "[]");
+    const $container = $("#discount-codes-analytics");
+    
+    if (!$container.length) return;
+
+    if (discounts.length === 0) {
+      $container.html('<p class="text-muted text-center py-3">Chưa có mã giảm giá nào</p>');
+      return;
+    }
+
+    const html = discounts.map(discount => {
+      const analysis = window.TRACKING.getDiscountCodeAnalysis(discount.code);
+      
+      return `
+        <div class="card mb-3 border-0 shadow-sm">
+          <div class="card-header bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 class="mb-0 fw-bold">${discount.code}</h6>
+                <small class="text-muted">${discount.title || 'Mã giảm giá'}</small>
+              </div>
+              <span class="badge ${discount.active ? 'bg-success' : 'bg-secondary'}">
+                ${discount.active ? 'Đang hoạt động' : 'Đã tắt'}
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-3">
+                <div class="text-center p-2 bg-light rounded">
+                  <div class="text-muted small mb-1">Tỷ lệ chuyển đổi</div>
+                  <div class="fw-bold text-primary fs-5">${analysis.conversionRate}%</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center p-2 bg-light rounded">
+                  <div class="text-muted small mb-1">Số lần sử dụng</div>
+                  <div class="fw-bold text-success fs-5">${analysis.usageCount}</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center p-2 bg-light rounded">
+                  <div class="text-muted small mb-1">Doanh thu</div>
+                  <div class="fw-bold text-info fs-6">${formatPrice(analysis.totalRevenue)}</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center p-2 bg-light rounded">
+                  <div class="text-muted small mb-1">Giảm giá TB</div>
+                  <div class="fw-bold text-warning fs-6">${formatPrice(analysis.averageDiscount)}</div>
+                </div>
+              </div>
+            </div>
+            ${analysis.customers.length > 0 ? `
+              <div class="mt-3">
+                <h6 class="small fw-bold mb-2">Khách hàng đã sử dụng (${analysis.customers.length})</h6>
+                <div class="table-responsive">
+                  <table class="table table-sm table-hover">
+                    <thead>
+                      <tr>
+                        <th>Email</th>
+                        <th>Tên</th>
+                        <th>Mã đặt</th>
+                        <th>Tổng tiền</th>
+                        <th>Giảm giá</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${analysis.customers.slice(0, 5).map(c => `
+                        <tr>
+                          <td>${c.email || 'N/A'}</td>
+                          <td>${c.name || 'N/A'}</td>
+                          <td><code>${c.bookingCode}</code></td>
+                          <td>${formatPrice(c.total)}</td>
+                          <td class="text-success">-${formatPrice(c.discount)}</td>
+                        </tr>
+                      `).join('')}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    $container.html(html);
+  }
+
   function updateRecentActivity(bookings, tours, reviews, cart, favorites) {
     const activities = [];
     
-    // Recent cart additions
-    const recentCartItems = cart
-      .filter(item => item.addedAt)
-      .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt))
-      .slice(0, 2);
+    // Get tracking data for real-time activities
+    const trackingData = window.TRACKING ? window.TRACKING.getTrackingData() : null;
     
-    recentCartItems.forEach(item => {
-      const addedDate = new Date(item.addedAt);
-      const timeAgo = getTimeAgo(addedDate);
-      activities.push({
-        type: "cart",
-        text: `Thêm vào giỏ hàng`,
-        subtext: `${item.tour?.title || 'Tour'} • ${item.quantity} người`,
-        amount: formatPrice((item.tour?.price || 0) * item.quantity),
-        time: timeAgo,
-        color: "blue",
-        link: "cart.html"
+    // Recent cart additions from tracking
+    if (trackingData && trackingData.addToCart && trackingData.addToCart.length > 0) {
+      const recentCartItems = trackingData.addToCart
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .slice(0, 3);
+      
+      recentCartItems.forEach(item => {
+        const addedDate = new Date(item.timestamp);
+        const timeAgo = getTimeAgo(addedDate);
+        const parsedPrice = window.APP_UTILS?.parsePrice(item.price) || Number(item.price || 0);
+        activities.push({
+          type: "cart",
+          text: `Thêm vào giỏ hàng`,
+          subtext: `${item.tourTitle || 'Tour'} • ${item.quantity} người`,
+          amount: formatPrice(parsedPrice * item.quantity),
+          time: timeAgo,
+          color: "blue",
+          link: "cart.html"
+        });
       });
-    });
+    }
+    
+    // Recent favorites from tracking
+    if (trackingData && trackingData.addToFavorites && trackingData.addToFavorites.length > 0) {
+      const recentFavorites = trackingData.addToFavorites
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .slice(0, 2);
+      
+      recentFavorites.forEach(item => {
+        const addedDate = new Date(item.timestamp);
+        const timeAgo = getTimeAgo(addedDate);
+        activities.push({
+          type: "favorite",
+          text: `Thêm vào yêu thích`,
+          subtext: `${item.tourTitle || 'Tour'}`,
+          amount: "",
+          time: timeAgo,
+          color: "purple",
+          link: "favorites.html"
+        });
+      });
+    }
+    
+    // Discount code usage from tracking
+    if (trackingData && trackingData.discountCodesUsed && trackingData.discountCodesUsed.length > 0) {
+      const recentDiscounts = trackingData.discountCodesUsed
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .slice(0, 2);
+      
+      recentDiscounts.forEach(item => {
+        const addedDate = new Date(item.timestamp);
+        const timeAgo = getTimeAgo(addedDate);
+        activities.push({
+          type: "discount",
+          text: `Sử dụng mã giảm giá`,
+          subtext: `Mã: ${item.code} • Giảm ${formatPrice(item.discountAmount)}`,
+          amount: formatPrice(item.orderTotal),
+          time: timeAgo,
+          color: "green",
+          link: "promotions.html"
+        });
+      });
+    }
 
-    // Recent favorites
-    const recentFavorites = favorites
-      .filter(f => f.addedAt)
-      .sort((a, b) => new Date(b.addedAt) - new Date(a.addedAt))
-      .slice(0, 2);
-    
-    recentFavorites.forEach(fav => {
-      const addedDate = new Date(fav.addedAt);
-      const timeAgo = getTimeAgo(addedDate);
-      activities.push({
-        type: "favorite",
-        text: `Thêm vào yêu thích`,
-        subtext: `Tour #${fav.id}${fav.note ? ' • ' + fav.note : ''}`,
-        amount: "",
-        time: timeAgo,
-        color: "purple",
-        link: "favorites.html"
-      });
-    });
-    
     // Recent bookings - show actual booking details
     const recentBookings = bookings.slice(-5).reverse();
     recentBookings.forEach(b => {
@@ -185,6 +396,10 @@
         ? '<i class="bi bi-cart-plus text-primary"></i>'
         : act.type === "favorite"
         ? '<i class="bi bi-heart-fill text-danger"></i>'
+        : act.type === "discount"
+        ? '<i class="bi bi-tag-fill text-success"></i>'
+        : act.type === "cancelled"
+        ? '<i class="bi bi-x-circle-fill text-danger"></i>'
         : '<i class="bi bi-receipt text-success"></i>';
       
       return `
@@ -287,11 +502,27 @@
       </li>
     `).join("");
 
-    $(".list-group").html(html || '<li class="list-group-item text-muted text-center">Chưa có dữ liệu</li>');
+    // Sửa selector để chỉ target vào #top-destinations, không ảnh hưởng đến sidebar
+    $("#top-destinations").html(html || '<li class="list-group-item text-muted text-center">Chưa có dữ liệu</li>');
   }
 
   $(function () {
     loadStats();
+    
+    // Auto-refresh stats every 5 seconds for real-time updates
+    setInterval(() => {
+      if (window.TRACKING) {
+        updateTrackingStats();
+        updatePromotionPerformance();
+        updateDiscountCodeAnalytics();
+      }
+    }, 5000);
+    
+    // Listen for tracking events
+    $(document).on('trackingUpdated', function() {
+      updateTrackingStats();
+      updatePromotionPerformance();
+    });
     
     // Make todo items clickable
     $(".todo-item input[type='checkbox']").on("change", function() {

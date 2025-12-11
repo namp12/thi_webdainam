@@ -34,7 +34,9 @@
     $("#tour-description").text(tour.description || "Chưa có mô tả.");
     $("#tour-start").text(tour.startDate || "Liên hệ");
 
-    // Gallery
+    // Gallery - Lấy ảnh từ mapping hoặc auto-detect
+    const imageSrc = window.IMAGE_MAPPING?.getTourImage(tour) || `assets/img/tours/${tour.id}.jpg`;
+    const fallbackImage = window.IMAGE_MAPPING?.getTourFallbackImage(tour) || 'assets/img/banners/placeholder.jpg';
     const galleryHtml = `
       <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
         <img src="${tour.image || "https://quynhonland.com.vn/wp-content/uploads/2019/08/dulichquynhon-4.jpg"}" 

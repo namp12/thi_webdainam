@@ -1,0 +1,55 @@
+{
+  "description": "Danh sách điểm đến nổi bật - HOÀN TOÀN ĐỘC LẬP, chỉ sử dụng ảnh local từ thư mục img, KHÔNG phụ thuộc vào API",
+  "destinations": [
+    {
+      "name": "Đà Nẵng",
+      "image": "assets/img/tours/10.jpg",
+      "fallbackImage": "assets/img/banners/banner.jpg",
+      "theme": "Du lịch Biển",
+      "link": "tours.html?destination=Đà Nẵng"
+    },
+    {
+      "name": "Sapa",
+      "image": "assets/img/tours/11.jpg",
+      "fallbackImage": "assets/img/banners/banner.jpg",
+      "theme": "Du lịch Núi",
+      "link": "tours.html?destination=Sapa"
+    },
+    {
+      "name": "Phú Quốc",
+      "image": "assets/img/tours/12.jpg",
+      "fallbackImage": "assets/img/banners/banner.jpg",
+      "theme": "Du lịch Biển",
+      "link": "tours.html?destination=Phú Quốc"
+    },
+    {
+      "name": "Hạ Long",
+      "image": "assets/img/tours/13.jpg",
+      "fallbackImage": "assets/img/banners/banner.jpg",
+      "theme": "Du lịch Biển",
+      "link": "tours.html?destination=Hạ Long"
+    },
+    {
+      "name": "Nha Trang",
+      "image": "assets/img/tours/14.jpg",
+      "fallbackImage": "assets/img/banners/banner.jpg",
+      "theme": "Du lịch Biển",
+      "link": "tours.html?destination=Nha Trang"
+    },
+    {
+      "name": "Đà Lạt",
+      "image": "assets/img/tours/15.jpg",
+      "fallbackImage": "assets/img/banners/banner.jpg",
+      "theme": "Du lịch Núi",
+      "link": "tours.html?destination=Đà Lạt"
+    }
+  ],
+  "instructions": {
+    "note": "Phần này HOÀN TOÀN ĐỘC LẬP, chỉ sử dụng ảnh local từ assets/img/tours/ và assets/img/banners/, KHÔNG phụ thuộc vào API",
+    "how_to_use": "1. Thêm/sửa/xóa destinations trong mảng này qua Admin Panel (admin-destinations.html)",
+    "image_path": "Ảnh phải đặt trong assets/img/tours/ hoặc assets/img/banners/",
+    "update": "Sau khi sửa, refresh trang index.html để thấy thay đổi",
+    "admin": "Quản lý tại: admin-destinations.html"
+  }
+}
+

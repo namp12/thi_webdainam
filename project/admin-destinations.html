@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Quản Lý Điểm Đến Nổi Bật - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    .dest-preview {
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .dest-card-admin {
+      border: 2px dashed #dee2e6;
+      border-radius: 12px;
+      padding: 1rem;
+      transition: all 0.3s;
+    }
+    .dest-card-admin:hover {
+      border-color: #0d6efd;
+      background: #f8f9fa;
+    }
+    .dest-card-admin.active {
+      border-color: #0d6efd;
+      background: #e7f1ff;
+    }
+  </style>
+</head>
+<body class="admin-layout bg-light d-flex">
+  <div id="header-admin-placeholder"></div>
+  <div class="d-flex flex-grow-1">
+    <div id="sidebar-placeholder"></div>
+    <main class="flex-grow-1 p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3><i class="bi bi-star-fill text-warning"></i> Quản Lý Điểm Đến Nổi Bật</h3>
+          <p class="text-muted mb-0">Tự chọn ảnh và thông tin cho phần "Điểm đến nổi bật" trên trang chủ</p>
+        </div>
+        <div>
+          <button class="btn btn-success" id="btn-add-dest">
+            <i class="bi bi-plus-circle"></i> Thêm Điểm Đến
+          </button>
+          <button class="btn btn-primary" id="btn-save-destinations">
+            <i class="bi bi-save"></i> Lưu Tất Cả
+          </button>
+        </div>
+      </div>
+
+      <!-- Danh sách destinations -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="bi bi-list-ul"></i> Danh Sách Điểm Đến (Tối đa 6)</h5>
+        </div>
+        <div class="card-body">
+          <div id="destinations-list" class="row g-3">
+            <div class="col-12 text-center py-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form thêm/sửa destination -->
+      <div class="card" id="dest-form-card" style="display: none;">
+        <div class="card-header">
+          <h5 class="mb-0" id="form-title">Thêm Điểm Đến Mới</h5>
+        </div>
+        <div class="card-body">
+          <form id="dest-form">
+            <input type="hidden" id="dest-edit-index" value="">
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Tên Điểm Đến <span class="text-danger">*</span></label>
+                <input type="text" id="dest-name" class="form-control" required placeholder="Ví dụ: Đà Nẵng">
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label">Chủ Đề/Thể Loại</label>
+                <select id="dest-theme" class="form-select">
+                  <option value="Du lịch Biển">Du lịch Biển</option>
+                  <option value="Du lịch Núi">Du lịch Núi</option>
+                  <option value="Khám phá Văn hóa">Khám phá Văn hóa</option>
+                  <option value="Du lịch">Du lịch</option>
+                </select>
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label">Ảnh Chính <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <select id="dest-image-select" class="form-select">
+                    <option value="">-- Chọn ảnh từ danh sách --</option>
+                  </select>
+                  <button class="btn btn-outline-secondary" type="button" onclick="window.open('admin-image-manager.html', '_blank')" title="Quản lý ảnh">
+                    <i class="bi bi-images"></i>
+                  </button>
+                </div>
+                <input type="text" id="dest-image" class="form-control mt-2" required placeholder="assets/img/tours/da-nang.jpg">
+                <small class="text-muted">Chọn từ danh sách hoặc nhập đường dẫn thủ công</small>
+              </div>
+              
+              <div class="col-md-6">
+                <label class="form-label">Ảnh Dự Phòng</label>
+                <input type="text" id="dest-fallback" class="form-control" placeholder="assets/img/banners/da-nang.jpg">
+                <small class="text-muted">Ảnh hiển thị nếu ảnh chính lỗi</small>
+              </div>
+              
+              <div class="col-md-12">
+                <label class="form-label">Link (tùy chọn)</label>
+                <input type="text" id="dest-link" class="form-control" placeholder="tours.html?destination=Đà Nẵng">
+                <small class="text-muted">Link khi click vào destination card</small>
+              </div>
+              
+              <div class="col-md-12">
+                <div class="preview-section">
+                  <label class="form-label">Preview Ảnh</label>
+                  <div class="text-center">
+                    <img id="dest-preview" src="" alt="Preview" class="dest-preview w-100" style="display: none; max-height: 300px;">
+                    <div id="dest-preview-placeholder" class="text-muted py-5 border rounded">
+                      <i class="bi bi-image"></i> Chưa có ảnh preview
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4 d-flex gap-2">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Lưu
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-cancel-form">
+                <i class="bi bi-x-circle"></i> Hủy
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xem Trước Ảnh</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="preview-image" src="" alt="Preview" class="img-fluid rounded" style="max-height: 500px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/admin-guard.js"></script>
+  <script>
+    $(function() {
+      $("#header-admin-placeholder").load("components/header-admin.html", function() {
+        if (window.APP_SETTINGS) window.APP_SETTINGS.init();
+      });
+      $("#sidebar-placeholder").load("components/sidebar-admin.html");
+    });
+  </script>
+  <script src="assets/js/admin-destinations.js"></script>
+</body>
+</html>
+

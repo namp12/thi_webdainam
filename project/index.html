@@ -13,9 +13,15 @@
   <link rel="stylesheet" href="assets/css/responsive.css">
   <link rel="stylesheet" href="assets/css/animation.css">
   <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/pricing.css">
+  <link rel="stylesheet" href="assets/css/homepage.css">
+  <link rel="stylesheet" href="assets/css/category-section.css">
+  <link rel="stylesheet" href="assets/css/icons.css">
   <!-- Bootstrap Icons CDN - Link tải icon trái tim và các icon khác -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
+  <!-- Iconify - Free Icons từ nhiều packs -->
+  <script src="https://code.iconify.design/3/iconify.min.js"></script>
+  <!-- Hoặc tải về từ: https://icons.getbootstrap.com/ -->
 </head>
 <body class="bg-light">
   <div id="header-placeholder"></div>
@@ -86,7 +92,6 @@
                 <div class="text-muted fw-bold mb-1" style="font-size: 1rem;">Tour hot</div>
                 <div class="text-muted mb-1" style="font-size: 0.9rem;">Khám phá biển đảo</div>
                 <div class="text-primary fw-bold" style="font-size: 1.2rem;">5.200.000đ</div>
-              </div>
             </div>
           </div>
         </div>
@@ -178,103 +183,97 @@
       </div>
     </section>
 
-    <section class="mb-5" id="promo">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold" data-i18n="hot_title">Tour bán chạy</h3>
-        <a class="btn btn-outline-primary btn-sm" href="tours.html" data-i18n="view_all">Xem tất cả</a>
+    <section class="category-section mb-5" id="promo">
+      <div class="category-section-header">
+        <div>
+          <h3 class="category-section-title" data-i18n="hot_title">Tour bán chạy</h3>
+          <p class="category-section-subtitle">Những hành trình được đặt nhiều nhất tuần này</p>
+        </div>
+        <a class="btn btn-outline-primary" href="tours.html" data-i18n="view_all">
+          <i class="bi bi-arrow-right me-1"></i>Xem tất cả
+        </a>
       </div>
-      <p class="text-muted mb-3">Những hành trình được đặt nhiều nhất tuần này.</p>
-      <div class="row" id="hot-tour-list"></div>
+      <div class="category-tours-grid" id="hot-tour-list"></div>
     </section>
 
-    <section class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold">Điểm đến nổi bật</h3>
+    <section class="category-section mb-5">
+      <div class="category-section-header">
+        <div>
+          <h3 class="category-section-title">Điểm đến nổi bật</h3>
+          <p class="category-section-subtitle">Lựa chọn tiêu biểu theo mùa, dễ đi và nhiều trải nghiệm</p>
+        </div>
       </div>
-      <p class="text-muted mb-3">Lựa chọn tiêu biểu theo mùa, dễ đi và nhiều trải nghiệm.</p>
-      <div id="destCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="row g-3">
-              <div class="col-md-4">
-                <div class="dest-card reveal-scale hover-scale image-zoom">
-                  <img src="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?auto=format&fit=crop&w=900&q=80" alt="Đà Nẵng" class="loaded">
-                  <div class="dest-overlay">
-                    <h6 class="mb-1">Đà Nẵng</h6>
-                    <span class="badge bg-light text-dark badge-soft">Biển & Ẩm thực</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="dest-card reveal-scale hover-scale image-zoom animate-delay-1">
-                  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Đà Lạt" class="loaded">
-                  <div class="dest-overlay">
-                    <h6 class="mb-1">Đà Lạt</h6>
-                    <span class="badge bg-light text-dark badge-soft">Núi & Hoa</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="dest-card reveal-scale hover-scale image-zoom animate-delay-2">
-                  <img src="https://images.unsplash.com/photo-1523517832534-89c87f2bffe0?auto=format&fit=crop&w=900&q=80" alt="Phú Quốc" class="loaded">
-                  <div class="dest-overlay">
-                    <h6 class="mb-1">Phú Quốc</h6>
-                    <span class="badge bg-light text-dark badge-soft">Resort & Lặn biển</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="row g-3">
-              <div class="col-md-4">
-                <div class="dest-card">
-                  <img src="https://images.unsplash.com/photo-1503197979108-c824168d51a8?auto=format&fit=crop&w=900&q=80" alt="Nha Trang">
-                  <div class="dest-overlay">
-                    <h6 class="mb-1">Nha Trang</h6>
-                    <span class="badge bg-light text-dark">Biển xanh</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="dest-card">
-                  <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=900&q=80" alt="Sapa">
-                  <div class="dest-overlay">
-                    <h6 class="mb-1">Sapa</h6>
-                    <span class="badge bg-light text-dark">Mây & Trekking</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="dest-card">
-                  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Hạ Long">
-                  <div class="dest-overlay">
-                    <h6 class="mb-1">Hạ Long</h6>
-                    <span class="badge bg-light text-dark">Du thuyền</span>
-                  </div>
-                </div>
-              </div>
+      <!-- Static HTML so bạn tự thay ảnh/điểm đến, không phụ thuộc API -->
+      <div class="category-tours-grid" id="destinations-grid">
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom" onclick="window.location.href='tours.html?destination=Đà Nẵng'">
+            <img src="assets/img/tours/10.jpg" alt="Đà Nẵng" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Đà Nẵng</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
             </div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#destCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#destCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-1" onclick="window.location.href='tours.html?destination=Sapa'">
+            <img src="assets/img/tours/11.jpg" alt="Sapa" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Sapa</h6>
+              <span class="badge bg-light text-dark">Du lịch Núi</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-2" onclick="window.location.href='tours.html?destination=Phú Quốc'">
+            <img src="assets/img/tours/12.jpg" alt="Phú Quốc" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Phú Quốc</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-3" onclick="window.location.href='tours.html?destination=Hạ Long'">
+            <img src="assets/img/tours/13.jpg" alt="Hạ Long" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Hạ Long</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-4" onclick="window.location.href='tours.html?destination=Nha Trang'">
+            <img src="assets/img/tours/14.jpg" alt="Nha Trang" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Nha Trang</h6>
+              <span class="badge bg-light text-dark">Du lịch Biển</span>
+            </div>
+          </div>
+        </div>
+        <div class="dest-card-wrapper">
+          <div class="dest-card reveal hover-lift image-zoom animate-delay-5" onclick="window.location.href='tours.html?destination=Đà Lạt'">
+            <img src="assets/img/tours/15.jpg" alt="Đà Lạt" class="loaded">
+            <div class="dest-overlay">
+              <h6 class="mb-1">Đà Lạt</h6>
+              <span class="badge bg-light text-dark">Du lịch Núi</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold">Ưu đãi nổi bật</h3>
+    <section class="category-section mb-5" id="promo">
+      <div class="category-section-header">
+        <div>
+          <h3 class="category-section-title">Ưu đãi nổi bật</h3>
+          <p class="category-section-subtitle">Combo và flash sale giới hạn số lượng, kiểm tra ngay</p>
+        </div>
+        <a href="promotions.html" class="btn btn-outline-primary">
+          <i class="bi bi-arrow-right me-1"></i>Xem tất cả
+        </a>
       </div>
-      <p class="text-muted mb-3">Combo và flash sale giới hạn số lượng, kiểm tra ngay.</p>
-      <div class="row g-3">
-        <div class="col-md-4">
+      <div class="category-tours-grid">
+        <div class="deal-card-wrapper">
           <div class="deal-card reveal hover-lift" data-deal="combo-bien-dao">
             <div class="badge bg-light text-dark mb-2 badge-pulse">-20%</div>
             <h6 class="fw-bold">Combo biển đảo</h6>
@@ -282,7 +281,7 @@
             <button class="btn btn-outline-light btn-sm btn-view-deal" data-deal="combo-bien-dao">Xem chi tiết</button>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="deal-card-wrapper">
           <div class="deal-card reveal hover-lift animate-delay-1" data-deal="flash-sale-nui">
             <div class="badge bg-light text-dark mb-2 badge-pulse">Flash sale</div>
             <h6 class="fw-bold">Tour miền núi</h6>
@@ -290,7 +289,7 @@
             <button class="btn btn-outline-light btn-sm btn-view-deal" data-deal="flash-sale-nui">Xem chi tiết</button>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="deal-card-wrapper">
           <div class="deal-card reveal hover-lift animate-delay-2" data-deal="voucher-gia-dinh">
             <div class="badge bg-light text-dark mb-2 badge-pulse">Voucher</div>
             <h6 class="fw-bold">Ưu đãi gia đình</h6>
@@ -301,50 +300,175 @@
       </div>
     </section>
 
-    <section class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold">Khách hàng nói gì?</h3>
+    <section class="testimonials-enhanced mb-5">
+      <div class="section-header-enhanced text-center mb-4">
+        <h3 class="section-title-enhanced">Khách hàng nói gì?</h3>
+        <p class="section-subtitle-enhanced">Đánh giá thực từ khách đã đi cùng chúng tôi</p>
       </div>
-      <p class="text-muted mb-3">Đánh giá thực từ khách đã đi cùng chúng tôi.</p>
-      <div id="testiCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div id="testiCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <div class="testi-card">
-              <div class="d-flex align-items-center gap-2 mb-2">
-                <img class="avatar" src="https://i.pravatar.cc/80?img=11" alt="avatar">
-                <div>
-                  <div class="fw-bold">Linh Tran</div>
-                  <div class="small text-muted">HCM</div>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="testimonial-card-enhanced">
+                  <div class="testimonial-header">
+                    <img src="https://i.pravatar.cc/80?img=11" alt="Linh Tran" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Linh Tran</div>
+                      <div class="testimonial-location">
+                        <i class="bi bi-geo-alt"></i>
+                        Hồ Chí Minh
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testimonial-rating">
+                    <div class="testimonial-stars">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                    </div>
+                    <span class="testimonial-rating-value">4.8</span>
+                  </div>
+                  <p class="testimonial-text">Đặt tour nhanh, giá rõ ràng, hỗ trợ 24/7 rất ưng. Đội ngũ tư vấn nhiệt tình và chuyên nghiệp.</p>
+                  <div class="testimonial-date">2 tuần trước</div>
                 </div>
               </div>
-              <p class="mb-2">“Đặt tour nhanh, giá rõ ràng, hỗ trợ 24/7 rất ưng.”</p>
-              <span class="badge bg-warning text-dark">★ 4.8</span>
+              <div class="col-md-4">
+                <div class="testimonial-card-enhanced">
+                  <div class="testimonial-header">
+                    <img src="https://i.pravatar.cc/80?img=22" alt="Hoang Nguyen" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Hoang Nguyen</div>
+                      <div class="testimonial-location">
+                        <i class="bi bi-geo-alt"></i>
+                        Hà Nội
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testimonial-rating">
+                    <div class="testimonial-stars">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-half"></i>
+                    </div>
+                    <span class="testimonial-rating-value">4.7</span>
+                  </div>
+                  <p class="testimonial-text">Tour biển đi Phú Quốc rất chất, resort xịn, giá hợp lý. Sẽ quay lại đặt tour tiếp.</p>
+                  <div class="testimonial-date">1 tháng trước</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="testimonial-card-enhanced">
+                  <div class="testimonial-header">
+                    <img src="https://i.pravatar.cc/80?img=36" alt="An Pham" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">An Pham</div>
+                      <div class="testimonial-location">
+                        <i class="bi bi-geo-alt"></i>
+                        Đà Nẵng
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testimonial-rating">
+                    <div class="testimonial-stars">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                    </div>
+                    <span class="testimonial-rating-value">4.9</span>
+                  </div>
+                  <p class="testimonial-text">Có nhiều lựa chọn trekking, hướng dẫn viên nhiệt tình. Trải nghiệm tuyệt vời!</p>
+                  <div class="testimonial-date">3 tuần trước</div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="carousel-item">
-            <div class="testi-card">
-              <div class="d-flex align-items-center gap-2 mb-2">
-                <img class="avatar" src="https://i.pravatar.cc/80?img=22" alt="avatar">
-                <div>
-                  <div class="fw-bold">Hoang Nguyen</div>
-                  <div class="small text-muted">HN</div>
+            <div class="row g-4">
+              <div class="col-md-4">
+                <div class="testimonial-card-enhanced">
+                  <div class="testimonial-header">
+                    <img src="https://i.pravatar.cc/80?img=47" alt="Mai Le" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Mai Le</div>
+                      <div class="testimonial-location">
+                        <i class="bi bi-geo-alt"></i>
+                        Cần Thơ
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testimonial-rating">
+                    <div class="testimonial-stars">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                    </div>
+                    <span class="testimonial-rating-value">5.0</span>
+                  </div>
+                  <p class="testimonial-text">Dịch vụ hoàn hảo từ A-Z. Giá cả minh bạch, không phát sinh thêm chi phí.</p>
+                  <div class="testimonial-date">1 tuần trước</div>
                 </div>
               </div>
-              <p class="mb-2">“Tour biển đi Phú Quốc rất chất, resort xịn, giá hợp lý.”</p>
-              <span class="badge bg-warning text-dark">★ 4.7</span>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <div class="testi-card">
-              <div class="d-flex align-items-center gap-2 mb-2">
-                <img class="avatar" src="https://i.pravatar.cc/80?img=36" alt="avatar">
-                <div>
-                  <div class="fw-bold">An Pham</div>
-                  <div class="small text-muted">Đà Nẵng</div>
+              <div class="col-md-4">
+                <div class="testimonial-card-enhanced">
+                  <div class="testimonial-header">
+                    <img src="https://i.pravatar.cc/80?img=58" alt="Nam Vo" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Nam Vo</div>
+                      <div class="testimonial-location">
+                        <i class="bi bi-geo-alt"></i>
+                        Đà Lạt
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testimonial-rating">
+                    <div class="testimonial-stars">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-half"></i>
+                    </div>
+                    <span class="testimonial-rating-value">4.6</span>
+                  </div>
+                  <p class="testimonial-text">Tour văn hóa miền Bắc rất hay, học được nhiều điều mới. Cảm ơn team!</p>
+                  <div class="testimonial-date">2 tháng trước</div>
                 </div>
               </div>
-              <p class="mb-2">“Có nhiều lựa chọn trekking, hướng dẫn viên nhiệt tình.”</p>
-              <span class="badge bg-warning text-dark">★ 4.9</span>
+              <div class="col-md-4">
+                <div class="testimonial-card-enhanced">
+                  <div class="testimonial-header">
+                    <img src="https://i.pravatar.cc/80?img=69" alt="Hoa Nguyen" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                      <div class="testimonial-name">Hoa Nguyen</div>
+                      <div class="testimonial-location">
+                        <i class="bi bi-geo-alt"></i>
+                        Nha Trang
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testimonial-rating">
+                    <div class="testimonial-stars">
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                      <i class="bi bi-star-fill"></i>
+                    </div>
+                    <span class="testimonial-rating-value">4.8</span>
+                  </div>
+                  <p class="testimonial-text">Combo vé máy bay + resort tiết kiệm được kha khá. Rất hài lòng!</p>
+                  <div class="testimonial-date">3 tuần trước</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -377,30 +501,53 @@
       </div>
     </section>
 
-    <section class="mb-5">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold" data-i18n="category_title">Tour theo chủ đề</h3>
-        <div class="nav nav-pills gap-2" id="category-pills">
-          <button class="btn btn-outline-primary active" type="button" data-category="">Tất cả</button>
-          <button class="btn btn-outline-primary" type="button" data-category="Biển">Du lịch Biển</button>
-          <button class="btn btn-outline-primary" type="button" data-category="Núi">Du lịch Núi</button>
-          <button class="btn btn-outline-primary" type="button" data-category="Văn hóa">Khám phá Văn hóa</button>
+    <section class="category-section mb-5">
+      <div class="category-section-header">
+        <div>
+          <h3 class="category-section-title" data-i18n="category_title">Tour theo chủ đề</h3>
+          <p class="category-section-subtitle">Chọn nhanh theo chủ đề bạn quan tâm</p>
+        </div>
+        <a href="tours.html" class="btn btn-outline-primary">
+          <i class="bi bi-arrow-right me-1"></i>Xem tất cả
+        </a>
+      </div>
+      
+      <div class="category-filter-pills" id="category-pills">
+        <div class="category-pill active" data-category="" role="button" tabindex="0">
+          <span class="category-pill-icon"><i class="bi bi-grid-3x3-gap-fill"></i></span>
+          <span class="category-pill-text">Tất cả</span>
+        </div>
+        <div class="category-pill" data-category="Biển" role="button" tabindex="0">
+          <span class="category-pill-icon"><i class="bi bi-water"></i></span>
+          <span class="category-pill-text">Du lịch Biển</span>
+        </div>
+        <div class="category-pill" data-category="Núi" role="button" tabindex="0">
+          <span class="category-pill-icon"><i class="bi bi-mountain"></i></span>
+          <span class="category-pill-text">Du lịch Núi</span>
+        </div>
+        <div class="category-pill" data-category="Văn hóa" role="button" tabindex="0">
+          <span class="category-pill-icon"><i class="bi bi-building"></i></span>
+          <span class="category-pill-text">Khám phá Văn hóa</span>
         </div>
       </div>
-      <p class="text-muted mb-3">Chọn nhanh theo chủ đề bạn quan tâm.</p>
-      <div class="row" id="category-tour-list"></div>
+      
+      <div class="category-tours-grid" id="category-tour-list"></div>
     </section>
 
     <section class="mb-5" id="blog">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="fw-bold" data-i18n="blog_title">Cảm hứng du lịch</h3>
-        <a class="btn btn-link" href="blog.html" data-i18n="view_blog">Xem blog</a>
+      <div class="section-header-enhanced d-flex justify-content-between align-items-end mb-4">
+        <div>
+          <h3 class="section-title-enhanced" data-i18n="blog_title">Cảm hứng du lịch</h3>
+          <p class="section-subtitle-enhanced mb-0">Cập nhật mẹo hay, lịch trình mẫu và điểm đến mới</p>
+        </div>
+        <a class="btn btn-outline-primary" href="blog.html" data-i18n="view_blog">
+          <i class="bi bi-arrow-right me-1"></i>Xem blog
+        </a>
       </div>
-      <p class="text-muted mb-3">Cập nhật mẹo hay, lịch trình mẫu và điểm đến mới.</p>
       <div class="row g-3">
         <div class="col-md-4">
           <div class="card h-100 shadow-sm reveal hover-lift image-zoom">
-            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <img src="assets/img/tours/24.jpg" class="card-img-top loaded" alt="blog">
             <div class="card-body">
               <h6 class="fw-bold">Check-list Đà Nẵng 3N2Đ</h6>
               <p class="small text-muted">Ăn gì, ở đâu, lịch trình tối ưu cho nhóm bạn trẻ.</p>
@@ -410,7 +557,7 @@
         </div>
         <div class="col-md-4">
           <div class="card h-100 shadow-sm reveal hover-lift image-zoom animate-delay-1">
-            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <img src="assets/img/tours/25.jpg" class="card-img-top loaded" alt="blog">
             <div class="card-body">
               <h6 class="fw-bold">Top 5 đảo đẹp nhất Việt Nam</h6>
               <p class="small text-muted">Danh sách đảo phải đi trong mùa hè này.</p>
@@ -420,7 +567,7 @@
         </div>
         <div class="col-md-4">
           <div class="card h-100 shadow-sm reveal hover-lift image-zoom animate-delay-2">
-            <img src="assets/img/banners/placeholder.jpg" class="card-img-top loaded" alt="blog">
+            <img src="assets/img/tours/26.jpg" class="card-img-top loaded" alt="blog">
             <div class="card-body">
               <h6 class="fw-bold">Mẹo săn vé & khách sạn rẻ</h6>
               <p class="small text-muted">Tổng hợp tip tiết kiệm cho gia đình và cặp đôi.</p>
@@ -432,15 +579,18 @@
     </section>
 
     <section class="mb-5">
-      <div class="newsletter shadow-sm reveal-scale hover-glow">
-        <div>
-          <h4 class="fw-bold mb-1 gradient-text" data-i18n="news_title">Nhận ưu đãi độc quyền</h4>
-          <p class="text-muted mb-0 small" data-i18n="news_subtitle">Đăng ký để nhận khuyến mãi và gợi ý tour mới mỗi tuần.</p>
+      <div class="newsletter-enhanced">
+        <div class="newsletter-content">
+          <h4 data-i18n="news_title">Nhận ưu đãi độc quyền</h4>
+          <p data-i18n="news_subtitle">Đăng ký email để nhận khuyến mãi và gợi ý tour mới mỗi tuần</p>
+          <form class="newsletter-form-enhanced" id="newsletter-form">
+            <input type="email" class="form-control" placeholder="Nhập email của bạn" aria-label="Email" required data-i18n-placeholder="news_placeholder">
+            <button class="btn btn-newsletter" type="submit" data-i18n="news_cta">
+              <i class="bi bi-envelope-check"></i>
+              Đăng ký ngay
+            </button>
+          </form>
         </div>
-        <form class="d-flex flex-column flex-md-row gap-2 mt-3">
-          <input type="email" class="form-control form-control-lg" placeholder="Nhập email của bạn" aria-label="Email" required data-i18n-placeholder="news_placeholder">
-          <button class="btn btn-primary btn-lg animate-pulse" type="submit" data-i18n="news_cta">Đăng ký</button>
-        </form>
       </div>
     </section>
 
@@ -546,11 +696,16 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/settings.js"></script>
+  <script src="assets/js/auth.js"></script>
   <script src="assets/js/favorites.js"></script>
   <script src="assets/js/cart.js"></script>
+  <script src="assets/js/pricing-manager.js"></script>
+  <script src="assets/js/icons-loader.js"></script>
+  <script src="assets/js/image-mapping.js"></script>
   <script src="assets/js/tours.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/index-animations.js"></script>
+  <script src="assets/js/homepage.js"></script>
   <script src="assets/js/deal-details.js"></script>
 </body>
 </html>

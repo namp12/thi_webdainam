@@ -1,0 +1,565 @@
+/**
+ * Tours List Page - Enhanced UI/UX
+ * Cải thiện layout và spacing để không bị che khuất
+ */
+
+/* ============================================
+   Tour Card Container
+   ============================================ */
+.tour-card {
+  border-radius: 16px;
+  overflow: visible !important; /* Đổi từ hidden sang visible */
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tour-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: #667eea;
+}
+
+/* ============================================
+   Image Wrapper - Fixed Height
+   ============================================ */
+.tour-card .card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Cố định tỷ lệ ảnh để không nhấp nhô */
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.tour-card .card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block; /* Tránh khoảng trống ảnh dạng inline */
+  transition: transform 0.5s ease;
+}
+
+.tour-card:hover .card-img-top {
+  transform: scale(1.08);
+}
+
+/* ============================================
+   Badges on Image - Better Positioning
+   ============================================ */
+.tour-card .badge-destination {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #667eea !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-width: calc(100% - 100px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tour-card .badge-duration {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 5;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(40, 167, 69, 0.95) !important;
+  color: white !important;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Badge khuyến mãi - đặt vị trí để không bị chồng lấp */
+.tour-card .badge-promotion {
+  position: absolute;
+  top: 50px; /* Bên dưới badge điểm đến */
+  right: 12px;
+  z-index: 6;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
+  color: white !important;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  animation: pulse-badge 2s infinite;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Nếu không có khuyến mãi, badge thời gian ở góc trên bên phải */
+.tour-card:not(:has(.badge-promotion)) .badge-duration {
+  top: 12px;
+  right: 12px;
+}
+
+/* ============================================
+   Card Body - Better Spacing
+   ============================================ */
+.tour-card .card-body {
+  padding: 1.25rem !important; /* Tăng padding */
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0; /* Ngăn tràn */
+}
+
+.tour-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+  color: #212529;
+  min-height: 3em; /* Chiều cao cố định cho tiêu đề */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Phần Đánh giá */
+.tour-card .rating {
+  color: #f4b400;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+}
+
+.tour-card .rating i {
+  font-size: 1rem;
+}
+
+.tour-card .small.text-muted {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* Mô tả */
+.tour-card .card-body > p.small {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #495057;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  min-height: 4.2em; /* Chiều cao cố định cho mô tả */
+}
+
+/* ============================================
+   Price Section - Always Visible
+   ============================================ */
+.tour-card-actions {
+  display: grid;
+  grid-template-columns: max-content auto auto;
+  align-items: center;
+  gap: 0.35rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid #f0f0f0;
+  margin-top: auto;
+}
+
+.tour-price {
+  padding: 0.25rem 0.45rem;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e5e8ef;
+  transition: all 0.25s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.tour-card:hover .tour-price {
+  background: #f9fafe;
+  border-color: rgba(102, 126, 234, 0.25);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.12);
+}
+
+.price-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: auto;
+  white-space: nowrap;
+}
+
+.price-label {
+  font-size: 0.55rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6c757d;
+}
+
+.price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.15rem;
+  flex-wrap: nowrap;
+  width: auto;
+}
+
+.price-original {
+  font-size: 0.8rem;
+  color: #adb5bd !important;
+  text-decoration: line-through;
+}
+
+.tour-price .fw-bold {
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.05;
+  word-break: break-word;
+  min-width: 0;
+}
+
+.tour-price .fw-bold.text-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tour-price .fw-bold.text-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-save-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 0.25rem;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  white-space: nowrap;
+}
+
+/* ============================================
+   Buttons Section - Always Visible
+   ============================================ */
+.tour-buttons {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.btn-detail,
+.btn-cart,
+.btn-favorite {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-detail {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  min-width: 96px;
+  flex: 0 1 120px;
+}
+
+.btn-detail:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-cart {
+  background: linear-gradient(135deg, #34e0a1 0%, #00a680 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 7px 11px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 166, 128, 0.2);
+  min-width: 88px;
+  height: 34px;
+  flex: 0 0 auto;
+}
+
+.btn-cart:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 166, 128, 0.35);
+}
+
+.btn-cart:hover {
+  background: linear-gradient(135deg, #00a680 0%, #34e0a1 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 224, 161, 0.4);
+}
+
+.btn-favorite {
+  background: #ffe9ec;
+  color: #dc3545;
+  border: 1px solid #ffc4cc;
+  border-radius: 50%;
+  padding: 0;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  min-width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  box-shadow: 0 2px 6px rgba(220, 53, 69, 0.18);
+}
+
+.btn-favorite:hover {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.26);
+}
+
+.btn-favorite-active {
+  background: #dc3545 !important;
+  color: white !important;
+  border-color: #dc3545 !important;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 992px) {
+  .tour-card .card-image-wrapper {
+    height: auto;
+  }
+  
+  .tour-card-actions {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  
+  .tour-price {
+    width: 100%;
+    min-width: 0;
+  }
+  
+  .tour-buttons {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    flex-wrap: wrap; /* cho phép xuống hàng ở mobile */
+  }
+  
+  .btn-detail,
+  .btn-cart {
+    flex: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .tour-card .card-body {
+    padding: 1rem !important;
+  }
+  
+  .tour-card .card-title {
+    font-size: 1rem;
+    min-height: 2.8em;
+  }
+  
+  .tour-price .fw-bold {
+    font-size: 1.25rem;
+  }
+  
+  .price-save-badge {
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .btn-detail,
+  .btn-cart {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    min-width: 0;
+    flex: 1 1 48%;
+  }
+
+  .tour-buttons {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-favorite {
+    margin-left: auto; /* đẩy tim về cuối hàng */
+  }
+}
+
+@media (max-width: 576px) {
+  .tour-card .card-image-wrapper {
+    height: auto;
+  }
+  
+  .badge-destination,
+  .badge-duration,
+  .badge-promotion {
+    font-size: 0.7rem;
+    padding: 4px 10px;
+  }
+  
+  .tour-card .badge-destination {
+    max-width: calc(100% - 80px);
+  }
+  
+  .price-main {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .tour-buttons {
+    flex-direction: column;
+  }
+  
+  .btn-detail,
+  .btn-cart {
+    width: 100%;
+  }
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .tour-card {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .tour-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+}
+
+[data-bs-theme="dark"] .tour-card .card-body {
+  background: var(--dark-card);
+}
+
+[data-bs-theme="dark"] .tour-card .card-title {
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .tour-card-actions {
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .tour-price {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+[data-bs-theme="dark"] .tour-card:hover .tour-price {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.25) 100%);
+  border-color: rgba(102, 126, 234, 0.4);
+}
+
+[data-bs-theme="dark"] .price-original {
+  color: #868e96 !important;
+}
+
+[data-bs-theme="dark"] .btn-favorite {
+  background: var(--dark-card);
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+[data-bs-theme="dark"] .btn-favorite:hover {
+  background: #dc3545;
+  color: white;
+}
+
+/* ============================================
+   Fix Overflow Issues
+   ============================================ */
+.tour-card * {
+  box-sizing: border-box;
+}
+
+.tour-card-clickable {
+  cursor: pointer;
+}
+
+.tour-card .card-body > * {
+  max-width: 100%;
+}
+
+/* Đảm bảo text giá không bị tràn */
+.tour-price .fw-bold {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+/* Đảm bảo nút không bị cắt */
+.tour-card-actions {
+  min-height: 80px;
+  padding-bottom: 0.5rem;
+}
+
+/* Sửa vị trí badge khuyến mãi */
+.tour-card:has(.badge-promotion) .badge-duration {
+  top: 50px;
+  right: 12px;
+}
+

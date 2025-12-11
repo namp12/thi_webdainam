@@ -1,0 +1,633 @@
+/**
+ * Homepage Enhanced UI/UX
+ * Cải thiện Hero Search, Banner, Category Tabs, Testimonials, Newsletter
+ */
+
+/* ============================================
+   Hero Search Bar - Enhanced
+   ============================================ */
+.hero-search-enhanced {
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-search-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 20px;
+  z-index: -1;
+}
+
+.hero-search-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.hero-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hero-search-field label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495057;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-search-field label i {
+  color: #667eea;
+  font-size: 1rem;
+}
+
+.hero-search-field .form-control,
+.hero-search-field .form-select {
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 0.875rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.hero-search-field .form-control:focus,
+.hero-search-field .form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  outline: none;
+}
+
+.hero-search-submit {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.875rem 2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  min-height: 50px;
+}
+
+.hero-search-submit:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  color: white;
+}
+
+.hero-search-submit:active {
+  transform: translateY(0);
+}
+
+/* ============================================
+   Hero Banner/Carousel - Flash Sale
+   ============================================ */
+.hero-banner-carousel {
+  margin-bottom: 3rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.hero-banner-carousel .carousel-item {
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.hero-banner-carousel .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+  display: flex;
+  align-items: center;
+  padding: 3rem;
+}
+
+.hero-banner-content {
+  color: white;
+  max-width: 600px;
+}
+
+.hero-banner-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  animation: pulse-badge 2s infinite;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.hero-banner-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.hero-banner-subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+.hero-banner-cta {
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.hero-banner-cta:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* ============================================
+   Category Tabs - Enhanced with Icons
+   ============================================ */
+.category-tabs-enhanced {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.category-tab-card {
+  flex: 1;
+  min-width: 200px;
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-tab-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.category-tab-card:hover {
+  border-color: #667eea;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+}
+
+.category-tab-card.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.2);
+}
+
+.category-tab-card.active::before {
+  transform: scaleX(1);
+}
+
+.category-tab-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  transition: all 0.3s ease;
+}
+
+.category-tab-card.active .category-tab-icon {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: scale(1.1);
+}
+
+.category-tab-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.category-tab-desc {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* ============================================
+   Testimonials - Enhanced Carousel
+   ============================================ */
+.testimonials-enhanced {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  margin-bottom: 3rem;
+}
+
+.testimonial-card-enhanced {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  border: 1px solid #e9ecef;
+}
+
+.testimonial-card-enhanced:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-color: #667eea;
+}
+
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.testimonial-info {
+  flex: 1;
+}
+
+.testimonial-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.testimonial-location {
+  font-size: 0.875rem;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.testimonial-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.testimonial-stars {
+  color: #f4b400;
+  font-size: 1.1rem;
+}
+
+.testimonial-rating-value {
+  font-weight: 700;
+  color: #212529;
+  font-size: 1rem;
+}
+
+.testimonial-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #495057;
+  font-style: italic;
+  flex: 1;
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.testimonial-text::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -10px;
+  font-size: 3rem;
+  color: #667eea;
+  opacity: 0.2;
+  font-family: Georgia, serif;
+}
+
+.testimonial-date {
+  font-size: 0.875rem;
+  color: #adb5bd;
+  margin-top: 1rem;
+  text-align: right;
+}
+
+/* ============================================
+   Newsletter - Enhanced Form
+   ============================================ */
+.newsletter-enhanced {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+}
+
+.newsletter-enhanced::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: newsletterGlow 3s ease-in-out infinite;
+}
+
+@keyframes newsletterGlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(10%, 10%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.newsletter-enhanced .newsletter-content {
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter-enhanced h4 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.newsletter-enhanced p {
+  font-size: 1.1rem;
+  opacity: 0.95;
+  margin-bottom: 2rem;
+}
+
+.newsletter-form-enhanced {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.newsletter-form-enhanced .form-control {
+  flex: 1;
+  min-width: 250px;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.newsletter-form-enhanced .form-control:focus {
+  outline: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.newsletter-form-enhanced .btn-newsletter {
+  background: white;
+  color: #667eea;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+}
+
+.newsletter-form-enhanced .btn-newsletter:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.4);
+  color: #667eea;
+}
+
+/* ============================================
+   Section Headers - Enhanced Typography
+   ============================================ */
+.section-header-enhanced {
+  margin-bottom: 2rem;
+}
+
+.section-title-enhanced {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #212529;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle-enhanced {
+  font-size: 1.1rem;
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+/* ============================================
+   Tour Cards on homepage - fix image jumping
+   ============================================ */
+.card-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Giữ tỷ lệ đồng nhất */
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  .hero-search-enhanced {
+    padding: 1.5rem;
+  }
+  
+  .hero-search-form {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero-search-submit {
+    width: 100%;
+  }
+  
+  .hero-banner-carousel .carousel-item {
+    height: 400px;
+  }
+  
+  .hero-banner-title {
+    font-size: 2rem;
+  }
+  
+  .hero-banner-subtitle {
+    font-size: 1rem;
+  }
+  
+  .category-tabs-enhanced {
+    flex-direction: column;
+  }
+  
+  .category-tab-card {
+    width: 100%;
+  }
+  
+  .testimonials-enhanced {
+    padding: 2rem 1rem;
+  }
+  
+  .newsletter-enhanced {
+    padding: 2rem 1.5rem;
+  }
+  
+  .newsletter-form-enhanced {
+    flex-direction: column;
+  }
+  
+  .newsletter-form-enhanced .form-control,
+  .newsletter-form-enhanced .btn-newsletter {
+    width: 100%;
+  }
+  
+  .section-title-enhanced {
+    font-size: 2rem;
+  }
+}
+
+/* ============================================
+   Dark Mode
+   ============================================ */
+[data-bs-theme="dark"] .hero-search-enhanced {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .hero-search-field .form-control,
+[data-bs-theme="dark"] .hero-search-field .form-select {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .category-tab-card {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .category-tab-title {
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .testimonial-card-enhanced {
+  background: var(--dark-card);
+  border-color: var(--dark-border);
+}
+
+[data-bs-theme="dark"] .testimonial-name {
+  color: var(--dark-text-primary);
+}
+
+[data-bs-theme="dark"] .testimonial-text {
+  color: var(--dark-text-secondary);
+}
+
+[data-bs-theme="dark"] .section-title-enhanced {
+  background: linear-gradient(135deg, #8b9aff 0%, #a78bf5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Quản Lý Ảnh Tours - Travel Booking</title>
+  <link rel="stylesheet" href="assets/libs/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body class="admin-layout bg-light d-flex">
+  <div id="header-admin-placeholder"></div>
+  <div class="d-flex flex-grow-1">
+    <div id="sidebar-placeholder"></div>
+    <main class="flex-grow-1 p-4">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h3>Quản Lý Ảnh Tours</h3>
+          <p class="text-muted mb-0">Chọn ảnh cho từng tour một cách trực quan</p>
+        </div>
+        <button class="btn btn-primary" id="btn-save-mapping">
+          <i class="bi bi-save"></i> Lưu Mapping
+        </button>
+      </div>
+
+      <!-- Upload ảnh mới -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="bi bi-upload"></i> Upload Ảnh Mới</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Chọn file ảnh</label>
+              <input type="file" id="image-upload" class="form-control" accept="image/*" multiple>
+              <small class="text-muted">Có thể chọn nhiều file cùng lúc</small>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Tên file (tùy chọn)</label>
+              <input type="text" id="image-name" class="form-control" placeholder="Ví dụ: da-nang.jpg">
+              <small class="text-muted">Để trống sẽ dùng tên file gốc</small>
+            </div>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-success" id="btn-upload">
+              <i class="bi bi-cloud-upload"></i> Upload Ảnh
+            </button>
+            <small class="text-muted ms-3">Lưu ý: Upload ảnh vào thư mục <code>assets/img/tours/</code></small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Danh sách tours và ảnh -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0"><i class="bi bi-images"></i> Chọn Ảnh Cho Tours</h5>
+        </div>
+        <div class="card-body">
+          <div id="tours-image-list" class="row g-3">
+            <div class="col-12 text-center py-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Đang tải...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Preview Modal -->
+  <div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xem Trước Ảnh</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img id="preview-image" src="" alt="Preview" class="img-fluid rounded" style="max-height: 500px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/libs/jquery.min.js"></script>
+  <script src="assets/libs/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/settings.js"></script>
+  <script src="assets/js/admin-guard.js"></script>
+  <script>
+    $(function() {
+      $("#header-admin-placeholder").load("components/header-admin.html", function() {
+        if (window.APP_SETTINGS) window.APP_SETTINGS.init();
+      });
+      $("#sidebar-placeholder").load("components/sidebar-admin.html");
+    });
+  </script>
+  <script src="assets/js/admin-image-manager.js"></script>
+</body>
+</html>
+
+
