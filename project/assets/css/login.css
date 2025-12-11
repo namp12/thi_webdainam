@@ -2,6 +2,37 @@
  * Login Page Styles
  * Beautiful, modern login page with animations
  */
+ /* FIX 1 – Cho phép trang được cuộn */
+html, body {
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+/* FIX 2 – Không cho login background chặn cuộn */
+.login-background {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh !important;
+    z-index: -1 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;  /* NGĂN CHẶN không đè UI */
+}
+
+/* FIX 3 – Đảm bảo login container không bị ép chiều cao */
+.login-container {
+    min-height: auto !important;
+    padding-bottom: 50px; /* Để không bị cắt phần cuối */
+}
+
+/* FIX 4 – Bỏ mọi min-vh hoặc height 100% cứng */
+.row, .login-card, .login-body {
+    min-height: auto !important;
+}
+
 
 .login-page {
   min-height: 100vh;

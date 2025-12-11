@@ -37,7 +37,7 @@
     // Gallery
     const galleryHtml = `
       <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
-        <img src="${tour.image || "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800"}" 
+        <img src="${tour.image || "https://quynhonland.com.vn/wp-content/uploads/2019/08/dulichquynhon-4.jpg"}" 
              class="w-100 h-100 object-fit-cover" alt="${tour.title}">
       </div>
     `;

@@ -6,6 +6,7 @@
   const { API } = window.APP_CONFIG;
   const { http, storage, formatPrice, showToast } = window.APP_UTILS;
   const CART_KEY = "travel_cart";
+  const SESSION_KEY = "travel_user";
 
   function getCart() {
     return storage.get(CART_KEY, []);
@@ -21,6 +22,12 @@
   function addToCart(tourId, quantity = 1, tourData = null) {
     const cart = getCart();
     const existingIndex = cart.findIndex(item => item.tourId === tourId);
+    const user = storage.get(SESSION_KEY, null);
+    if (!user) {
+      showToast("Vui lòng đăng nhập để thêm vào giỏ hàng", "warning");
+      setTimeout(() => window.location.href = "login.html?redirect=" + encodeURIComponent(window.location.pathname), 2000);
+      return;
+    }
 
     if (existingIndex >= 0) {
       cart[existingIndex].quantity += quantity;
@@ -56,11 +63,21 @@
   function removeFromCart(tourId) {
     const cart = getCart();
     const filtered = cart.filter(item => item.tourId !== tourId);
+    const user = storage.get(SESSION_KEY, null);
+    if (!user) {
+      showToast("Vui lòng đăng nhập để thao tác giỏ hàng", "warning");
+      return;
+    }
     saveCart(filtered);
     showToast("Đã xóa khỏi giỏ hàng", "success");
   }
 
   function updateQuantity(tourId, quantity) {
+    const user = storage.get(SESSION_KEY, null);
+    if (!user) {
+      showToast("Vui lòng đăng nhập để cập nhật giỏ hàng", "warning");
+      return;
+    }
     if (quantity <= 0) {
       removeFromCart(tourId);
       return;

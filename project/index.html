@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="assets/css/dark-mode.css">
   <!-- Bootstrap Icons CDN - Link tải icon trái tim và các icon khác -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-  <!-- Hoặc tải về từ: https://icons.getbootstrap.com/ -->
+
 </head>
 <body class="bg-light">
   <div id="header-placeholder"></div>
@@ -30,23 +30,27 @@
             </div>
             <h1 class="fw-bold display-4 mb-3 text-dark gradient-text" data-i18n="hero_title">Việt Tour Pro • Đi đúng chỗ, giá đúng chuẩn</h1>
             <p class="lead mb-4 text-dark" data-i18n="hero_subtitle">Tìm kiếm, lọc và đặt tour nhanh như TripAdvisor: sáng sủa, rõ ràng, tin cậy.</p>
-            <form id="hero-search" class="search-dock hover-lift">
-              <div class="d-flex flex-wrap gap-3 align-items-center flex-grow-1">
-                <div class="d-flex align-items-center gap-2">
-                  <div class="text-muted small" data-i18n="lbl_destination">Điểm đến</div>
-                  <select id="tour-destination" class="form-select" aria-label="Điểm đến">
+            <form id="hero-search" class="search-dock p-3 rounded-4 shadow-sm bg-white">
+              <div class="row g-4 align-items-end">
+
+                <!-- Điểm đến -->
+                <div class="col-md-3">
+                  <label class="text-muted small mb-1" data-i18n="lbl_destination">Điểm đến</label>
+                  <select id="tour-destination" class="form-select">
                     <option value="">Tất cả</option>
                   </select>
                 </div>
-                <div class="divider d-none d-md-block"></div>
-                <div class="d-flex align-items-center gap-2">
-                  <div class="text-muted small" data-i18n="lbl_date">Ngày đi</div>
-                  <input id="tour-date" type="date" class="form-control" aria-label="Ngày đi">
+
+                <!-- Ngày đi -->
+                <div class="col-md-3">
+                  <label class="text-muted small mb-1" data-i18n="lbl_date">Ngày đi</label>
+                  <input id="tour-date" type="date" class="form-control">
                 </div>
-                <div class="divider d-none d-md-block"></div>
-                <div class="d-flex align-items-center gap-2">
-                  <div class="text-muted small" data-i18n="lbl_guests">Số người</div>
-                  <select id="tour-guests" class="form-select" aria-label="Số người">
+
+                <!-- Số người -->
+                <div class="col-md-2">
+                  <label class="text-muted small mb-1" data-i18n="lbl_guests">Số người</label>
+                  <select id="tour-guests" class="form-select">
                     <option value="1">1</option>
                     <option value="2" selected>2</option>
                     <option value="4">4</option>
@@ -54,25 +58,34 @@
                     <option value="8">8</option>
                   </select>
                 </div>
-                <div class="divider d-none d-md-block"></div>
-                <div class="d-flex align-items-center gap-2">
-                  <div class="text-muted small" data-i18n="lbl_keyword">Từ khóa</div>
-                  <input id="tour-search" class="form-control" placeholder="Tên tour hoặc số ngày" data-i18n-placeholder="ph_keyword" aria-label="Từ khóa">
+
+                <!-- Từ khóa -->
+                <div class="col-md-4">
+                  <label class="text-muted small mb-1" data-i18n="lbl_keyword">Từ khóa</label>
+                  <input id="tour-search" class="form-control" placeholder="Tên tour hoặc số ngày">
                 </div>
+
               </div>
-              <div class="d-flex align-items-center gap-2 ms-auto">
-                <button id="tour-submit" class="btn btn-accent px-4 fw-semibold" type="submit" data-i18n="btn_search">Tìm kiếm</button>
-                <button id="tour-reset" class="btn btn-outline-secondary" type="button" data-i18n="btn_reset">Xóa</button>
+
+              <!-- Nút -->
+              <div class="d-flex justify-content-end gap-2 mt-4">
+                <button id="tour-submit" class="btn btn-success px-4 fw-semibold" type="submit" data-i18n="btn_search">
+                  Tìm kiếm
+                </button>
+                <button id="tour-reset" class="btn btn-outline-secondary" type="button" data-i18n="btn_reset">
+                  Xóa
+                </button>
               </div>
             </form>
+
           </div>
           <div class="col-lg-6 text-center">
-            <div class="hero-visual shadow-lg image-zoom">
-              <img src="assets/img/banners/placeholder.jpg" class="img-fluid rounded-4 loaded" alt="Travel">
-              <div class="floating-card shadow animate-float">
-                <div class="small text-muted">Tour hot</div>
-                <div class="fw-semibold">Khám phá biển đảo</div>
-                <div class="text-primary fw-bold">5.200.000đ</div>
+            <div class="hero-visual shadow-lg image-zoom position-relative overflow-hidden">
+              <img src="https://flytime.vn/upload/img/products/08ae65742cda01e85a345a92e2744a2b.gif" class="img-fluid rounded-4 loaded" alt="Khám phá tour du lịch biển đảo" loading="lazy" style="transition: transform 0.5s ease;">
+              <div class="floating-card shadow animate-float bg-white p-3 rounded-3" style="position: absolute; bottom: 30px; right: 30px; max-width: 250px; animation-duration: 3s; animation-timing-function: ease-in-out;">
+                <div class="text-muted fw-bold mb-1" style="font-size: 1rem;">Tour hot</div>
+                <div class="text-muted mb-1" style="font-size: 0.9rem;">Khám phá biển đảo</div>
+                <div class="text-primary fw-bold" style="font-size: 1.2rem;">5.200.000đ</div>
               </div>
             </div>
           </div>
@@ -136,28 +149,28 @@
       <div class="row g-3">
         <div class="col-md-3">
           <div class="feature-card h-100 shadow-sm hover-lift reveal">
-            <div class="icon-circle bg-primary-subtle text-primary mb-2 icon-bounce">💰</div>
+            <div class="icon-circle bg-primary-subtle text-primary mb-2 icon-bounce"><i class="bi bi-cash-coin"></i></div>
             <h6 class="fw-bold mb-1" data-i18n="trust_item1_title">Giá tốt nhất</h6>
             <p class="small text-muted mb-0" data-i18n="trust_item1_desc">Cam kết giá minh bạch, ưu đãi liên tục.</p>
           </div>
         </div>
         <div class="col-md-3">
           <div class="feature-card h-100 shadow-sm hover-lift reveal animate-delay-1">
-            <div class="icon-circle bg-success-subtle text-success mb-2 icon-rotate">↺</div>
+            <div class="icon-circle bg-success-subtle text-success mb-2 icon-rotate"><i class="bi bi-arrow-counterclockwise"></i></div>
             <h6 class="fw-bold mb-1" data-i18n="trust_item2_title">Hủy miễn phí</h6>
             <p class="small text-muted mb-0" data-i18n="trust_item2_desc">Linh hoạt kế hoạch, đổi ý không lo.</p>
           </div>
         </div>
         <div class="col-md-3">
           <div class="feature-card h-100 shadow-sm hover-lift reveal animate-delay-2">
-            <div class="icon-circle bg-warning-subtle text-warning mb-2 icon-pulse">⏰</div>
+            <div class="icon-circle bg-warning-subtle text-warning mb-2 icon-pulse"><i class="bi bi-clock"></i></div>
             <h6 class="fw-bold mb-1" data-i18n="trust_item3_title">Hỗ trợ 24/7</h6>
             <p class="small text-muted mb-0" data-i18n="trust_item3_desc">Đội ngũ CS luôn sẵn sàng khi bạn cần.</p>
           </div>
         </div>
         <div class="col-md-3">
           <div class="feature-card h-100 shadow-sm hover-lift reveal animate-delay-3">
-            <div class="icon-circle bg-info-subtle text-info mb-2 icon-bounce">⭐</div>
+            <div class="icon-circle bg-info-subtle text-info mb-2 icon-bounce"><i class="bi bi-star-fill"></i></div>
             <h6 class="fw-bold mb-1" data-i18n="trust_item4_title">Đánh giá cao</h6>
             <p class="small text-muted mb-0" data-i18n="trust_item4_desc">Điểm hài lòng cao từ khách hàng thực.</p>
           </div>

@@ -11,6 +11,12 @@
     const $items = $("#cart-items");
     const $empty = $("#cart-empty");
     const $content = $("#cart-content");
+    const user = storage.get("travel_user", null);
+    if (!user) {
+      showToast("Vui lòng đăng nhập để xem giỏ hàng", "warning");
+      setTimeout(() => window.location.href = "login.html?redirect=cart.html", 2000);
+      return;
+    }
 
     if (!cart.length) {
       $empty.removeClass("d-none");
@@ -105,6 +111,11 @@
 
   $("#btn-checkout").on("click", function () {
     const cart = APP_CART.getCart();
+    const user = storage.get("travel_user", null);
+    if (!user) {
+      showToast("Vui lòng đăng nhập để thanh toán", "warning");
+      return;
+    }
     if (!cart.length) {
       showToast("Giỏ hàng trống", "warning");
       return;
