@@ -517,8 +517,26 @@
       renderHot(tours);
       renderCategory(tours, "");
     } catch (err) {
-      showToast("Không tải được tour", "danger");
       console.error("❌ Lỗi khi load tours:", err);
+      // Fallback sang data local để vẫn hiển thị
+      try {
+        const fallbackRes = await fetch("data/sample-tours.json");
+        const fallbackData = await fallbackRes.json();
+        tours = fallbackData?.tours || [];
+        if (tours.length) {
+          showToast("Đang dùng dữ liệu mẫu (API lỗi)", "warning");
+          renderStats(tours);
+          fillDestinations(tours);
+          render(tours);
+          renderHot(tours);
+          renderCategory(tours, "");
+        } else {
+          showToast("Không tải được tour", "danger");
+        }
+      } catch (fallbackErr) {
+        console.error("❌ Fallback cũng lỗi:", fallbackErr);
+        showToast("Không tải được tour", "danger");
+      }
     } finally {
       showLoading(false);
     }
