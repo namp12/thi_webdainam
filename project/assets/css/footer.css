@@ -21,8 +21,8 @@
 
 /* Map Section */
 .footer-map-section {
-  position: relative;
-  background: #0f1419;
+  padding-bottom: 10px;   /* Tạo khoảng cách dưới map */
+  padding-top: 15px;
 }
 
 .map-wrapper {

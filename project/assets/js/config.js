@@ -1,5 +1,5 @@
 // Base API configuration
-const BASE_URL = "https://692abb687615a15ff24d8062.mockapi.io/travel-booking";
+const BASE_URL = "https://692aefda7615a15ff24e2a04.mockapi.io/travel-booking";
 
 const API = {
   // Theo endpoint bạn cung cấp: /user và /tours
