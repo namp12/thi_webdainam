@@ -36,3 +36,30 @@ $(async function () {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slides = document.querySelectorAll('.hero-slide');
+    let currentSlide = 0;
+    const intervalTime = 3000; // 3 giây
+
+    function showSlide(index) {
+        // Ẩn tất cả slides
+        slides.forEach((slide) => {
+            slide.classList.remove('active');
+        });
+        
+        // Hiển thị slide hiện tại
+        slides[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Khởi tạo slider
+    showSlide(currentSlide);
+
+    // Bắt đầu chế độ tự động chuyển đổi
+    setInterval(nextSlide, intervalTime);
+});

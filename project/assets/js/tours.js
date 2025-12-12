@@ -84,7 +84,7 @@
           const fallbackImage = getTourFallbackImage(t);
           
           return `
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-4">
           <div class="card h-100 tour-card tour-card-clickable" data-id="${t.id}">
             <div class="position-relative card-image-wrapper">
               <img src="${imageSrc}" 
@@ -134,7 +134,7 @@
                     <div class="price-container">
                       <span class="price-label text-muted small">Từ</span>
                       <div class="price-main">
-                        <span class="fw-bold text-primary" style="font-size: 1.5rem; line-height: 1.2;">${formatPrice(pricing.finalPrice)}</span>
+                        <span class="fw-bold text-primary" style="font-size: 1.75rem; line-height: 1.2;">${formatPrice(pricing.finalPrice)}</span>
                       </div>
                     </div>
                   `}
@@ -202,7 +202,7 @@
                    loading="lazy"
                    onerror="this.onerror=null; this.src='${t.image || `assets/img/banners/placeholder.jpg`}';">
               <div class="card-overlay"></div>
-              <span class="badge bg-danger position-absolute top-0 start-0 m-2" style="z-index: 10;">
+              <span class="badge bg-danger position-absolute end-10 m-2" style="top: 40px;">
                 <i class="bi bi-fire"></i> Hot
               </span>
               ${hasPromotion && badgeText ? `
@@ -248,7 +248,7 @@
                     <div class="price-container">
                       <span class="price-label text-muted small">Từ</span>
                       <div class="price-main">
-                        <span class="fw-bold text-primary" style="font-size: 1.25rem;">${formatPrice(pricing.finalPrice)}</span>
+                        <span class="fw-bold text-primary" style="font-size: 1.5rem;">${formatPrice(pricing.finalPrice)}</span>
                       </div>
                     </div>
                   `}
@@ -493,9 +493,9 @@
     
     if (html) {
       $destGrid.html(html);
-      console.log(`✅ Đã render ${destinations.length} destinations với ảnh từ file local`);
+      console.log(`Đã render ${destinations.length} destinations với ảnh từ file local`);
     } else {
-      console.warn("⚠️ Không có HTML để render");
+      console.warn("Không có HTML để render");
     }
   }
 
@@ -509,7 +509,7 @@
       
       // Load tours từ API - LUÔN LUÔN load mới nhất để có tours mới và ảnh mới
       tours = await http.get(API.tours);
-      console.log(`✅ Đã load ${tours.length} tours từ API cho index.html`);
+      console.log(`Đã load ${tours.length} tours từ API cho index.html`);
       
       renderStats(tours);
       fillDestinations(tours);
@@ -517,7 +517,7 @@
       renderHot(tours);
       renderCategory(tours, "");
     } catch (err) {
-      console.error("❌ Lỗi khi load tours:", err);
+      console.error("Lỗi khi load tours:", err);
       // Fallback sang data local để vẫn hiển thị
       try {
         const fallbackRes = await fetch("data/sample-tours.json");
@@ -534,7 +534,7 @@
           showToast("Không tải được tour", "danger");
         }
       } catch (fallbackErr) {
-        console.error("❌ Fallback cũng lỗi:", fallbackErr);
+        console.error("Fallback cũng lỗi:", fallbackErr);
         showToast("Không tải được tour", "danger");
       }
     } finally {
@@ -547,7 +547,7 @@
   
   // Listen for tour image updates từ dashboard
   $(document).on('tourImageUpdated toursImagesUpdated', function(e, data) {
-    console.log('📢 Nhận được thông báo cập nhật ảnh tour, reload tours...');
+    console.log('Nhận được thông báo cập nhật ảnh tour, reload tours...');
     // Reload tours để hiển thị ảnh mới
     loadTours();
   });
@@ -614,10 +614,10 @@
       const $btn = $(this);
       const id = $btn.data("id");
       
-      console.log("❤️ Click thêm vào yêu thích, tour ID:", id);
+      console.log("Click thêm vào yêu thích, tour ID:", id);
       
       if (!window.APP_FAVORITES) {
-        console.error("❌ APP_FAVORITES không tồn tại");
+        console.error("APP_FAVORITES không tồn tại");
         showToast("Hệ thống yêu thích chưa sẵn sàng", "danger");
         return;
       }
@@ -632,13 +632,13 @@
         if (typeof favTourData === 'string') {
           try {
             tourData = JSON.parse(favTourData.replace(/&#39;/g, "'"));
-            console.log("✅ Lấy tourData từ data-tour trên nút yêu thích");
+            console.log("Lấy tourData từ data-tour trên nút yêu thích");
           } catch (err) {
-            console.warn("⚠️ Không thể parse tourData từ data-tour:", err);
+            console.warn("Không thể parse tourData từ data-tour:", err);
           }
         } else {
           tourData = favTourData;
-          console.log("✅ Lấy tourData từ data-tour (object)");
+          console.log("Lấy tourData từ data-tour (object)");
         }
       }
       
@@ -652,13 +652,13 @@
             if (typeof cartTourData === 'string') {
               try {
                 tourData = JSON.parse(cartTourData.replace(/&#39;/g, "'"));
-                console.log("✅ Lấy tourData từ .add-cart button");
+                console.log("Lấy tourData từ .add-cart button");
               } catch (err) {
-                console.warn("⚠️ Không thể parse tourData từ .add-cart:", err);
+                console.warn("Không thể parse tourData từ .add-cart:", err);
               }
             } else {
               tourData = cartTourData;
-              console.log("✅ Lấy tourData từ .add-cart (object)");
+              console.log("Lấy tourData từ .add-cart (object)");
             }
           }
         }
@@ -669,7 +669,7 @@
         const tour = tours.find(t => String(t.id) === String(id));
         if (tour) {
           tourData = tour;
-          console.log("✅ Tìm thấy tour từ tours array:", tour.title);
+          console.log("Tìm thấy tour từ tours array:", tour.title);
         }
       }
       
@@ -677,13 +677,13 @@
       if (!tourData && window.APP_CONFIG && window.APP_UTILS) {
         const { API } = window.APP_CONFIG;
         const { http } = window.APP_UTILS;
-        console.log("⚠️ Không tìm thấy tourData, đang load từ API...");
+        console.log("Không tìm thấy tourData, đang load từ API...");
         http.get(`${API.tours}/${id}`).then(tour => {
           tourData = tour;
-          console.log("✅ Đã load tour từ API:", tour.title);
+          console.log("Đã load tour từ API:", tour.title);
           addToFavorites(id, tourData, $btn);
         }).catch(err => {
-          console.error("❌ Không thể load tour từ API:", err);
+          console.error("Không thể load tour từ API:", err);
           // Vẫn thử thêm với tourData null
           addToFavorites(id, null, $btn);
         });
@@ -698,19 +698,19 @@
     function addToFavorites(id, tourData, $btn) {
       // Kiểm tra APP_FAVORITES có tồn tại không
       if (!window.APP_FAVORITES) {
-        console.error("❌ APP_FAVORITES không tồn tại. Vui lòng đảm bảo favorites.js đã được load.");
+        console.error("APP_FAVORITES không tồn tại. Vui lòng đảm bảo favorites.js đã được load.");
         showToast("Hệ thống yêu thích chưa sẵn sàng. Vui lòng tải lại trang.", "danger");
         return false;
       }
       
       // Kiểm tra hàm add có tồn tại không
       if (typeof window.APP_FAVORITES.add !== 'function') {
-        console.error("❌ APP_FAVORITES.add không phải là function");
+        console.error("APP_FAVORITES.add không phải là function");
         showToast("Hệ thống yêu thích chưa sẵn sàng", "danger");
         return false;
       }
       
-      console.log("❤️ Thêm vào yêu thích:", {
+      console.log("Thêm vào yêu thích:", {
         id: id,
         hasTourData: !!tourData,
         tourTitle: tourData ? tourData.title : "null",
@@ -722,7 +722,7 @@
         // Gọi hàm add từ APP_FAVORITES
         const result = window.APP_FAVORITES.add(id, "", tourData);
         
-        console.log("📋 Kết quả thêm vào yêu thích:", result);
+        console.log("Kết quả thêm vào yêu thích:", result);
         
         if (result === true) {
           // Cập nhật UI khi thành công
@@ -736,7 +736,7 @@
             $btn.find('i').removeClass('heart-beat-animation');
           }, 600);
           
-          console.log("✅ Đã thêm vào yêu thích thành công");
+          console.log("Đã thêm vào yêu thích thành công");
           return true;
         } else if (result === false) {
           // Nếu đã có trong yêu thích hoặc có lỗi (ví dụ: chưa đăng nhập)
@@ -749,12 +749,12 @@
                 .addClass("btn-favorite-active")
                 .removeClass("btn-favorite")
                 .prop("title", "Đã có trong yêu thích");
-            console.log("ℹ️ Tour đã có trong yêu thích");
+            console.log("Tour đã có trong yêu thích");
           }
           return false;
         }
       } catch (error) {
-        console.error("❌ Lỗi khi thêm vào yêu thích:", error);
+        console.error("Lỗi khi thêm vào yêu thích:", error);
         console.error("Error stack:", error.stack);
         showToast("Có lỗi xảy ra khi thêm vào yêu thích: " + error.message, "danger");
         return false;
