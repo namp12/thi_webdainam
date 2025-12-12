@@ -11,6 +11,33 @@ body {
   font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
+  padding-top: calc(var(--topbar-height) + 60px);
+  /* Topbar height + navbar height */
+}
+
+/* Fixed header (topbar + navbar) */
+:root {
+  --topbar-height: 44px;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1030;
+  background: #fff;
+}
+
+.navbar {
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1029;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .navbar {
@@ -42,68 +69,77 @@ body {
 
 /* Container chính của slider */
 .hero-slider {
-    /* Đảm bảo kích thước cố định như hình mẫu */
-    height: 400px; /* Điều chỉnh chiều cao theo mong muốn */
-    width: 100%;
-    position: relative;
+  /* Đảm bảo kích thước cố định như hình mẫu */
+  height: 400px;
+  /* Điều chỉnh chiều cao theo mong muốn */
+  width: 100%;
+  position: relative;
 }
 
 /* Định dạng từng slide */
 .hero-slide {
-    width: 100%;
-    height: 100%;
-    position: absolute; /* Đặt các slide chồng lên nhau */
-    top: 0;
-    left: 0;
-    opacity: 0; /* Mặc định ẩn tất cả các slide */
-    transition: opacity 1s ease-in-out; /* Hiệu ứng chuyển cảnh */
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  /* Đặt các slide chồng lên nhau */
+  top: 0;
+  left: 0;
+  opacity: 0;
+  /* Mặc định ẩn tất cả các slide */
+  transition: opacity 1s ease-in-out;
+  /* Hiệu ứng chuyển cảnh */
 }
 
 /* Slide đang hoạt động */
 .hero-slide.active {
-    opacity: 1;
+  opacity: 1;
 }
 
 .hero-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Đảm bảo hình ảnh bao phủ hết slide */
-    border-radius: 0.5rem; /* Giống border-radius: 4 của khối ngoài */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Đảm bảo hình ảnh bao phủ hết slide */
+  border-radius: 0.5rem;
+  /* Giống border-radius: 4 của khối ngoài */
 }
 
 /* Định vị và định dạng thẻ nổi */
 .floating-card {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    max-width: 200px;
-    /* Các style khác: font-size, màu sắc, shadow... */
-    z-index: 10;
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  max-width: 200px;
+  /* Các style khác: font-size, màu sắc, shadow... */
+  z-index: 10;
 }
 
 .floating-card .tour-label {
-    font-size: 1rem;
-    font-weight: bold;
+  font-size: 1rem;
+  font-weight: bold;
 }
+
 .floating-card .tour-description {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
+
 .floating-card .tour-price {
-    font-size: 1.2rem;
-    font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 /* Tên địa danh (Phú Quốc) ở giữa ảnh */
 .island-name {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-size: 2.5rem; /* Tùy chỉnh kích thước chữ */
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    z-index: 5;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2.5rem;
+  /* Tùy chỉnh kích thước chữ */
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  z-index: 5;
 }
 
 .floating-card {
@@ -213,7 +249,8 @@ body {
 /* Tour Card Specific Styles - Base styles, enhanced in tours-list.css */
 .tour-card {
   border-radius: 16px;
-  overflow: visible; /* Changed to visible to prevent clipping */
+  overflow: visible;
+  /* Changed to visible to prevent clipping */
 }
 
 .tour-card .card-img-top {
@@ -429,15 +466,19 @@ body {
   0% {
     transform: scale(1);
   }
+
   14% {
     transform: scale(1.3);
   }
+
   28% {
     transform: scale(1);
   }
+
   42% {
     transform: scale(1.3);
   }
+
   70% {
     transform: scale(1);
   }
@@ -496,6 +537,7 @@ body {
   height: 100%;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
 }
+
 .step-icon {
   width: 44px;
   height: 44px;
@@ -514,19 +556,23 @@ body {
   height: 230px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .dest-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
+
 .dest-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
 }
+
 .dest-card:hover img {
   transform: scale(1.1);
 }
+
 .dest-overlay {
   position: absolute;
   inset: 0;
@@ -550,6 +596,7 @@ body {
   overflow: hidden;
   cursor: pointer;
 }
+
 .deal-card::before {
   content: '';
   position: absolute;
@@ -557,17 +604,20 @@ body {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
+
 .deal-card:hover::before {
   opacity: 1;
 }
+
 .deal-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 32px rgba(0, 166, 128, 0.4);
 }
+
 .deal-card .btn {
   border-radius: 999px;
   border-color: rgba(255, 255, 255, 0.6);
@@ -575,6 +625,7 @@ body {
   z-index: 1;
   transition: all 0.3s ease;
 }
+
 .deal-card .btn:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.9);
@@ -760,6 +811,7 @@ body {
   max-width: 520px;
   margin: 0 auto;
 }
+
 .avatar {
   width: 48px;
   height: 48px;
@@ -780,12 +832,13 @@ body {
   border-radius: 14px;
   transition: transform 0.4s;
 }
+
 .gallery img:hover {
   transform: scale(1.03);
 }
 
 /* Remove bottom margin clashes for last sections */
-main > section:last-of-type {
+main>section:last-of-type {
   margin-bottom: 0;
 }
 
@@ -801,6 +854,7 @@ main > section:last-of-type {
   background: #121212;
   color: #e6e6e6;
 }
+
 [data-bs-theme="dark"] .navbar,
 [data-bs-theme="dark"] .topbar,
 [data-bs-theme="dark"] .search-dock,
@@ -811,29 +865,36 @@ main > section:last-of-type {
   background: #1f1f1f !important;
   border-color: #2a2a2a !important;
 }
+
 [data-bs-theme="dark"] .hero {
   background: linear-gradient(180deg, #0f1114, #16181c);
 }
+
 [data-bs-theme="dark"] .nav-link.active {
   color: var(--accent) !important;
 }
+
 [data-bs-theme="dark"] .form-control,
 [data-bs-theme="dark"] .form-select {
   background: #1f1f1f;
   color: #e6e6e6;
   border-color: #2a2a2a;
 }
+
 [data-bs-theme="dark"] .filter-bar {
   background: #121212;
 }
+
 [data-bs-theme="dark"] body {
   background: #0f1114;
   color: #e6e6e6;
 }
+
 [data-bs-theme="dark"] .footer {
   background: #0c0d10;
   border-top-color: #222;
 }
+
 [data-bs-theme="dark"] .badge,
 [data-bs-theme="dark"] .btn-outline-secondary {
   border-color: #2a2a2a;
@@ -1122,4 +1183,3 @@ main > section:last-of-type {
     font-size: 1.25rem;
   }
 }
-

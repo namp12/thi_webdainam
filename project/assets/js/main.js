@@ -12,6 +12,10 @@ $(async function () {
           const script = document.createElement('script');
           script.src = 'assets/js/header-client.js';
           document.body.appendChild(script);
+          
+          // Remove any height from header placeholder to avoid spacing issues
+          $header.css('height', '0');
+          $header.css('overflow', 'visible');
         });
       }
       if ($footer.length) {
