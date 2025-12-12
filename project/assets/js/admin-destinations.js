@@ -10,24 +10,55 @@
   let availableImages = [];
   let editingIndex = -1;
 
-  // Load danh sách ảnh có sẵn
+  // Load danh sách ảnh có sẵn - kiểm tra tồn tại trước khi thêm
   async function loadAvailableImages() {
     try {
-      // Danh sách ảnh mẫu - trong thực tế sẽ scan thư mục
-      availableImages = [
-        '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg',
-        '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg',
-        'da-nang.jpg', 'sapa.jpg', 'phu-quoc.jpg', 'ha-long.jpg', 'nha-trang.jpg', 'da-lat.jpg',
-        'hue.jpg', 'hoi-an.jpg', 'mai-chau.jpg', 'moc-chau.jpg'
+      // Danh sách ảnh thực tế có trong thư mục (từ 4-52, bỏ các số không có)
+      const imageList = [
+        '4.jpg', '5.jpg', '6.jpg', '7.jpg', '9.jpg', '10.jpg',
+        '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', 
+        '20.jpg', '21.jpg', '22.jpg', '24.jpg', '25.jpg', '26.jpg', '27.jpg', '28.jpg', 
+        '29.jpg', '30.jpg', '31.jpg', '32.jpg', '33.jpg', '34.jpg', '35.jpg', '36.jpg', 
+        '37.jpg', '38.jpg', '39.jpg', '40.jpg', '41.jpg', '42.jpg', '43.jpg', '44.jpg', 
+        '45.jpg', '46.jpg', '47.jpg', '48.jpg', '49.jpg', '50.jpg', '51.jpg', '52.jpg'
       ];
       
+      // Thêm ảnh từ banners
+      const bannerImages = ['banner.jpg'];
+      
+      // Kiểm tra và thêm chỉ những ảnh tồn tại
+      availableImages = [];
       const $select = $("#dest-image-select");
       $select.html('<option value="">-- Chọn ảnh từ danh sách --</option>');
-      availableImages.forEach(img => {
-        $select.append(`<option value="assets/img/tours/${img}">${img}</option>`);
+      
+      // Thêm tất cả ảnh vào dropdown ngay (không cần kiểm tra từng cái - sẽ kiểm tra khi preview)
+      // Điều này giúp dropdown load nhanh hơn
+      imageList.forEach(img => {
+        const imagePath = `assets/img/tours/${img}`;
+        availableImages.push(img);
+        $select.append(`<option value="${imagePath}">${img}</option>`);
       });
+      
+      // Thêm ảnh từ banners
+      bannerImages.forEach(img => {
+        const imagePath = `assets/img/banners/${img}`;
+        availableImages.push(`banners/${img}`);
+        $select.append(`<option value="${imagePath}">${img} (banner)</option>`);
+      });
+      
+      // Thêm option để nhập thủ công
+      $select.append(`<option value="__manual__">-- Nhập đường dẫn thủ công --</option>`);
+      
+      console.log(`✅ Đã load ${availableImages.length} ảnh có sẵn`);
     } catch (err) {
       console.warn("Không load được danh sách ảnh", err);
+      // Fallback: thêm ít nhất một số ảnh cơ bản
+      const $select = $("#dest-image-select");
+      $select.html('<option value="">-- Chọn ảnh từ danh sách --</option>');
+      ['10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'].forEach(img => {
+        $select.append(`<option value="assets/img/tours/${img}">${img}</option>`);
+      });
+      $select.append(`<option value="__manual__">-- Nhập đường dẫn thủ công --</option>`);
     }
   }
 
@@ -151,7 +182,7 @@
     editingIndex = -1;
   }
 
-  // Update preview ảnh
+  // Update preview ảnh với xử lý lỗi
   function updatePreview(imageUrl) {
     if (!imageUrl) {
       $("#dest-preview").hide();
@@ -159,8 +190,43 @@
       return;
     }
     
-    $("#dest-preview").attr('src', imageUrl).show();
-    $("#dest-preview-placeholder").hide();
+    const $preview = $("#dest-preview");
+    const $placeholder = $("#dest-preview-placeholder");
+    
+    // Hiển thị preview và ẩn placeholder
+    $preview.show();
+    $placeholder.hide();
+    
+    // Tạo ảnh mới để kiểm tra tồn tại
+    const img = new Image();
+    
+    img.onload = function() {
+      // Ảnh tồn tại, cập nhật src
+      $preview.attr('src', imageUrl);
+      $preview.css('opacity', '1');
+      $preview.off('error');
+    };
+    
+    img.onerror = function() {
+      // Ảnh không tồn tại, hiển thị placeholder và cảnh báo
+      $preview.hide();
+      $placeholder.show();
+      $placeholder.html(`
+        <div class="text-center text-muted p-4">
+          <i class="bi bi-image" style="font-size: 3rem;"></i>
+          <p class="mt-2 mb-0">Ảnh không tìm thấy</p>
+          <small>Vui lòng kiểm tra lại đường dẫn</small>
+        </div>
+      `);
+      showToast("Ảnh không tồn tại, vui lòng kiểm tra đường dẫn", "warning", 3000);
+    };
+    
+    // Bắt đầu load ảnh
+    img.src = imageUrl;
+    
+    // Cập nhật src ngay để hiển thị (sẽ được thay thế khi load xong)
+    $preview.attr('src', imageUrl);
+    $preview.css('opacity', '0.5'); // Mờ đi khi đang load
   }
 
   // Preview ảnh lớn
@@ -224,15 +290,45 @@
   // Khi chọn ảnh từ dropdown
   $("#dest-image-select").on('change', function() {
     const selected = $(this).val();
-    if (selected) {
+    if (selected === '__manual__') {
+      // Cho phép nhập thủ công
+      $("#dest-image").val('').focus();
+      $("#dest-image").attr('placeholder', 'Nhập đường dẫn ảnh, ví dụ: assets/img/tours/10.jpg');
+      showToast("Bạn có thể nhập đường dẫn ảnh thủ công", "info", 2000);
+    } else if (selected) {
       $("#dest-image").val(selected);
+      $("#dest-image").attr('placeholder', 'assets/img/tours/da-nang.jpg');
       updatePreview(selected);
+    } else {
+      $("#dest-image").val('');
+      $("#dest-image").attr('placeholder', 'assets/img/tours/da-nang.jpg');
     }
   });
 
-  // Khi nhập đường dẫn ảnh thủ công
+  // Khi nhập đường dẫn ảnh thủ công - với debounce
+  let previewTimeout;
   $("#dest-image").on('input', function() {
-    const imageUrl = $(this).val();
+    const imageUrl = $(this).val().trim();
+    
+    // Clear timeout trước đó
+    clearTimeout(previewTimeout);
+    
+    if (!imageUrl) {
+      $("#dest-preview").hide();
+      $("#dest-preview-placeholder").show();
+      return;
+    }
+    
+    // Debounce: đợi 500ms sau khi người dùng ngừng gõ
+    previewTimeout = setTimeout(() => {
+      updatePreview(imageUrl);
+    }, 500);
+  });
+  
+  // Khi blur (rời khỏi input), kiểm tra ngay
+  $("#dest-image").on('blur', function() {
+    clearTimeout(previewTimeout);
+    const imageUrl = $(this).val().trim();
     if (imageUrl) {
       updatePreview(imageUrl);
     }

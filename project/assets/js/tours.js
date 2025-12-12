@@ -53,9 +53,23 @@
 
   function render(items) {
     if (!$list.length) return;
+    $empty.addClass("d-none");
+    
     if (!items.length) {
       $list.empty();
       $empty.removeClass("d-none");
+      $empty.html(`
+        <div class="text-center py-5">
+          <div class="mb-3">
+            <i class="bi bi-search" style="font-size: 4rem; color: #adb5bd;"></i>
+          </div>
+          <h5 class="text-muted mb-2">Không tìm thấy tour nào</h5>
+          <p class="text-muted mb-3">Thử điều chỉnh bộ lọc hoặc từ khóa tìm kiếm của bạn</p>
+          <button class="btn btn-outline-primary" onclick="$('#tour-reset').click();">
+            <i class="bi bi-arrow-counterclockwise me-1"></i>Xóa bộ lọc
+          </button>
+        </div>
+      `);
       return;
     }
     const html = items
@@ -395,34 +409,93 @@
   window.renderCategory = renderCategory;
 
   function applyFilter() {
+    if (!tours || tours.length === 0) {
+      console.warn("⚠️ Chưa có dữ liệu tours để lọc");
+      return;
+    }
+
     let filtered = [...tours];
-    const q = $search.val()?.toLowerCase() || "";
+    const q = ($search.val() || "").trim().toLowerCase();
     const dest = $destination.val();
     const priceRange = $price.val();
     const dur = Number($duration.val());
     const sort = $sort.val();
 
+    // Tìm kiếm mở rộng: title, description, destination, theme
     if (q) {
-      filtered = filtered.filter(
-        (t) =>
-          t.title.toLowerCase().includes(q) ||
-          String(t.duration).includes(q)
-      );
+      filtered = filtered.filter((t) => {
+        const title = (t.title || "").toLowerCase();
+        const description = (t.description || "").toLowerCase();
+        const destination = (t.destination || "").toLowerCase();
+        const theme = (t.theme || "").toLowerCase();
+        const duration = String(t.duration || "");
+        
+        return (
+          title.includes(q) ||
+          description.includes(q) ||
+          destination.includes(q) ||
+          theme.includes(q) ||
+          duration.includes(q)
+        );
+      });
     }
-    if (dest) filtered = filtered.filter((t) => t.destination === dest);
-    if (priceRange) {
-      const [min, max] = priceRange.split("-").map(Number);
-      filtered = filtered.filter((t) => t.price >= min && t.price <= max);
-    }
-    if (dur) filtered = filtered.filter((t) => Number(t.duration) === dur);
 
+    // Lọc theo điểm đến
+    if (dest) {
+      filtered = filtered.filter((t) => t.destination === dest);
+    }
+
+    // Lọc theo khoảng giá - parse price đúng cách
+    if (priceRange) {
+      const [minStr, maxStr] = priceRange.split("-");
+      const min = window.APP_UTILS?.parsePrice(minStr) || Number(minStr) || 0;
+      const max = maxStr ? (window.APP_UTILS?.parsePrice(maxStr) || Number(maxStr) || Infinity) : Infinity;
+      
+      filtered = filtered.filter((t) => {
+        const tourPrice = window.APP_UTILS?.parsePrice(t.price) || Number(t.price) || 0;
+        return tourPrice >= min && tourPrice <= max;
+      });
+    }
+
+    // Lọc theo số ngày
+    if (dur) {
+      filtered = filtered.filter((t) => Number(t.duration) === dur);
+    }
+
+    // Sắp xếp nâng cao
     if (sort) {
       const [field, dir] = sort.split("-");
       filtered.sort((a, b) => {
-        const valA = Number(a[field]) || 0;
-        const valB = Number(b[field]) || 0;
+        let valA, valB;
+        
+        if (field === "price") {
+          valA = window.APP_UTILS?.parsePrice(a.price) || Number(a.price) || 0;
+          valB = window.APP_UTILS?.parsePrice(b.price) || Number(b.price) || 0;
+        } else if (field === "duration") {
+          valA = Number(a.duration) || 0;
+          valB = Number(b.duration) || 0;
+        } else if (field === "rating") {
+          valA = Number(a.rating) || 0;
+          valB = Number(b.rating) || 0;
+        } else {
+          valA = Number(a[field]) || 0;
+          valB = Number(b[field]) || 0;
+        }
+        
         return dir === "asc" ? valA - valB : valB - valA;
       });
+    }
+
+    // Hiển thị số kết quả (chỉ khi có filter active)
+    const resultCount = filtered.length;
+    const hasActiveFilters = q || dest || priceRange || dur;
+    
+    if (resultCount === 0 && hasActiveFilters) {
+      // Không hiển thị toast nếu không có filter (để tránh spam)
+      // Empty state sẽ được hiển thị trong render()
+    } else if (resultCount > 0 && hasActiveFilters && resultCount !== tours.length) {
+      // Chỉ hiển thị toast nếu có filter và kết quả khác với tổng số
+      showToast(`Tìm thấy ${resultCount} tour phù hợp`, "success", 2000);
     }
 
     render(filtered);
@@ -509,40 +582,43 @@
       
       // Load tours từ API - LUÔN LUÔN load mới nhất để có tours mới và ảnh mới
       tours = await http.get(API.tours);
-      console.log(`Đã load ${tours.length} tours từ API cho index.html`);
+      console.log(`✅ Đã load ${tours.length} tours từ API`);
       
+      // Chỉ render stats và fill destinations, không render list ngay
       renderStats(tours);
       fillDestinations(tours);
-      render(tours);
-      renderHot(tours);
-      renderCategory(tours, "");
+      
+      // Render các section khác (hot, category) nếu có
+      if ($hotList.length) renderHot(tours);
+      if ($catList.length) renderCategory(tours, "");
+      
+      return true;
     } catch (err) {
-      console.error("Lỗi khi load tours:", err);
+      console.error("❌ Lỗi khi load tours từ API:", err);
       // Fallback sang data local để vẫn hiển thị
       try {
         const fallbackRes = await fetch("data/sample-tours.json");
         const fallbackData = await fallbackRes.json();
         tours = fallbackData?.tours || [];
         if (tours.length) {
-          showToast("Đang dùng dữ liệu mẫu (API lỗi)", "warning");
+          showToast("Đang dùng dữ liệu mẫu (API lỗi)", "warning", 3000);
           renderStats(tours);
           fillDestinations(tours);
-          render(tours);
-          renderHot(tours);
-          renderCategory(tours, "");
+          if ($hotList.length) renderHot(tours);
+          if ($catList.length) renderCategory(tours, "");
+          return true;
         } else {
           showToast("Không tải được tour", "danger");
+          return false;
         }
       } catch (fallbackErr) {
-        console.error("Fallback cũng lỗi:", fallbackErr);
+        console.error("❌ Fallback cũng lỗi:", fallbackErr);
         showToast("Không tải được tour", "danger");
+        return false;
       }
     } finally {
       showLoading(false);
     }
-    
-    // Render destinations - hiện đã dùng HTML tĩnh trong index.html, bỏ qua JS render
-    // await renderDestinations([]);
   }
   
   // Listen for tour image updates từ dashboard
@@ -552,26 +628,86 @@
     loadTours();
   });
 
+  // Load filter từ URL params (nếu có)
+  function loadFiltersFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    const search = params.get("search") || params.get("q") || "";
+    const destination = params.get("destination") || "";
+    const price = params.get("price") || "";
+    const duration = params.get("duration") || "";
+    const sort = params.get("sort") || "";
+
+    if (search) $search.val(search);
+    if (destination) $destination.val(destination);
+    if (price) $price.val(price);
+    if (duration) $duration.val(duration);
+    if (sort) $sort.val(sort);
+  }
+
   $(function () {
     if (!$list.length) return;
-    loadTours();
-    $search.on("input", debounce(applyFilter, 300));
+    
+    // Load filters từ URL trước
+    loadFiltersFromURL();
+    
+    loadTours().then((success) => {
+      if (success && tours && tours.length > 0) {
+        // Áp dụng filter sau khi load xong tours (nếu có params trong URL)
+        if (window.location.search) {
+          applyFilter();
+        } else {
+          // Nếu không có filter, render tất cả tours
+          render(tours);
+        }
+      }
+    });
+    
+    // Event handlers với debounce cho search
+    $search.on("input", debounce(function() {
+      applyFilter();
+    }, 300));
+    
+    // Hỗ trợ Enter để tìm kiếm
+    $search.on("keypress", function(e) {
+      if (e.which === 13) { // Enter key
+        e.preventDefault();
+        applyFilter();
+        const $tourList = document.getElementById("tour-list");
+        if ($tourList) {
+          $tourList.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+    });
+    
     $destination.on("change", applyFilter);
     $price.on("change", applyFilter);
     $duration.on("change", applyFilter);
     $sort.on("change", applyFilter);
+    
     $submit.on("click", function (e) {
       e.preventDefault();
       applyFilter();
-      document.getElementById("tour-list").scrollIntoView({ behavior: "smooth" });
+      const $tourList = document.getElementById("tour-list");
+      if ($tourList) {
+        $tourList.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
-    $reset.on("click", function () {
+    
+    $reset.on("click", function (e) {
+      e.preventDefault();
       $search.val("");
       $destination.val("");
       $price.val("");
       $duration.val("");
       $sort.val("");
+      
+      // Xóa URL params
+      const url = new URL(window.location);
+      url.search = "";
+      window.history.replaceState({}, "", url);
+      
       applyFilter();
+      showToast("Đã xóa tất cả bộ lọc", "info", 1500);
     });
 
     // Support both old button pills and new category tab cards

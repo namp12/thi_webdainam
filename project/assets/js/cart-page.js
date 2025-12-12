@@ -11,7 +11,7 @@
     const $items = $("#cart-items");
     const $empty = $("#cart-empty");
     const $content = $("#cart-content");
-    const user = storage.get("travel_user", null);
+    const user = window.APP_UTILS.storage.get("travel_user", null);
     if (!user) {
       showToast("Vui lòng đăng nhập để xem giỏ hàng", "warning");
       setTimeout(() => window.location.href = "login.html?redirect=cart.html", 2000);
