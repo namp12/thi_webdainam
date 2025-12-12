@@ -8,7 +8,8 @@
    ============================================ */
 .tour-card {
   border-radius: 16px;
-  overflow: visible !important; /* Đổi từ hidden sang visible */
+  overflow: visible !important;
+  /* Đổi từ hidden sang visible */
   border: 1px solid #e9ecef;
   transition: all 0.3s ease;
   height: 100%;
@@ -31,7 +32,8 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  aspect-ratio: 16 / 9; /* Cố định tỷ lệ ảnh để không nhấp nhô */
+  aspect-ratio: 16 / 9;
+  /* Cố định tỷ lệ ảnh để không nhấp nhô */
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
@@ -40,7 +42,8 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  display: block; /* Tránh khoảng trống ảnh dạng inline */
+  display: block;
+  /* Tránh khoảng trống ảnh dạng inline */
   transition: transform 0.5s ease;
 }
 
@@ -96,7 +99,8 @@
 /* Badge khuyến mãi - đặt vị trí để không bị chồng lấp */
 .tour-card .badge-promotion {
   position: absolute;
-  top: 50px; /* Bên dưới badge điểm đến */
+  top: 50px;
+  /* Bên dưới badge điểm đến */
   right: 12px;
   z-index: 6;
   background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
@@ -121,11 +125,13 @@
    Card Body - Better Spacing
    ============================================ */
 .tour-card .card-body {
-  padding: 1.25rem !important; /* Tăng padding */
+  padding: 1.25rem !important;
+  /* Tăng padding */
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  min-height: 0; /* Ngăn tràn */
+  min-height: 0;
+  /* Ngăn tràn */
 }
 
 .tour-card .card-title {
@@ -134,7 +140,8 @@
   line-height: 1.4;
   margin-bottom: 0.75rem;
   color: #212529;
-  min-height: 3em; /* Chiều cao cố định cho tiêu đề */
+  min-height: 3em;
+  /* Chiều cao cố định cho tiêu đề */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -162,7 +169,7 @@
 }
 
 /* Mô tả */
-.tour-card .card-body > p.small {
+.tour-card .card-body>p.small {
   font-size: 0.875rem;
   line-height: 1.6;
   color: #495057;
@@ -173,7 +180,8 @@
   -webkit-box-orient: vertical;
   line-clamp: 3;
   overflow: hidden;
-  min-height: 4.2em; /* Chiều cao cố định cho mô tả */
+  min-height: 4.2em;
+  /* Chiều cao cố định cho mô tả */
 }
 
 /* ============================================
@@ -345,6 +353,15 @@
   box-shadow: 0 4px 12px rgba(52, 224, 161, 0.4);
 }
 
+/* Force show button text */
+.btn-cart span,
+.btn-detail span {
+  display: inline !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+
 .btn-favorite {
   background: #ffe9ec;
   color: #dc3545;
@@ -384,24 +401,25 @@
   .tour-card .card-image-wrapper {
     height: auto;
   }
-  
+
   .tour-card-actions {
     grid-template-columns: 1fr;
     gap: 0.5rem;
   }
-  
+
   .tour-price {
     width: 100%;
     min-width: 0;
   }
-  
+
   .tour-buttons {
     width: 100%;
     justify-content: flex-start;
     gap: 0.35rem;
-    flex-wrap: wrap; /* cho phép xuống hàng ở mobile */
+    flex-wrap: wrap;
+    /* cho phép xuống hàng ở mobile */
   }
-  
+
   .btn-detail,
   .btn-cart {
     flex: 1;
@@ -412,21 +430,21 @@
   .tour-card .card-body {
     padding: 1rem !important;
   }
-  
+
   .tour-card .card-title {
     font-size: 1rem;
     min-height: 2.8em;
   }
-  
+
   .tour-price .fw-bold {
     font-size: 1.25rem;
   }
-  
+
   .price-save-badge {
     font-size: 0.65rem;
     padding: 0.3rem 0.6rem;
   }
-  
+
   .btn-detail,
   .btn-cart {
     font-size: 0.8rem;
@@ -443,7 +461,8 @@
   }
 
   .btn-favorite {
-    margin-left: auto; /* đẩy tim về cuối hàng */
+    margin-left: auto;
+    /* đẩy tim về cuối hàng */
   }
 }
 
@@ -451,27 +470,27 @@
   .tour-card .card-image-wrapper {
     height: auto;
   }
-  
+
   .badge-destination,
   .badge-duration,
   .badge-promotion {
     font-size: 0.7rem;
     padding: 4px 10px;
   }
-  
+
   .tour-card .badge-destination {
     max-width: calc(100% - 80px);
   }
-  
+
   .price-main {
     flex-direction: column;
     gap: 0.25rem;
   }
-  
+
   .tour-buttons {
     flex-direction: column;
   }
-  
+
   .btn-detail,
   .btn-cart {
     width: 100%;
@@ -539,7 +558,7 @@
   cursor: pointer;
 }
 
-.tour-card .card-body > * {
+.tour-card .card-body>* {
   max-width: 100%;
 }
 
@@ -562,4 +581,3 @@
   top: 50px;
   right: 12px;
 }
-

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot Widget - Travel Booking Assistant</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    /* ==================== CUSTOM STYLES ==================== */
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    /* Nút kích hoạt chatbot - Floating Action Button */
+    #chatbot-trigger {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+    
+    #chatbot-trigger:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
+    }
+    
+    /* Hiệu ứng pulse (nhịp đập) */
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 30px rgba(102, 126, 234, 0.7);
+      }
+      100% {
+        box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+      }
+    }
+    
+    /* Khung chat */
+    #chatbot-container {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 380px;
+      max-width: calc(100vw - 60px);
+      height: 550px;
+      max-height: calc(100vh - 150px);
+      display: none;
+      z-index: 999;
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Header của chatbot */
+    .chatbot-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 15px 15px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .chatbot-header h5 {
+      margin: 0;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .chatbot-header .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      display: inline-block;
+      animation: blink 1.5s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    
+    .chatbot-header .btn-close {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    
+    .chatbot-header .btn-close:hover {
+      opacity: 1;
+    }
+    
+    /* Body - Khu vực hiển thị tin nhắn */
+    .chatbot-body {
+      height: 400px;
+      overflow-y: auto;
+      padding: 20px;
+      background: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    /* Custom scrollbar */
+    .chatbot-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .chatbot-body::-webkit-scrollbar-track {
+      background: #e9ecef;
+    }
+    
+    .chatbot-body::-webkit-scrollbar-thumb {
+      background: #667eea;
+      border-radius: 3px;
+    }
+    
+    /* Bong bóng chat */
+    .message {
+      display: flex;
+      margin-bottom: 10px;
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .message.bot {
+      justify-content: flex-start;
+    }
+    
+    .message.user {
+      justify-content: flex-end;
+    }
+    
+    .message-bubble {
+      max-width: 75%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      word-wrap: break-word;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .message.bot .message-bubble {
+      background: white;
+      color: #333;
+      border-bottom-left-radius: 4px;
+    }
+    
+    .message.user .message-bubble {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    
+    /* Hiệu ứng "Bot đang nhập..." */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 18px;
+      border-bottom-left-radius: 4px;
+      max-width: 75px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .typing-indicator span {
+      width: 8px;
+      height: 8px;
+      background: #667eea;
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+    
+    .typing-indicator span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .typing-indicator span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.7;
+      }
+      30% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+    }
+    
+    /* Footer - Ô input */
+    .chatbot-footer {
+      padding: 15px;
+      background: white;
+      border-radius: 0 0 15px 15px;
+      border-top: 1px solid #e9ecef;
+    }
+    
+    .chatbot-footer .input-group {
+      gap: 10px;
+    }
+    
+    .chatbot-footer input {
+      border-radius: 25px;
+      border: 2px solid #e9ecef;
+      padding: 10px 20px;
+      transition: border-color 0.2s;
+    }
+    
+    .chatbot-footer input:focus {
+      border-color: #667eea;
+      box-shadow: none;
+    }
+    
+    .chatbot-footer button {
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    
+    .chatbot-footer button:hover {
+      transform: scale(1.1);
+    }
+    
+    /* Responsive */
+    @media (max-width: 576px) {
+      #chatbot-container {
+        width: calc(100vw - 40px);
+        right: 20px;
+        bottom: 90px;
+      }
+      
+      #chatbot-trigger {
+        bottom: 20px;
+        right: 20px;
+      }
+    }
+    
+    /* Demo content styling */
+    .demo-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .demo-content h1 {
+      color: #667eea;
+      margin-bottom: 20px;
+    }
+    
+    .demo-content .badge {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Demo Content -->
+  <div class="demo-content">
+    <h1><i class="fas fa-robot me-2"></i>Chatbot Widget Demo</h1>
+    <p class="lead">Chào mừng bạn đến với Travel Booking Assistant!</p>
+    <p>Đây là trang demo cho chatbot widget. Click vào nút chat ở góc dưới bên phải để bắt đầu trò chuyện.</p>
+    
+    <div class="alert alert-info">
+      <h5><i class="fas fa-info-circle me-2"></i>Hướng dẫn sử dụng:</h5>
+      <ul class="mb-0">
+        <li>Click vào nút chat tròn ở góc dưới phải</li>
+        <li>Nhập câu hỏi và nhấn Enter hoặc click nút gửi</li>
+        <li>Bot sẽ trả lời dựa trên từ khóa bạn nhập</li>
+      </ul>
+    </div>
+    
+    <h5 class="mt-4">Thử các câu hỏi sau:</h5>
+    <div class="d-flex flex-wrap gap-2">
+      <span class="badge">Xin chào</span>
+      <span class="badge">Giá tour bao nhiêu?</span>
+      <span class="badge">Đặt tour như thế nào?</span>
+      <span class="badge">Thanh toán</span>
+      <span class="badge">Liên hệ</span>
+      <span class="badge">Giờ làm việc</span>
+    </div>
+  </div>
+  
+  <!-- Nút kích hoạt Chatbot -->
+  <button id="chatbot-trigger" aria-label="Mở chatbot">
+    <i class="fas fa-comments"></i>
+  </button>
+  
+  <!-- Khung Chat -->
+  <div id="chatbot-container">
+    <div class="card border-0 shadow-lg h-100">
+      <!-- Header -->
+      <div class="chatbot-header">
+        <h5>
+          <i class="fas fa-robot"></i>
+          Travel Assistant
+          <span class="status-dot"></span>
+        </h5>
+        <button class="btn-close" id="chatbot-close" aria-label="Đóng chatbot">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <!-- Body - Khu vực tin nhắn -->
+      <div class="chatbot-body" id="chatbot-messages">
+        <!-- Tin nhắn chào mừng -->
+        <div class="message bot">
+          <div class="message-bubble">
+            <strong>👋 Xin chào!</strong><br>
+            Tôi là trợ lý ảo của Travel Booking. Tôi có thể giúp gì cho bạn hôm nay?
+          </div>
+        </div>
+      </div>
+      
+      <!-- Footer - Ô input -->
+      <div class="chatbot-footer">
+        <div class="input-group">
+          <input 
+            type="text" 
+            class="form-control" 
+            id="chatbot-input" 
+            placeholder="Nhập tin nhắn..."
+            autocomplete="off"
+          >
+          <button id="chatbot-send" aria-label="Gửi tin nhắn">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    /* ==================== CHATBOT LOGIC ==================== */
+    
+    $(document).ready(function() {
+      
+      // ========== DỮ LIỆU TRAINING BOT (30+ mục) ==========
+      const botData = [
+        // Chào hỏi
+        {
+          keywords: ["xin chào", "hi", "hello", "chào", "hey", "halo"],
+          answer: "Chào bạn! 👋 Tôi là trợ lý ảo của <strong>Việt Tour Pro</strong>. Tôi có thể giúp bạn:<br>• Tìm tour du lịch<br>• Tư vấn điểm đến<br>• Đặt vé và thanh toán<br>• Giải đáp thắc mắc<br><br>Bạn cần tôi hỗ trợ gì?"
+        },
+        
+        // Tour trong nước
+        {
+          keywords: ["hạ long", "ha long", "vịnh hạ long"],
+          answer: "🌊 <strong>Tour Vịnh Hạ Long</strong><br>• Thời gian: 2N1Đ / 3N2Đ<br>• Giá: 2.500.000đ - 4.500.000đ<br>• Điểm nổi bật: Du thuyền 5 sao, hang Sửng Sốt, làng chài Cửa Vạn<br>• Khởi hành: Hàng ngày<br><br>Bạn muốn xem chi tiết tour?"
+        },
+        {
+          keywords: ["đà nẵng", "da nang", "bà nà", "bana"],
+          answer: "🏖️ <strong>Tour Đà Nẵng - Hội An</strong><br>• Thời gian: 3N2Đ / 4N3Đ<br>• Giá: 3.200.000đ - 5.800.000đ<br>• Điểm nổi bật: Bà Nà Hills, Cầu Vàng, phố cổ Hội An, Ngũ Hành Sơn<br>• Khởi hành: Thứ 2, 4, 6<br><br>Tour rất hot! Bạn quan tâm không?"
+        },
+        {
+          keywords: ["phú quốc", "phu quoc", "đảo ngọc"],
+          answer: "🏝️ <strong>Tour Phú Quốc</strong><br>• Thời gian: 3N2Đ / 4N3Đ<br>• Giá: 4.500.000đ - 7.900.000đ<br>• Điểm nổi bật: VinWonders, Safari, Sunset Sanato, lặn ngắm san hô<br>• Khởi hành: Hàng ngày<br><br>Đảo ngọc đang chờ bạn! 🌴"
+        },
+        {
+          keywords: ["sapa", "sa pa", "fansipan"],
+          answer: "⛰️ <strong>Tour Sapa - Fansipan</strong><br>• Thời gian: 2N3Đ / 3N2Đ<br>• Giá: 2.800.000đ - 4.200.000đ<br>• Điểm nổi bật: Đỉnh Fansipan, ruộng bậc thang, bản Cát Cát, chợ tình<br>• Khởi hành: Thứ 6, 7, CN<br><br>Mùa đẹp nhất: Tháng 9-11 (lúa chín) 🌾"
+        },
+        {
+          keywords: ["nha trang", "vinpearl"],
+          answer: "🐚 <strong>Tour Nha Trang</strong><br>• Thời gian: 3N2Đ / 4N3Đ<br>• Giá: 3.500.000đ - 6.200.000đ<br>• Điểm nổi bật: VinWonders, tắm bùn I-Resort, đảo Hòn Mun, Vinpearl Land<br>• Khởi hành: Hàng ngày<br><br>Thiên đường biển đảo! 🌊"
+        },
+        {
+          keywords: ["đà lạt", "da lat", "thành phố ngàn hoa"],
+          answer: "🌸 <strong>Tour Đà Lạt</strong><br>• Thời gian: 2N3Đ / 3N2Đ<br>• Giá: 2.200.000đ - 3.800.000đ<br>• Điểm nổi bật: Thung lũng tình yêu, Crazy House, đồi chè Cầu Đất, hồ Tuyền Lâm<br>• Khởi hành: Hàng ngày<br><br>Lãng mạn và thơ mộng! 💕"
+        },
+        
+        // Tour nước ngoài
+        {
+          keywords: ["thái lan", "bangkok", "phuket", "pattaya"],
+          answer: "🇹🇭 <strong>Tour Thái Lan</strong><br>• Bangkok - Pattaya: 4N3Đ - 5.900.000đ<br>• Phuket - Krabi: 4N3Đ - 7.200.000đ<br>• Điểm nổi bật: Chùa vàng, chợ nổi, đảo Phi Phi, massage Thái<br>• Visa: Miễn visa 30 ngày<br><br>Xứ sở chùa vàng chào đón bạn! 🛕"
+        },
+        {
+          keywords: ["singapore", "sing", "singa"],
+          answer: "🇸🇬 <strong>Tour Singapore</strong><br>• Thời gian: 3N2Đ / 4N3Đ<br>• Giá: 8.500.000đ - 12.900.000đ<br>• Điểm nổi bật: Gardens by the Bay, Universal Studios, Marina Bay Sands<br>• Visa: Miễn visa 30 ngày<br><br>Đảo quốc sư tử hiện đại! 🦁"
+        },
+        {
+          keywords: ["nhật bản", "japan", "tokyo", "osaka"],
+          answer: "🇯🇵 <strong>Tour Nhật Bản</strong><br>• Tokyo - Osaka - Kyoto: 5N4Đ - 25.900.000đ<br>• Hokkaido: 5N4Đ - 28.500.000đ<br>• Điểm nổi bật: Núi Phú Sĩ, chùa vàng Kinkaku-ji, hoa anh đào<br>• Visa: Cần xin visa<br><br>Xứ sở hoa anh đào! 🌸"
+        },
+        {
+          keywords: ["hàn quốc", "korea", "seoul", "busan"],
+          answer: "🇰🇷 <strong>Tour Hàn Quốc</strong><br>• Seoul - Nami - Everland: 4N3Đ - 15.900.000đ<br>• Seoul - Busan: 5N4Đ - 18.500.000đ<br>• Điểm nổi bật: Cung điện Gyeongbokgung, làng Hanok, tháp N Seoul<br>• Visa: Cần xin visa<br><br>Xứ sở Kim Chi! 🥢"
+        },
+        {
+          keywords: ["dubai", "uae", "các tiểu vương quốc"],
+          answer: "🇦🇪 <strong>Tour Dubai - Abu Dhabi</strong><br>• Thời gian: 5N4Đ<br>• Giá: 32.900.000đ - 45.000.000đ<br>• Điểm nổi bật: Burj Khalifa, sa mạc Safari, Nhà thờ Hồi giáo Sheikh Zayed<br>• Visa: Visa on arrival<br><br>Thiên đường xa hoa! 🏜️"
+        },
+        
+        // Giá và chi phí
+        {
+          keywords: ["giá", "chi phí", "bao nhiêu tiền", "giá tour", "giá cả"],
+          answer: "💰 <strong>Bảng giá tour tham khảo:</strong><br>• Tour trong nước: 2tr - 8tr<br>• Tour Đông Nam Á: 6tr - 15tr<br>• Tour Đông Bắc Á: 15tr - 35tr<br>• Tour Châu Âu/Mỹ: 40tr - 80tr<br><br>Giá đã bao gồm: Vé máy bay, khách sạn, ăn uống, vé tham quan, HDV<br><br>Bạn quan tâm tour nào?"
+        },
+        {
+          keywords: ["rẻ", "giảm giá", "tiết kiệm", "budget"],
+          answer: "💸 <strong>Tour tiết kiệm:</strong><br>• Đà Lạt 2N3Đ: 2.200.000đ<br>• Vũng Tàu 2N1Đ: 1.800.000đ<br>• Ninh Bình 1N2Đ: 1.500.000đ<br><br>Mẹo tiết kiệm:<br>• Đặt sớm giảm 10-15%<br>• Đi nhóm từ 10 người giảm 5%<br>• Áp dụng mã khuyến mãi<br><br>Xem thêm khuyến mãi!"
+        },
+        
+        // Đặt tour
+        {
+          keywords: ["đặt tour", "booking", "đặt vé", "đặt chỗ", "book"],
+          answer: "📝 <strong>Quy trình đặt tour:</strong><br>1️⃣ Chọn tour trên website<br>2️⃣ Điền thông tin: Họ tên, SĐT, Email<br>3️⃣ Chọn ngày khởi hành<br>4️⃣ Chọn phương thức thanh toán<br>5️⃣ Xác nhận đặt chỗ<br><br>📞 Hoặc gọi hotline: <strong>1900-xxxx</strong> để được tư vấn trực tiếp!"
+        },
+        {
+          keywords: ["cần gì", "giấy tờ", "hồ sơ", "documents"],
+          answer: "📄 <strong>Giấy tờ cần thiết:</strong><br><br><strong>Tour trong nước:</strong><br>• CMND/CCCD (bản gốc)<br>• Giấy khai sinh (trẻ em dưới 14 tuổi)<br><br><strong>Tour nước ngoài:</strong><br>• Hộ chiếu (còn hạn >6 tháng)<br>• Visa (nếu cần)<br>• Ảnh 4x6 (2 ảnh)<br>• Giấy tờ tùy theo yêu cầu từng nước"
+        },
+        
+        // Thanh toán
+        {
+          keywords: ["thanh toán", "payment", "trả tiền", "phương thức"],
+          answer: "💳 <strong>Phương thức thanh toán:</strong><br>• Thẻ tín dụng/ghi nợ (Visa, Master, JCB)<br>• Chuyển khoản ngân hàng<br>• Ví điện tử: MoMo, ZaloPay, VNPay<br>• Thanh toán tại văn phòng (tiền mặt)<br>• Trả góp 0% (đơn từ 10tr)<br><br>💰 Đặt cọc: 30% - Thanh toán còn lại trước 7 ngày khởi hành"
+        },
+        {
+          keywords: ["trả góp", "góp", "installment"],
+          answer: "💳 <strong>Trả góp 0% lãi suất:</strong><br>• Áp dụng: Đơn hàng từ 10 triệu<br>• Kỳ hạn: 3, 6, 9, 12 tháng<br>• Thẻ hỗ trợ: Visa, Master, JCB<br>• Ngân hàng: Vietcombank, Techcombank, VPBank, Sacombank<br><br>Ví dụ: Tour 15tr trả góp 12 tháng = 1.250.000đ/tháng"
+        },
+        
+        // Hủy tour & chính sách
+        {
+          keywords: ["hủy tour", "hủy vé", "hoàn tiền", "refund", "cancel"],
+          answer: "🔄 <strong>Chính sách hủy tour:</strong><br>• Trước 30 ngày: Hoàn 100%<br>• Trước 15-29 ngày: Hoàn 90%<br>• Trước 7-14 ngày: Hoàn 50%<br>• Dưới 7 ngày: Không hoàn tiền<br><br>⚠️ Lưu ý: Phí hủy vé máy bay & visa không hoàn lại<br><br>📞 Liên hệ hotline để được hỗ trợ!"
+        },
+        {
+          keywords: ["đổi lịch", "thay đổi", "reschedule"],
+          answer: "🔄 <strong>Chính sách đổi lịch:</strong><br>• Miễn phí đổi lịch 1 lần (trước 15 ngày)<br>• Phí đổi lịch: 500.000đ/lần (dưới 15 ngày)<br>• Phụ thu chênh lệch giá (nếu có)<br><br>Điều kiện: Tour mới phải cùng giá trị hoặc cao hơn"
+        },
+        
+        // Khuyến mãi
+        {
+          keywords: ["khuyến mãi", "giảm giá", "promotion", "discount", "ưu đãi", "mã"],
+          answer: "🎉 <strong>Khuyến mãi HOT:</strong><br>• <code>SUMMER2024</code>: Giảm 200k (đơn từ 5tr)<br>• <code>NEWUSER</code>: Giảm 150k (khách mới)<br>• <code>FAMILY</code>: Giảm 300k (đơn từ 15tr)<br>• <code>FLASH50</code>: Giảm 50k (không điều kiện)<br><br>🎁 Giảm theo ngưỡng:<br>• Đơn 10tr: Giảm thêm 100k<br>• Đơn 20tr: Giảm thêm 200k<br>• Đơn 30tr: Giảm thêm 300k<br>• Đơn 40tr: Giảm thêm 500k<br><br>Áp dụng ngay!"
+        },
+        
+        // Liên hệ
+        {
+          keywords: ["liên hệ", "hotline", "số điện thoại", "email", "contact", "địa chỉ"],
+          answer: "📞 <strong>Thông tin liên hệ:</strong><br>• Hotline: <strong>1900-xxxx</strong> (24/7)<br>• Email: support@viettourpro.vn<br>• Địa chỉ: 123 Đường ABC, Q.1, TP.HCM<br>• Facebook: fb.com/viettourpro<br>• Zalo: 0909-xxx-xxx<br><br>🕐 Văn phòng: T2-T6 (8h-18h), T7 (8h-12h)"
+        },
+        {
+          keywords: ["giờ làm việc", "mở cửa", "thời gian", "làm việc"],
+          answer: "🕐 <strong>Giờ làm việc:</strong><br>• Thứ 2 - Thứ 6: 8:00 - 18:00<br>• Thứ 7: 8:00 - 12:00<br>• Chủ nhật: Nghỉ<br><br>📞 Hotline hỗ trợ 24/7!<br>🌙 Ngoài giờ vui lòng để lại tin nhắn, chúng tôi sẽ phản hồi sớm nhất."
+        },
+        
+        // Dịch vụ
+        {
+          keywords: ["visa", "làm visa", "xin visa"],
+          answer: "🛂 <strong>Dịch vụ làm Visa:</strong><br>• Thái Lan: Miễn visa 30 ngày<br>• Singapore: Miễn visa 30 ngày<br>• Nhật Bản: 1.500.000đ (7-10 ngày)<br>• Hàn Quốc: 1.200.000đ (5-7 ngày)<br>• Mỹ: 5.000.000đ (15-20 ngày)<br><br>Hỗ trợ làm visa trọn gói!"
+        },
+        {
+          keywords: ["bảo hiểm", "insurance"],
+          answer: "🛡️ <strong>Bảo hiểm du lịch:</strong><br>• Trong nước: 50.000đ/người<br>• Nước ngoài: 150.000đ - 500.000đ/người<br><br>Quyền lợi:<br>• Tai nạn: 100 triệu<br>• Y tế: 50 triệu<br>• Hành lý: 10 triệu<br>• Hủy chuyến: 5 triệu<br><br>Khuyến nghị mua bảo hiểm!"
+        },
+        
+        // Mùa du lịch
+        {
+          keywords: ["mùa", "thời điểm", "khi nào", "tháng mấy"],
+          answer: "🌤️ <strong>Thời điểm lý tưởng:</strong><br>• Hạ Long: Tháng 3-5, 9-11<br>• Đà Nẵng: Tháng 2-5<br>• Phú Quốc: Tháng 11-3<br>• Sapa: Tháng 9-11 (lúa chín)<br>• Đà Lạt: Quanh năm<br><br>🌸 Mùa hoa:<br>• Anh đào Nhật: Tháng 3-4<br>• Tulip Hà Lan: Tháng 3-5"
+        },
+        
+        // Gia đình & nhóm
+        {
+          keywords: ["gia đình", "family", "trẻ em", "bé"],
+          answer: "👨‍👩‍👧‍👦 <strong>Tour gia đình:</strong><br>• Phú Quốc: VinWonders + Safari<br>• Đà Nẵng: Bà Nà Hills + Asia Park<br>• Nha Trang: Vinpearl Land<br><br>🎁 Ưu đãi:<br>• Trẻ dưới 2 tuổi: Miễn phí<br>• Trẻ 2-5 tuổi: 50% giá tour<br>• Trẻ 6-11 tuổi: 75% giá tour<br><br>Mã <code>FAMILY</code> giảm 300k!"
+        },
+        {
+          keywords: ["nhóm", "group", "công ty", "team building"],
+          answer: "👥 <strong>Tour nhóm/Công ty:</strong><br>• Từ 10 người: Giảm 5%<br>• Từ 20 người: Giảm 10%<br>• Từ 30 người: Giảm 15%<br><br>🎯 Team building:<br>• Vũng Tàu: 1.500.000đ/người<br>• Phan Thiết: 1.800.000đ/người<br>• Đà Lạt: 2.500.000đ/người<br><br>Tặng banner, áo đồng phục!"
+        },
+        
+        // Honeymoon
+        {
+          keywords: ["honeymoon", "tuần trăng mật", "cưới", "tân hôn"],
+          answer: "💑 <strong>Tour Honeymoon:</strong><br>• Phú Quốc: 8.500.000đ/cặp<br>• Đà Nẵng: 6.200.000đ/cặp<br>• Bali: 15.900.000đ/cặp<br>• Maldives: 45.000.000đ/cặp<br><br>🎁 Quà tặng:<br>• Phòng Honeymoon<br>• Bữa tối lãng mạn<br>• Spa couple<br>• Album ảnh cưới<br><br>Lãng mạn trọn vẹn! 💕"
+        },
+        
+        // Cảm ơn & tạm biệt
+        {
+          keywords: ["cảm ơn", "thank", "thanks", "cám ơn"],
+          answer: "Rất vui được giúp bạn! 😊<br><br>Nếu có thêm câu hỏi về tour, giá cả, đặt vé... đừng ngại hỏi nhé!<br><br>Chúc bạn có chuyến đi tuyệt vời! ✈️"
+        },
+        {
+          keywords: ["tạm biệt", "bye", "goodbye", "hẹn gặp lại"],
+          answer: "Tạm biệt! 👋<br><br>Cảm ơn bạn đã quan tâm đến <strong>Việt Tour Pro</strong>.<br><br>Chúc bạn có một ngày tuyệt vời!<br>Hẹn gặp lại trong chuyến du lịch sắp tới! 🌏✨"
+        }
+      ];
+      
+      // ========== BIẾN TOÀN CỤC ==========
+      let isTyping = false; // Trạng thái bot đang nhập
+      
+      // ========== HÀM XỬ LÝ ==========
+      
+      // Hàm tìm câu trả lời từ dữ liệu training
+      function findAnswer(userMessage) {
+        const lowerMessage = userMessage.toLowerCase().trim();
+        
+        // Duyệt qua từng mục trong dữ liệu
+        for (let item of botData) {
+          // Kiểm tra xem có từ khóa nào xuất hiện trong câu không
+          for (let keyword of item.keywords) {
+            if (lowerMessage.includes(keyword)) {
+              return item.answer;
+            }
+          }
+        }
+        
+        // Nếu không tìm thấy, trả về câu mặc định
+        return "Xin lỗi, tôi chưa hiểu câu hỏi của bạn. 🤔<br>Bạn có thể hỏi về: giá tour, đặt tour, thanh toán, liên hệ, hoặc khuyến mãi.";
+      }
+      
+      // Hàm thêm tin nhắn vào khung chat
+      function addMessage(message, sender) {
+        const messageHtml = `
+          <div class="message ${sender}">
+            <div class="message-bubble">${message}</div>
+          </div>
+        `;
+        $('#chatbot-messages').append(messageHtml);
+        scrollToBottom();
+      }
+      
+      // Hàm hiển thị hiệu ứng "đang nhập..."
+      function showTypingIndicator() {
+        const typingHtml = `
+          <div class="message bot typing-message">
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        `;
+        $('#chatbot-messages').append(typingHtml);
+        scrollToBottom();
+      }
+      
+      // Hàm xóa hiệu ứng "đang nhập..."
+      function hideTypingIndicator() {
+        $('.typing-message').remove();
+      }
+      
+      // Hàm tự động cuộn xuống đáy
+      function scrollToBottom() {
+        const chatBody = $('#chatbot-messages');
+        chatBody.animate({
+          scrollTop: chatBody[0].scrollHeight
+        }, 300);
+      }
+      
+      // Hàm xử lý gửi tin nhắn
+      function sendMessage() {
+        const userMessage = $('#chatbot-input').val().trim();
+        
+        // Kiểm tra tin nhắn rỗng
+        if (userMessage === '' || isTyping) {
+          return;
+        }
+        
+        // Thêm tin nhắn của user
+        addMessage(userMessage, 'user');
+        
+        // Xóa ô input
+        $('#chatbot-input').val('');
+        
+        // Hiển thị "đang nhập..."
+        isTyping = true;
+        showTypingIndicator();
+        
+        // Giả lập độ trễ (500ms - 1s) trước khi bot trả lời
+        const delay = Math.random() * 500 + 500; // Random từ 500-1000ms
+        
+        setTimeout(function() {
+          // Xóa "đang nhập..."
+          hideTypingIndicator();
+          
+          // Tìm câu trả lời
+          const botAnswer = findAnswer(userMessage);
+          
+          // Thêm tin nhắn của bot
+          addMessage(botAnswer, 'bot');
+          
+          isTyping = false;
+        }, delay);
+      }
+      
+      // ========== SỰ KIỆN ==========
+      
+      // Mở/Đóng chatbot khi click nút trigger
+      $('#chatbot-trigger').on('click', function(e) {
+        e.preventDefault();
+        $('#chatbot-container').fadeToggle(300);
+        
+        // Focus vào ô input khi mở
+        if ($('#chatbot-container').is(':visible')) {
+          setTimeout(function() {
+            $('#chatbot-input').focus();
+          }, 350);
+        }
+      });
+      
+      // Đóng chatbot khi click nút close
+      $('#chatbot-close').on('click', function(e) {
+        e.preventDefault();
+        $('#chatbot-container').fadeOut(300);
+      });
+      
+      // Gửi tin nhắn khi click nút gửi
+      $('#chatbot-send').on('click', function(e) {
+        e.preventDefault();
+        console.log('Send button clicked');
+        sendMessage();
+      });
+      
+      // Gửi tin nhắn khi nhấn Enter
+      $('#chatbot-input').on('keypress', function(e) {
+        if (e.which === 13) { // Enter key
+          e.preventDefault();
+          console.log('Enter pressed');
+          sendMessage();
+        }
+      });
+      
+      console.log('✅ Chatbot Widget initialized successfully!');
+    });
+  </script>
+  
+</body>
+</html>

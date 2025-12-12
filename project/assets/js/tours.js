@@ -36,9 +36,14 @@
     if (!$statTotal.length) return;
     const total = data.length;
     const destCount = new Set(data.map((t) => t.destination)).size;
-    const avg =
-      data.reduce((sum, t) => sum + Number(t.price || 0), 0) /
-      (total || 1);
+    
+    // Use parsePrice to handle formatted price strings like "21,664,750 VND"
+    const { parsePrice } = window.APP_UTILS || {};
+    const avg = data.reduce((sum, t) => {
+      const price = parsePrice ? parsePrice(t.price) : Number(t.price || 0);
+      return sum + price;
+    }, 0) / (total || 1);
+    
     $statTotal.text(total);
     $statDest.text(destCount);
     $statPrice.text(formatPrice(Math.round(avg)) || "--");
@@ -154,7 +159,7 @@
                   `}
                 </div>
                 <div class="tour-buttons d-flex gap-2">
-                  <button class="btn btn-cart btn-sm add-cart" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
+                  <button class="btn btn-cart btn-sm add-cart flex-grow-1" data-id="${t.id}" data-tour='${JSON.stringify(t).replace(/'/g, "&#39;")}'>
                     <i class="bi bi-cart-plus"></i>
                     <span>Giỏ hàng</span>
                   </button>

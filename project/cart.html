@@ -72,6 +72,54 @@
                 <span class="fw-bold text-success fs-6" id="cart-discount-amount">-0 ₫</span>
               </div>
               
+              <!-- Promo Code Input Section -->
+              <div class="promo-code-section mb-3 p-3 bg-light rounded">
+                <label class="form-label fw-semibold mb-2">
+                  <i class="bi bi-ticket-perforated me-1"></i>Mã giảm giá
+                </label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="cart-promo-code" 
+                         placeholder="Nhập mã giảm giá (VD: SUMMER2024)">
+                  <button class="btn btn-outline-primary" id="btn-apply-cart-promo" type="button">
+                    <i class="bi bi-check-lg me-1"></i>Áp dụng
+                  </button>
+                </div>
+                <div class="invalid-feedback d-block" id="cart-promo-error" style="display: none !important;"></div>
+                <div class="valid-feedback d-block" id="cart-promo-success" style="display: none !important;"></div>
+                
+                <!-- Applied Promo Display -->
+                <div id="applied-promo-display" class="mt-2 p-2 bg-success-subtle border border-success rounded d-none">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <small class="text-success fw-semibold">
+                        <i class="bi bi-check-circle-fill me-1"></i>
+                        Mã <span id="applied-promo-code"></span> đã được áp dụng
+                      </small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" id="btn-remove-promo" type="button">
+                      <i class="bi bi-x-lg"></i>
+                    </button>
+                  </div>
+                  <small class="text-muted d-block mt-1">Giảm: <span id="applied-promo-amount" class="text-success fw-bold"></span></small>
+                </div>
+              </div>
+
+              <!-- Tier Discount Display -->
+              <div class="d-flex justify-content-between align-items-center mb-2" id="cart-tier-discount-row" style="display: none !important;">
+                <span class="text-info fw-semibold">
+                  <i class="bi bi-gift-fill me-1"></i>Giảm theo ngưỡng:
+                </span>
+                <span class="fw-bold text-info fs-6" id="cart-tier-discount-amount">-0 ₫</span>
+              </div>
+              
+              <!-- Next Tier Info -->
+              <div class="tier-discount-info mb-3 p-2 bg-info-subtle rounded" id="tier-discount-info" style="display: none;">
+                <small class="text-info">
+                  <i class="bi bi-info-circle-fill me-1"></i> 
+                  <span id="tier-next-message"></span>
+                </small>
+              </div>
+              
               <hr class="my-3">
               
               <!-- Tổng thanh toán (Grand Total) - Nổi bật -->
@@ -104,6 +152,7 @@
   <script src="assets/js/auth.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/pricing-manager.js"></script>
+  <script src="assets/js/promo-manager.js"></script>
   <script src="assets/js/cart.js"></script>
   <script src="assets/js/image-mapping.js"></script>
   <script src="assets/js/cart-page.js"></script>

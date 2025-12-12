@@ -3,9 +3,9 @@
     <div class="d-flex align-items-center gap-2">
       <i class="bi bi-translate" style="color: #6c757d;"></i>
       <label for="lang-select" class="small text-muted mb-0" data-i18n="lang_label">Ngôn ngữ</label>
-      <select id="lang-select" class="form-select form-select-sm w-auto">
-        <option value="vi">VI</option>
-        <option value="en">EN</option>
+      <select id="lang-select" class="form-select form-select-sm w-auto" style="min-width: 120px;">
+        <option value="vi">🇻🇳 Tiếng Việt</option>
+        <option value="en">🇬🇧 English</option>
       </select>
     </div>
     <div class="form-check form-switch d-flex align-items-center gap-2">
@@ -16,6 +16,10 @@
     <a class="small text-muted d-flex align-items-center gap-1" href="contact.html" data-i18n="support">
       <i class="bi bi-question-circle"></i>
       Hỗ trợ
+    </a>
+    <a class="small text-primary d-flex align-items-center gap-1" href="chatbot-widget.html" title="Chat với trợ lý ảo">
+      <i class="bi bi-robot"></i>
+      Chatbot
     </a>
   </div>
 </div>
@@ -39,7 +43,7 @@
       </ul>
       <div class="d-flex align-items-center gap-2" id="header-auth-buttons">
         <a class="btn btn-outline-primary btn-sm position-relative" href="cart.html">
-          <i class="bi bi-cart"></i> Giỏ hàng
+          <i class="bi bi-cart"></i> <span data-i18n="nav_cart">Giỏ hàng</span>
           <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-badge d-none" style="font-size: 0.65rem;">0</span>
         </a>
         <a class="btn btn-outline-primary btn-sm" href="favorites.html" data-i18n="nav_fav">

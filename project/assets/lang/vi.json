@@ -10,6 +10,7 @@
   "nav_about": "Giới thiệu",
   "nav_fav": "♥ Yêu thích",
   "nav_login": "Đăng nhập",
+  "nav_cart": "Giỏ hàng",
   "hero_badge": "Ưu đãi mới nhất • Hơn 10,000 khách hài lòng",
   "hero_title": "Việt Tour Pro • Đi đúng chỗ, giá đúng chuẩn",
   "hero_subtitle": "Tìm kiếm, lọc và đặt tour nhanh, rõ ràng, tin cậy.",
@@ -19,8 +20,7 @@
   "lbl_keyword": "Từ khóa",
   "ph_keyword": "Tên tour hoặc số ngày",
   "btn_search": "Tìm kiếm",
-  "btn_reset": "Xóa"
-,
+  "btn_reset": "Xóa",
   "filter_hint": "Gợi ý dựa trên bộ lọc của bạn",
   "stat_total": "Tổng tour",
   "stat_dest": "Địa điểm",
@@ -275,4 +275,3 @@
   "admin_funnel_checkout": "Bắt đầu thanh toán",
   "admin_funnel_completed": "Hoàn tất"
 }
-

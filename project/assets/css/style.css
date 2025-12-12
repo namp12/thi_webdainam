@@ -500,11 +500,6 @@ body {
     justify-content: center;
   }
 
-  .btn-detail span,
-  .btn-cart span {
-    display: none;
-  }
-
   .btn-detail,
   .btn-cart {
     min-width: 40px;

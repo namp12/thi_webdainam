@@ -91,55 +91,105 @@
       ]
     },
     {
-      id: 'discount-summer2024',
+      id: 'promo-summer2024',
       type: 'discount-code',
       code: 'SUMMER2024',
-      title: 'Mã giảm giá mùa hè',
-      subtitle: 'Giảm 15% cho tất cả tour',
-      description: 'Mã giảm giá đặc biệt cho mùa hè 2024. Áp dụng cho tất cả các tour trong tháng 6, 7, 8.',
-      discountType: 'percent',
-      discountValue: 15,
-      minOrder: 2000000,
-      maxDiscount: 1000000,
-      badge: '-15%',
+      title: 'Mã giảm giá mùa hè 2024',
+      subtitle: 'Giảm 200k cho đơn hàng từ 5 triệu',
+      description: 'Mã giảm giá đặc biệt cho mùa hè 2024. Áp dụng cho tất cả các tour.',
+      discountType: 'fixed',
+      discountValue: 200000,
+      minOrder: 5000000,
+      maxDiscount: 200000,
+      badge: '-200K',
       badgeType: 'discount',
       conditions: [
-        'Áp dụng cho đơn hàng từ 2.000.000đ',
-        'Giảm tối đa 1.000.000đ',
-        'Chỉ áp dụng cho tour trong tháng 6-8',
-        'Không áp dụng với các khuyến mãi khác'
+        'Áp dụng cho đơn hàng từ 5.000.000đ',
+        'Giảm cố định 200.000đ',
+        'Có thể kết hợp với giảm giá theo ngưỡng',
+        'Không giới hạn số lần sử dụng'
       ],
-      validFrom: '2024-06-01',
-      validTo: '2024-08-31',
+      validFrom: '2024-01-01',
+      validTo: '2024-12-31',
       maxUses: 1000,
-      usedCount: 342,
+      usedCount: 0,
       quantityType: 'unlimited'
     },
     {
-      id: 'discount-firsttime',
+      id: 'promo-newuser',
       type: 'discount-code',
-      code: 'WELCOME50',
-      title: 'Chào mừng khách hàng mới',
-      subtitle: 'Giảm 50.000đ cho đơn hàng đầu tiên',
+      code: 'NEWUSER',
+      title: 'Khách hàng mới',
+      subtitle: 'Giảm 150k cho khách hàng mới',
       description: 'Mã giảm giá đặc biệt dành cho khách hàng mới. Áp dụng cho đơn hàng đầu tiên của bạn.',
       discountType: 'fixed',
-      discountValue: 50000,
-      minOrder: 1000000,
-      maxDiscount: 50000,
-      badge: '-50K',
+      discountValue: 150000,
+      minOrder: 0,
+      maxDiscount: 150000,
+      badge: '-150K',
       badgeType: 'discount',
       conditions: [
         'Chỉ áp dụng cho khách hàng mới',
-        'Áp dụng cho đơn hàng từ 1.000.000đ',
+        'Không yêu cầu giá trị đơn hàng tối thiểu',
         'Mỗi tài khoản chỉ sử dụng 1 lần',
-        'Không áp dụng với các khuyến mãi khác'
+        'Có thể kết hợp với giảm giá theo ngưỡng'
       ],
       validFrom: '2024-01-01',
       validTo: '2024-12-31',
       maxUses: 5000,
-      usedCount: 1234,
+      usedCount: 0,
       quantityType: 'unlimited',
       userType: 'new'
+    },
+    {
+      id: 'promo-family',
+      type: 'discount-code',
+      code: 'FAMILY',
+      title: 'Ưu đãi gia đình',
+      subtitle: 'Giảm 300k cho đơn từ 15 triệu',
+      description: 'Mã giảm giá đặc biệt dành cho gia đình. Áp dụng cho các tour gia đình.',
+      discountType: 'fixed',
+      discountValue: 300000,
+      minOrder: 15000000,
+      maxDiscount: 300000,
+      badge: '-300K',
+      badgeType: 'discount',
+      conditions: [
+        'Áp dụng cho đơn hàng từ 15.000.000đ',
+        'Giảm cố định 300.000đ',
+        'Dành cho tour gia đình',
+        'Có thể kết hợp với giảm giá theo ngưỡng'
+      ],
+      validFrom: '2024-01-01',
+      validTo: '2024-12-31',
+      maxUses: 500,
+      usedCount: 0,
+      quantityType: 'unlimited'
+    },
+    {
+      id: 'promo-flash50',
+      type: 'discount-code',
+      code: 'FLASH50',
+      title: 'Flash Sale 50k',
+      subtitle: 'Giảm 50k không điều kiện',
+      description: 'Mã giảm giá flash sale. Áp dụng cho tất cả đơn hàng không giới hạn.',
+      discountType: 'fixed',
+      discountValue: 50000,
+      minOrder: 0,
+      maxDiscount: 50000,
+      badge: '-50K',
+      badgeType: 'discount',
+      conditions: [
+        'Không yêu cầu giá trị đơn hàng tối thiểu',
+        'Giảm cố định 50.000đ',
+        'Áp dụng cho tất cả tour',
+        'Có thể kết hợp với giảm giá theo ngưỡng'
+      ],
+      validFrom: '2024-01-01',
+      validTo: '2024-12-31',
+      maxUses: 10000,
+      usedCount: 0,
+      quantityType: 'unlimited'
     },
     {
       id: 'combo-ha-long',
@@ -329,12 +379,17 @@
     const codes = promotions.filter(p => p.type === 'discount-code');
     const $container = $('#promo-list-discount-code');
     
+    console.log('🎫 Rendering discount codes:', codes.length, 'codes found');
+    console.log('Codes:', codes.map(c => c.code));
+    
     if (codes.length === 0) {
+      console.warn('⚠️ No discount codes found!');
       $container.html('<div class="col-12 text-center py-5"><p class="text-muted">Chưa có mã giảm giá nào</p></div>');
       return;
     }
 
     const html = codes.map(promo => renderDiscountCodeCard(promo)).join('');
+    console.log('✅ Generated HTML for', codes.length, 'discount codes');
     $container.html(html);
   }
 
@@ -525,19 +580,27 @@
 
   // Initialize
   $(function () {
+    console.log('🚀 Promotions page initialized');
+    console.log('📦 Total promotions in array:', promotions.length);
+    console.log('🎫 Discount codes:', promotions.filter(p => p.type === 'discount-code').map(p => p.code));
+    
     initDiscountCodes();
     
     // Render all promotions
+    console.log('🎨 Rendering all promotion types...');
     renderPromotions('all');
     renderPromotions('flash-sale');
     renderPromotions('combo');
     renderPromotions('voucher');
     renderDiscountCodes();
+    console.log('✅ Initial render complete');
 
     // Tab change handler
     $('#promo-tabs button').on('shown.bs.tab', function (e) {
       const target = $(e.target).data('bs-target');
+      console.log('📑 Tab changed to:', target);
       if (target === '#pane-discount-code') {
+        console.log('🎫 Re-rendering discount codes...');
         renderDiscountCodes();
       }
     });

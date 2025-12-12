@@ -914,6 +914,173 @@
     // Logic này sẽ được xử lý trong renderCart
   });
 
+  // ============= PROMO CODE HANDLERS =============
+  
+  /**
+   * Apply promo code handler
+   */
+  $(document).on('click', '#btn-apply-cart-promo', function() {
+    const code = $('#cart-promo-code').val().trim().toUpperCase();
+    const $error = $('#cart-promo-error');
+    const $success = $('#cart-promo-success');
+    
+    if (!code) {
+      $error.text('Vui lòng nhập mã giảm giá').show();
+      $success.hide();
+      return;
+    }
+
+    if (!window.PROMO_MANAGER) {
+      $error.text('Hệ thống khuyến mãi chưa sẵn sàng').show();
+      $success.hide();
+      return;
+    }
+
+    const cart = APP_CART.getCart();
+    const subtotal = cart.reduce((sum, item) => {
+      const price = window.APP_UTILS?.parsePrice(item.tour?.price) || 0;
+      return sum + (price * item.quantity);
+    }, 0);
+
+    const validation = window.PROMO_MANAGER.validatePromoCode(code, subtotal);
+    
+    if (validation.valid) {
+      // Save to sessionStorage
+      sessionStorage.setItem('applied_promo_code', code);
+      sessionStorage.setItem('applied_promo_data', JSON.stringify(validation.promoCode));
+      
+      // Show success
+      $error.hide();
+      $success.text(`Mã ${code} đã được áp dụng!`).show();
+      
+      // Update display
+      $('#applied-promo-code').text(code);
+      $('#applied-promo-amount').text(formatPrice(validation.promoCode.discountValue) + 'đ');
+      $('#applied-promo-display').removeClass('d-none');
+      
+      // Update summary
+      updateSummaryWithPromo();
+      
+      showToast(`Đã áp dụng mã ${code}`, 'success');
+    } else {
+      $success.hide();
+      $error.text(validation.error).show();
+      sessionStorage.removeItem('applied_promo_code');
+      sessionStorage.removeItem('applied_promo_data');
+    }
+  });
+
+  /**
+   * Remove promo code handler
+   */
+  $(document).on('click', '#btn-remove-promo', function() {
+    sessionStorage.removeItem('applied_promo_code');
+    sessionStorage.removeItem('applied_promo_data');
+    
+    $('#cart-promo-code').val('');
+    $('#cart-promo-error').hide();
+    $('#cart-promo-success').hide();
+    $('#applied-promo-display').addClass('d-none');
+    
+    updateSummaryWithPromo();
+    showToast('Đã xóa mã giảm giá', 'info');
+  });
+
+  /**
+   * Update summary with promo code and tier discounts
+   */
+  function updateSummaryWithPromo() {
+    const cart = APP_CART.getCart();
+    let subtotal = 0;
+
+    cart.forEach(item => {
+      const tour = item.tour || {};
+      const parsedPrice = window.APP_UTILS?.parsePrice(tour.price) || Number(tour.price || 0);
+      
+      let pricing = { 
+        originalPrice: parsedPrice, 
+        finalPrice: parsedPrice
+      };
+      
+      if (window.PRICING_MANAGER) {
+        pricing = window.PRICING_MANAGER.calculateFinalPrice(tour);
+      }
+      
+      subtotal += pricing.finalPrice * item.quantity;
+    });
+
+    // Get promo code discount
+    const promoCode = sessionStorage.getItem('applied_promo_code');
+    let promoDiscount = 0;
+    
+    if (promoCode && window.PROMO_MANAGER) {
+      const validation = window.PROMO_MANAGER.validatePromoCode(promoCode, subtotal);
+      if (validation.valid) {
+        promoDiscount = validation.promoCode.discountValue;
+      } else {
+        // Remove invalid code
+        sessionStorage.removeItem('applied_promo_code');
+        sessionStorage.removeItem('applied_promo_data');
+        $('#applied-promo-display').addClass('d-none');
+      }
+    }
+
+    // Get tier discount
+    let tierDiscount = 0;
+    if (window.PROMO_MANAGER) {
+      const tierInfo = window.PROMO_MANAGER.calculateTierDiscount(subtotal);
+      tierDiscount = tierInfo.discount;
+      
+      // Show tier discount if applicable
+      if (tierDiscount > 0) {
+        $('#cart-tier-discount-row').show();
+        $('#cart-tier-discount-amount').text(`-${formatPrice(tierDiscount)} ₫`);
+      } else {
+        $('#cart-tier-discount-row').hide();
+      }
+      
+      // Show next tier info
+      const nextTier = window.PROMO_MANAGER.getNextTier(subtotal);
+      if (nextTier) {
+        $('#tier-next-message').text(nextTier.message);
+        $('#tier-discount-info').show();
+      } else {
+        $('#tier-discount-info').hide();
+      }
+    }
+
+    // Calculate totals
+    const serviceFee = subtotal * 0.05;
+    const totalDiscount = promoDiscount + tierDiscount;
+    const grandTotal = Math.max(0, subtotal + serviceFee - totalDiscount);
+
+    // Update display
+    $('#cart-subtotal').text(formatPrice(subtotal) + ' ₫');
+    $('#cart-service-fee').text(formatPrice(serviceFee) + ' ₫');
+    
+    if (totalDiscount > 0) {
+      $('#cart-discount-row').show();
+      $('#cart-discount-amount').text(`-${formatPrice(totalDiscount)} ₫`);
+    } else {
+      $('#cart-discount-row').hide();
+    }
+    
+    $('#cart-total').text(formatPrice(grandTotal) + ' ₫');
+    
+    // Enable/disable checkout button
+    $('#btn-checkout').prop('disabled', grandTotal <= 0);
+  }
+
+  // Override updateSummary to include promo logic
+  const originalUpdateSummary = updateSummary;
+  updateSummary = function() {
+    originalUpdateSummary();
+    // Add a small delay to ensure DOM is ready
+    setTimeout(() => {
+      updateSummaryWithPromo();
+    }, 50);
+  };
+
   $(function () {
     console.log("🚀 Cart page initialized");
     renderCart();
@@ -923,6 +1090,25 @@
       console.log("🔄 Force update summary after page load");
       updateSummary();
     }, 300);
+    
+    // Restore applied promo code on page load
+    const savedPromoCode = sessionStorage.getItem('applied_promo_code');
+    if (savedPromoCode) {
+      $('#cart-promo-code').val(savedPromoCode);
+      $('#applied-promo-code').text(savedPromoCode);
+      
+      const savedPromoData = sessionStorage.getItem('applied_promo_data');
+      if (savedPromoData) {
+        try {
+          const promoData = JSON.parse(savedPromoData);
+          $('#applied-promo-amount').text(formatPrice(promoData.discountValue) + 'đ');
+          $('#applied-promo-display').removeClass('d-none');
+          $('#cart-promo-success').text(`Mã ${savedPromoCode} đã được áp dụng!`).show();
+        } catch (e) {
+          console.warn('Error parsing saved promo data:', e);
+        }
+      }
+    }
   });
   
   // Cũng lắng nghe event khi cart được cập nhật từ nơi khác

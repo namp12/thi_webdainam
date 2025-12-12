@@ -513,7 +513,10 @@
 
   // Xuất ra CSV
   function exportToCSV(data, filename) {
+    console.log('💾 exportToCSV called with:', data.length, 'rows, filename:', filename);
+    
     if (!data || data.length === 0) {
+      console.warn('⚠️ No data to export');
       window.APP_UTILS.showToast('Không có dữ liệu để xuất', 'warning');
       return;
     }
@@ -555,6 +558,7 @@
     link.click();
     document.body.removeChild(link);
 
+    console.log('✅ CSV export successful:', filename);
     window.APP_UTILS.showToast('Xuất CSV thành công!', 'success');
   }
 
@@ -717,18 +721,37 @@
     });
 
     // Thiết lập nút xuất
-    $('#export-revenue-csv').on('click', function() {
+    console.log('🔧 Setting up CSV export buttons...');
+    
+    const $exportRevenueBtn = $('#export-revenue-csv');
+    const $exportBookingsBtn = $('#export-bookings-csv');
+    const $exportAllBtn = $('#export-all-stats');
+    
+    console.log('Export buttons found:', {
+      revenue: $exportRevenueBtn.length,
+      bookings: $exportBookingsBtn.length,
+      all: $exportAllBtn.length
+    });
+    
+    $exportRevenueBtn.on('click', function() {
+      console.log('📊 Export Revenue CSV clicked!');
       const period = $('.chart-filter-btn.active').data('period') || '7d';
+      console.log('Period:', period, 'Bookings:', bookings.length);
       exportRevenueCSV(bookings, period);
     });
 
-    $('#export-bookings-csv').on('click', function() {
+    $exportBookingsBtn.on('click', function() {
+      console.log('📋 Export Bookings CSV clicked!');
+      console.log('Bookings data:', bookings.length, 'items');
       exportBookingsCSV(bookings);
     });
 
-    $('#export-all-stats').on('click', function() {
+    $exportAllBtn.on('click', function() {
+      console.log('📦 Export All Stats clicked!');
       exportAllStats();
     });
+    
+    console.log('✅ CSV export buttons setup complete');
   }
 
   // Xuất các hàm ra toàn cục
@@ -741,15 +764,26 @@
 
   // Khởi tạo khi DOM sẵn sàng
   $(function() {
+    console.log('📈 Dashboard Charts: DOM Ready');
+    console.log('Current path:', window.location.pathname);
+    console.log('Is admin dashboard?', window.location.pathname.includes('admin-dashboard'));
+    
     if (window.location.pathname.includes('admin-dashboard')) {
+      console.log('Chart.js available?', typeof Chart !== 'undefined');
+      
       // Chờ Chart.js load
       if (typeof Chart !== 'undefined') {
+        console.log('✅ Initializing charts immediately...');
         initAllCharts();
       } else {
+        console.warn('⚠️ Chart.js not loaded, waiting 1 second...');
         // Thử lại sau một khoảng thời gian
         setTimeout(() => {
           if (typeof Chart !== 'undefined') {
+            console.log('✅ Chart.js loaded, initializing charts...');
             initAllCharts();
+          } else {
+            console.error('❌ Chart.js still not loaded after 1 second!');
           }
         }, 1000);
       }

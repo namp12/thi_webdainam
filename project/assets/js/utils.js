@@ -121,8 +121,19 @@
   }
 
   function formatDuration(duration) {
-    return `${duration} ngày`;
+  if (!duration) return '0 ngày';
+  
+  // Nếu duration đã là string có chứa "ngày" hoặc "đêm", trả về nguyên bản
+  if (typeof duration === 'string' && (duration.includes('ngày') || duration.includes('đêm'))) {
+    return duration;
   }
+  
+  // Nếu là số, format lại
+  const num = Number(duration);
+  if (isNaN(num)) return duration; // Trả về nguyên bản nếu không parse được
+  
+  return `${num} ngày`;
+}
 
   window.APP_UTILS = {
     http,

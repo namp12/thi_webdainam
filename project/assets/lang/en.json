@@ -10,6 +10,7 @@
   "nav_about": "About",
   "nav_fav": "♥ Favorites",
   "nav_login": "Login",
+  "nav_cart": "Cart",
   "hero_badge": "Latest deals • 10,000+ happy travelers",
   "hero_title": "Viet Tour Pro • Right trip, right price",
   "hero_subtitle": "Search, filter, and book fast with clarity and trust.",
@@ -19,8 +20,7 @@
   "lbl_keyword": "Keyword",
   "ph_keyword": "Tour name or duration",
   "btn_search": "Search",
-  "btn_reset": "Clear"
-,
+  "btn_reset": "Clear",
   "filter_hint": "Suggestions based on your filters",
   "stat_total": "Total tours",
   "stat_dest": "Destinations",
@@ -275,4 +275,3 @@
   "admin_funnel_checkout": "Checkout Started",
   "admin_funnel_completed": "Completed"
 }
-
